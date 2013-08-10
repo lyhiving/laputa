@@ -1,0 +1,132 @@
+
+﻿<a id="gotop" href="#">   
+  <span>▲<strong>TOP</strong></span> 
+</a>
+      <div id="footer" class="container" style="text-align: center; font-size: 12px; color:#C0C0C0">
+        <p>&copy; <a href="http://animetaste.org/" target="_blank">AnimeTaste.org</a> · <a href="/page/about/" target="_blank">About</a> ·  <a href="mailto:admin@aimozhen.com" class="Email">Contact</a> · Made with ❤ in Shanghai · Thanks <a href="http://twitter.github.com/bootstrap/" class="Bootstrap">Bootstrap</a> · <a href="http://www.miibeian.gov.cn" target="_blank">沪ICP备13003160号</a></p>
+        <p>&nbsp;</p>
+</div>
+
+     <!-- /下方     <a id="issue" href="/page/issue/">   
+  <span>用户<br />反馈</span> 
+</a>
+-->
+
+    <!-- javascript ================================================== -->
+    <script src="__PUBLIC__/media/js/bootstrap.min.js?t=20130729"></script>
+    <script src="__PUBLIC__/media/js/amz.js?t=20130724"></script>
+    <script src="http://amzstatic.b0.upaiyun.com/media/js/bootstrap-editable.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/media/messenger/js/underscore-min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/media/messenger/js/backbone-min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/media/messenger/js/messenger.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/media/messenger/js/messenger-theme-future.js"></script>
+    
+	<link type="text/css" rel="stylesheet" href="/media/messenger/css/messenger.css"/>
+    <link type="text/css" rel="stylesheet" href="/media/messenger/css/messenger-theme-future.css"/>
+    <script type="text/javascript"> $(function(){ 
+
+
+   }); </script>
+    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=652974" ></script>
+	<script type="text/javascript" id="bdshell_js"></script>
+	<script type="text/javascript">
+	var bds_config = {'wbUid':3163946864,'snsKey':{'tsina':'2517727821'}};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+	</script>
+
+        
+    
+
+<div id="loginFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>登录</h3>
+  </div>
+    <div class="modal-body">
+    <form action="{:U('User/Member/FrontLoginVerify')}" method="POST">
+        <div class="modal-body">
+				邮件&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="email" /> &nbsp;&nbsp; <a href="#reg" data-toggle="modal" style="font-size:80%">没有账号？</a> <br />
+				密码&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="password" /> &nbsp;&nbsp; <a href="#forget" data-toggle="modal" style="font-size:80%">找回密码</a> <br /></div>
+            &nbsp;&nbsp;<input type="submit" value="登录" class="btn btn-red"/>
+        </div>
+    </form>
+    </div>
+</div>
+
+<div id="regFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>注册</h3>
+  </div>
+    <div class="modal-body">
+    <form action="{:U('User/Member/Register')}" id="regFormFront" method="POST" >
+        <div class="modal-body">
+            <div class="control-group" id="emailgroup">
+            <input type="text" name="email" id="regemail" class="input-block-level share-video" placeholder="电子邮件地址"/>
+            <span class="help-inline" id="emailInfo"></span>
+			<div style="font-size: 14px; color: #919191; margin: 10px 0 20px 0;"><strong>欢迎来到艾墨镇 请在上方填写你常用的邮箱</strong></div>
+        		</div>
+             <input id="send" type="submit" value="下一步" data-loading-text="读取中..." role="button"  class="btn btn-red"/>
+
+        </div>
+    </form>
+    </div>
+</div>
+
+<div id="forget" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>找回密码</h3>
+  </div>
+    <div class="modal-body">
+    <form action="/ajax/forget/validate.php" method="POST">
+        <div class="modal-body">
+   		  <p>请填写用来登录的邮件地址 我们将向你发送一份身份确认邮件<br />
+			<span style="font-size: 80%">如果提交多次仍没有收到邮件请与我们联系 admin@aimozhen.com</span></p>
+			<input type="text" name="email" placeholder="电子邮件地址"/> <br />
+            <input type="submit" value="确认" class="btn btn-red"/>
+        </div>
+    </form>
+    </div>
+</div>
+
+<div id="shareFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" style="color: #FFFFFF" aria-hidden="true" data-dismiss="modal">×</button>
+    <h3>分享视频</h3>
+  </div>
+  <div class="modal-body">
+    <form action="/ajax/post.php" id="shareVideoFront" method="POST" >
+        <div class="modal-body">
+            <div class="control-group" id="urlgroup">
+            <input type="text" name="url" id="url" class="input-block-level share-video" placeholder="请输入你想要分享的视频页面地址"/>
+            <span class="help-inline" id="urlInfo"></span>
+			<div style="font-size: 14px; color: #919191; margin: 10px 0 20px 0;"><strong>支持优酷，土豆，音悦台，新浪博客，乐视，56，酷6等视频网站<br />艾墨镇的氛围和你息息相关，希望你能给我们带来更多精彩的分享</strong></div>
+        		</div>
+             <input id="send" type="submit" value="发布" data-loading-text="读取中..." role="button"  class="btn btn-red"/>
+
+        </div>
+    </form>
+    <script type="text/javascript"> $(function(){ vShareVideoFront(); vRegFormFront();}); </script>
+    
+  </div></div>  
+  
+  
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0123a2f162a7829ef691d1b9702258e3' type='text/javascript'%3E%3C/script%3E"));
+
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-11082147-7']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</body>
+</html>

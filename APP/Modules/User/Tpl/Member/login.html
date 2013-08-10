@@ -1,0 +1,56 @@
+<include file="./APP/Tpl/header.html" />
+<script>var verifyURL = "{:U('User/Member/verify')}"; </script>
+		<div class="container" style="margin:30px auto 20px auto">
+	
+		  <div class="row">
+          
+		  <div class="span11 shadow" style="width:990px"> 
+            <div id="title" style="padding:20px;">
+            <if condition='$wrong' >
+                <div class="alert alert-error">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>错误提示：</strong> {$wrong}
+                </div>
+            </if>
+			<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">欢迎回到艾墨镇！</span><br />
+			<span style="color: #7F7F7F;">快给小伙伴们分享些精彩视频吧！</span><br />
+			<div class="hr2"></div>
+		  </div>
+		  <!-- 编辑区域--> 
+		  <div class="span6" style="margin-left:0;padding:0 0 0 20px;"> 
+		  
+	
+		  <form class="form-horizontal" action="{:U('User/Member/LoginVerify')}" method="POST">
+					<div class="control-group" id="namegroup">
+						<label class="control-label2" for="email">Email </label>
+						<div class="controls2">
+							<input type="text" class="input-xlarge" id="email" name="email" >
+							 <span class="help-inline" id="nameInfo"></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label2" for="password">密码 </label>
+						<div class="controls2">
+							<input class="input-xlarge" id="password" name="password" type="password" />
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls2">
+							<input class="input-small" id="verify" name="verify" type="text" /> &nbsp; <img id="code" src="{:U('User/Member/verify')}" /> &nbsp; <a href="javascript:void(change_code(this));">看不清</a>
+						</div>
+                        
+					</div>
+					
+
+					<div style="margin:10px 0 0 60px;">
+						<input id="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
+					</div>
+			</form>
+			</div>
+			<!-- /编辑区域-->
+		  </div>
+		  
+		  </div>
+		</div> <!-- /上方 -->
+
+<include file="./APP/Tpl/footer.html" />

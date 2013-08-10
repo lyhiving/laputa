@@ -18,7 +18,9 @@ class IndexAction extends CommonAction {
 
     // 网站首页 最新视频
     public function Index() {
-
+        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+        $post = M('video')->order('id DESC')->field($field, true)->limit(24)->select();
+        $this->post = postreplace($post);
         $this->display();
     }
 
@@ -36,5 +38,7 @@ class IndexAction extends CommonAction {
     public function Discover() {
         echo 111;
     }
+
+
 }
 ?>

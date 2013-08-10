@@ -1,80 +1,71 @@
 <include file="./APP/Tpl/header.html" />
-		<div class="container" style="margin:30px auto 20px auto">
-	
-		  <div class="row">
-		  <div class="span11 shadow" style="width:990px"> 
-		  <div id="title" style="padding:20px;">
-			<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">欢迎来到艾墨镇！</span><br />
-			<span style="color: #7F7F7F;">填写居住证，永久有效无需暂住^_^</span><br />
-			<div class="hr2"></div>
-		  </div>
-		  <!-- 编辑区域--> 
-		  <div class="span6" style="margin-left:0;padding:0 0 0 20px;"> 
-		  
-	
-		  <form class="form-horizontal" id="reg" action="{:U('User/Member/RegisterVerify')}" method="POST">
-		  <input type="hidden" name="hidden" value="{$regemail|md5}" />
-					<div class="control-group" id="namegroup">
-						<label class="control-label2" for="name">昵称 </label>
-						<div class="controls2">
-							<input type="text" class="input-xlarge" id="name" name="name" placeholder="好名字是好生活的开始~">
-							 <span class="help-inline" id="nameInfo"></span>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label2" for="input01">Email </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="email" name="email" type="text" readonly value="{$regemail}" />
-						</div>
-					</div>
-					<div class="control-group" id="pass1group">
-						<label class="control-label2" for="pass1">密码 </label>
-						<div class="controls2">
-							<input class="input-xlarge" type="password" id="pass1" name="pass1" />
-							<span class="help-inline" id="pass1Info"></span>
-						</div>
-					</div>
-					<div class="control-group" id="pass2group">
-						<label class="control-label2" for="pass2">重复 </label>
-						<div class="controls2">
-							<input class="input-xlarge" type="password" id="pass2" name='pass2' />
-							<span class="help-inline" id="pass2Info"></span>
-						</div>
-					</div>
-				   
-		  <div id="title" style=" padding-bottom:20px;">
-			<span style="color: #7F7F7F; font-weight: bold;">如果有邀请码请填写在下方（选填）</span>
-			<div class="hr2"></div>
-		  </div>
-					<div class="control-group">
-						<label class="control-label2" for="input01">邀请 </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="invitecode" name="invitecode" type="text" />
-						</div>
-					</div> 
-				  <!-- <div class="control-group">
-						<label class="control-label2" for="input01" >微博 </label>
-						<div class="controls2">
-							<input placeholder="http://weibo.com/你的名字" class="input-xlarge" id="exterweibo" name="exterweibo" type="text" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label2" for="input01">博客 </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="exterblog" name="exterblog" type="text" />
-						</div>
-					</div>-->
-					
-					<div style="margin:10px 0 0 60px;">
-						<input id="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-						
-					</div>
-			</form>
-			</div>
-			<!-- /编辑区域-->
-		  </div>
-		  
-		  </div>
-		</div> <!-- /上方 -->
-		<script type="text/javascript"> $(function(){ vRegForm();}); </script>	
+    ﻿	<div class="container" >
+
+		<div id="tips" class="hide alert" style="margin:-20px 30px 40px 0px;font-size:12px;">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		Hi，欢迎来到艾墨镇，这是一个关于独立影像的小镇。期待你一起来分享更多的内容，<strong><a href="#reg" data-toggle="modal">点此入住</a></strong> 。
+	</div>
+    		<div style="width:100%; height:20px; ">
+      
+          <div style="color:#AAA; float:left;margin:-10px 0 0 0">
+            <ul id="headerbar" style="margin-left:0px">
+              <li class="active"><a href="/">最新</a></li>
+              <li class="dropdown" > 
+                <a class="dropdown-toggle" id="drop4" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">最热 <b class="caret"></b></a>
+                <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/hot/view/">最多观看</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/hot/comment/">最多评论</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/hot/fav/">最多收藏</a></li>
+                </ul>
+              </li>
+              <li ><a href="/verify/">创作人</a></li>
+              <li ><a href="/discover/">随便看看</a></li>
+              <li class="dropdown" > 
+                <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
+                <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                  				  <li><a href="/tag/2/">剧情短片 <span style="float:right; color:#ABABAB">(833)</span></a></li>
+				  				  <li><a href="/tag/3/">MV <span style="float:right; color:#ABABAB">(261)</span></a></li>
+				  				  <li><a href="/tag/4/">广告/宣传 <span style="float:right; color:#ABABAB">(465)</span></a></li>
+				  				  <li><a href="/tag/5/">游戏CG <span style="float:right; color:#ABABAB">(27)</span></a></li>
+				  				  <li><a href="/tag/6/">电视包装 <span style="float:right; color:#ABABAB">(78)</span></a></li>
+				  				  <li><a href="/tag/7/">片头片尾 <span style="float:right; color:#ABABAB">(24)</span></a></li>
+				  				  <li><a href="/tag/8/">ShowReel <span style="float:right; color:#ABABAB">(82)</span></a></li>
+				  				  <li><a href="/tag/9/">预告/花絮 <span style="float:right; color:#ABABAB">(35)</span></a></li>
+				  				  <li><a href="/tag/10/">纪录片 <span style="float:right; color:#ABABAB">(51)</span></a></li>
+				  				  <li><a href="/tag/1/">归类无能 <span style="float:right; color:#ABABAB">(86)</span></a></li>
+				                  </ul>
+              </li>
+            </ul> <!-- /tabs -->
+          </div> 
+        
+        
+		<div style="float:right;margin:-14px 0 0 10px"><wb:follow-button uid="3163946864" type="red_2" width="136" height="24" ></wb:follow-button></div>
+				<div style="color:#AAA; float:right;margin:-14px 0 0 0">艾墨镇共有 <strong>1942</strong> 部作品</div>
+		        
+	</div>
+    	<div class="hr2" style="margin:0 30px 15px 0;"></div>
+		
+	<div class="row amzcontent">
+         
+        <foreach name="post" item="v">
+      		<include file="Post:single" /> 
+        </foreach>
+
+				
+      </div>
+      
+      
+		<div class="row amznavigation">
+            <div class="amznext" style="text-align:center">
+                        <a href="/?amzpage=2">下一页</a> 
+                        </div>
+ 		</div>
+      
+		<div id="realpagination" class="row" style=" margin-top:50px;display:none">
+        <div class="pagination pagination-small pagination-centered">
+                ﻿
+<ul><li class='disabled'><a href='#'>首页</a></li><li class='disabled'><a href='#'>&laquo;</a></li><li class='active'><a href='#'>1</a></li><li><a href='/2'>2</a></li><li><a href='/3'>3</a></li><li><a href='/4'>4</a></li><li><a href='/5'>5</a></li><li><a href='/6'>6</a></li><li><a href='/7'>7</a></li><li><a href='/8'>8</a></li><li><a href='/9'>9</a></li><li><a href='/10'>10</a></li><li> <a href='/2'>&raquo;</a></li><li> <a href='/29'>尾页</a></li> </ul>&nbsp;&nbsp;<ul> <li><span class=disabled>当前1/29页</span></li> </ul>            </div>
+ 		</div>
+
+</div> <!-- /上方 -->
 <include file="./APP/Tpl/footer.html" />

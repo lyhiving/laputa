@@ -86,7 +86,8 @@ class MemberAction extends CommonAction {
        if (!IS_POST) _404('页面不存在...');
        $email = I('email');
        if (M('User')->field('id,email')->where(array('email' => $email))->find()) $this->redirect('/');
-       if ( (I('hidden') != 0) && (I('hidden') == md5($email)) ) {
+	   
+       if ( (I('hidden') != '') && (I('hidden') == md5($email)) ) {
            $data = array (
            'username' => I('name'),
            'password' => md5(I('pass1')),
@@ -94,6 +95,7 @@ class MemberAction extends CommonAction {
            'createdTime' => time(),
            'group' => 99
            );
+		   
            if (I('invitecode') == 'animator'){
            	$data[verify] = 1;
             $data[guest] = 0;
@@ -104,6 +106,7 @@ class MemberAction extends CommonAction {
            	$data[verify] = 0;
             $data[guest] = 1;
            }
+		   echo 112;
            if( M('User')->add($data)) {
             self::LoginMethod($email, $pwd = I('pass1', '', 'md5'));
 
@@ -111,7 +114,6 @@ class MemberAction extends CommonAction {
              }
 
             }
-
     }
 
 

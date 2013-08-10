@@ -1,0 +1,25 @@
+﻿<!-- 作品-->
+<div class="span3 shadow amzvideo" style="height:318px;padding:10px; margin-bottom:20px; margin-right:2px">
+	<div class="playbutton">
+		<span>
+			<a href="/video/{$v.id}/" target="_blank" title="{$v.title}" >
+				<div style=" width:210px; height:160px;background: url('__PUBLIC__/images/play.png') no-repeat center center;">&nbsp;
+				</div>
+			</a>
+		</span>
+	<div class="img-rounded post-image" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 290px;background-color:#000000">
+	</div>     					
+</div>
+                <div class="post-title"><a href="/video/{$v.id}/" target="_blank" title="{$v.title}" >{$v.title}</a></div>
+    			<div class="post-explain">{$v.description}</div>
+				<div class="post-infor">观看{$v.viewed|intval}次 {$v.comment|intval}评论 {$v.like|intval}收藏</div>
+                <div class="hr1"></div>
+                <div class="post-author"  style=" margin-top:10px;">
+                <div class="avatar"  style="height:32px; width:32px;"><a href="/user/{$v.id}/" ><img width="32" height="32" src="{$v.useravatar}" /></a></div>
+            <div id="post-detailed" class="float-left" style="margin-left:10px;line-height:12px">
+                <div id="post-author" class="ellipsis" style="width:170px;font-size:12px;line-height:18px;"><a href="/user/{$v.userid}/" title="{$v.username}">{$v.username}</a> </div>
+                <div style="color: #bbb;font-size:11px;">{$v.createdTime|date="Y-n-d G:i",###}</div>
+                	
+            </div></div>
+</div>
+<!-- 作品 END--> 

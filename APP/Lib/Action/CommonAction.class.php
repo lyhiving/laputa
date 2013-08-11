@@ -27,16 +27,16 @@ class CommonAction extends Action{
         if (!self::$user || self::$user->id != session('uid')) {
 
             if (isset($_SESSION['uid'])) {
-                $temp_user = M('User')->select(session('uid'));
-                self::$user = $temp_user[0];
-                self::$user[avatar] = getavatar($temp_user[0]);
+                $temp_user = M('User')->find(session('uid'));
+                self::$user = $temp_user;
+                self::$user[avatar] = getavatar($temp_user);
 
             } elseif (self::cookieget('__u')) {
 
-                $temp_user = M('User')->select(intval(self::cookieget('__u')));
-                if (sha1($temp_user[0][id] . '3xtc' . $temp_user[0][password]) == self::cookieget('__c')) {
-                    self::$user = $temp_user[0];
-                    self::$user[avatar] = getavatar($temp_user[0]);
+                $temp_user = M('User')->find(intval(self::cookieget('__u')));
+                if (sha1($temp_user[id] . '3xtc' . $temp_user[password]) == self::cookieget('__c')) {
+                    self::$user = $temp_user;
+                    self::$user[avatar] = getavatar($temp_user);
                     }
 
             }
@@ -45,10 +45,9 @@ class CommonAction extends Action{
 
 
 	private static function cookieget($name) {
+        return isset($_COOKIE[$name]) ? trim($_COOKIE[$name]) : null;
 
-    return isset($_COOKIE[$name]) ? trim($_COOKIE[$name]) : null;
-
-}
+    }
 
 }
 ?>

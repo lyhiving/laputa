@@ -1,4 +1,13 @@
-﻿<?php
+<?php
+// +----------------------------------------------------------------------
+// | AIMOZHEN [ SHARE VIDES SHARE LIFES ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013 http://aimozhen.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: Gavin Foo <fuxiaopang@msn.com>
+// +----------------------------------------------------------------------
 
 class SubPages{
 
@@ -85,19 +94,12 @@ class SubPages{
   function __destruct(){
 
     unset($each_disNums);
-
     unset($nums);
-
     unset($current_page);
-
     unset($sub_pages);
-
     unset($pageNums);
-
     unset($page_array);
-
     unset($subPage_link);
-
     unset($subPage_type);
 
    }
@@ -342,7 +344,7 @@ class SubPages{
 
     }
 
-	$subPageCss2Str.="&nbsp;&nbsp;<ul> <li><span class=disabled>当前".$this->current_page."/".$this->pageNums."页</span></li> </ul>";
+    $subPageCss2Str.="&nbsp;&nbsp;<ul> <li><span class=disabled>当前".$this->current_page."/".$this->pageNums."页</span></li> </ul>";
 
 
 
@@ -351,6 +353,4 @@ class SubPages{
    }
 
 }
-
 ?>
-

@@ -63,6 +63,8 @@ class IndexAction extends CommonAction {
     public function ListVideo($where, $order, $field, $page_size, $page_link) {
         $posts = M('video');
         $count = $posts->where($where)->count();// 查询满足要求的总记录数
+        $this->post_count = $count;
+
         // 先设置小页面获取值
         $jspage = isset($_GET['p']) ? intval($_GET['p']) : 1;
         // 再设置传给数据库的标准值 $page

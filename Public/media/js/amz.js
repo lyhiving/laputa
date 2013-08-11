@@ -236,11 +236,11 @@ function iaspost(){
 		next: '.amznext a',
 		history: false ,
 		noneleft: function(trigger) { jQuery("#realpagination").fadeIn(1200); },
-		loaderDelay: 600 ,
+		loaderDelay: 1200 ,
 		triggerPageThreshold: 3 ,
 		customTriggerProc: function(trigger) { jQuery("#realpagination").fadeIn(1200); },
 		onRenderComplete: function() { playbutton();},
-		loader: '<div style="text-align:center">正在载入 <img style="margin:0 0 2px 5px" src="/images/preloader.gif"/></div>',
+		loader: '<div class="row"><div style="text-align:center">正在载入 <img style="margin:0 0 2px 5px" src="/Public/images/preloader.gif"/></div></div>',
 	});
 };
 

@@ -2,4 +2,4 @@
 .amateras
 .project
 .settings/
-./admin/*
+./APP/Runtime/*

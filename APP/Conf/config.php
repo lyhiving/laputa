@@ -25,7 +25,7 @@ return array (
     //数据库连接参数
     'DB_HOST' => 'localhost',
     'DB_USER' => 'root',
-    'DB_PWD' => 'Fxp930311321',
+    'DB_PWD' => '',
     'DB_NAME' => 'newaimozhen',
     'DB_PREFIX' => 'amz_',
 

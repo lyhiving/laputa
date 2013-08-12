@@ -17,7 +17,8 @@
 class PostAction extends CommonAction {
 
 
-    // 首页
+
+    // 添加视频
     public function addvideo() {
        if (!CommonAction::$user) $this->redirect('/');
        if (!IS_POST) _404('页面不存在...');

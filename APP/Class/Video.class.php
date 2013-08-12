@@ -126,7 +126,7 @@ class Video {
             return '';
 
         return <<<CONTENT
-   <embed src="/include/player/youku.swf?showAd=0&VideoIDS={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
+   <embed src="/Public/player/youku.swf?showAd=0&VideoIDS={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
 CONTENT;
     }
 
@@ -156,7 +156,7 @@ CONTENT;
             $info = VideoUrlParser::parse($this->url);
             $iid=$info['iid'];
             return <<<CONTENT
-<embed src="/include/player/olc_8.swf?tvcCode=-1&swfPath=/include/player/sp.swf&iid=$iid&autoPlay=true" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="1002" height="564"></embed>
+<embed src="/Public/player/olc_8.swf?tvcCode=-1&swfPath=/Public/player/sp.swf&iid=$iid&autoPlay=true" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="1002" height="564"></embed>
 CONTENT;
     }
 
@@ -213,7 +213,7 @@ CONTENT;
             return $this->url;
 
         return <<<CONTENT
-   <embed src="/include/player/ku6.swf?vid={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
+   <embed src="/Public/player/ku6.swf?vid={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
 CONTENT;
     }
 

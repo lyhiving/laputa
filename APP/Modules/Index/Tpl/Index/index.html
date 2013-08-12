@@ -1,15 +1,16 @@
 <include file="./APP/Tpl/header.html" />
     ﻿	<div class="container" >
-
+		<if condition="!$visitor[id]">
 		<div id="tips" class="hide alert" style="margin:-20px 30px 40px 0px;font-size:12px;">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		Hi，欢迎来到艾墨镇，这是一个关于独立影像的小镇。期待你一起来分享更多的内容，<strong><a href="#reg" data-toggle="modal">点此入住</a></strong> 。
+		Hi，欢迎来到艾墨镇，这是一个关于独立影像的小镇。期待你一起来分享更多的内容，<strong><a href="#regFront" data-toggle="modal">点此入住</a></strong> 。
 	</div>
+    	</if>
     		<div style="width:100%; height:20px; ">
       
           <div style="color:#AAA; float:left;margin:-10px 0 0 0">
             <ul id="headerbar" style="margin-left:0px">
-              <li class="active"><a href="/">最新</a></li>
+              <li class="active"><a href="{$page_link}/">最新</a></li>
               <li class="dropdown" > 
                 <a class="dropdown-toggle" id="drop4" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">最热 <b class="caret"></b></a>
                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
@@ -18,8 +19,7 @@
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="/hot/fav/">最多收藏</a></li>
                 </ul>
               </li>
-              <li ><a href="/verify/">创作人</a></li>
-              <li ><a href="/discover/">随便看看</a></li>
+              <li ><a href="{$page_link}/discover/">随便看看</a></li>
               <li class="dropdown" > 
                 <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
                 <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
@@ -59,6 +59,7 @@
 		<div class="row amznavigation">
             <div class="amznext" style="text-align:center">
                         {$page_next}
+                        
                         </div>
  		</div>
       

@@ -1,4 +1,4 @@
-<?php $visitor = CommonAction::$user; ?>
+<?php $visitor = CommonAction::$user; $tags = getalltag(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html xmlns:wb=“http://open.weibo.com/wb”>
@@ -43,9 +43,9 @@
             <div style="float:left; margin:7px 10px 0 0;width:103px;height:23px;}"><a href="/"><img src="__PUBLIC__/images/logo@2x.png"__PUBLIC__/></a></div>
             <div class="nav-collapse collapse">
      		<ul class="nav ">
-              <li><a href="/">发现</a></li>
-              <li><a href="/collection/">精彩选辑</a></li>
-              <li><a href="/page/issue/">反馈</a></li>
+              <if condition="$page_cat == creator"> <li class="active"> <else /> <li> </if> <a href="/creator/">创作人</a></li>
+              <if condition="$page_cat == share"> <li class="active"> <else /> <li> </if> <a href="/share/">灵感库</a></li>
+              <if condition="$page_cat == collection"> <li class="active"> <else /> <li> </if> <a href="/collection/">精选集</a></li>
               </ul>
 
             
@@ -73,8 +73,8 @@
                                 
                 <!-- 搜索 -->
 				<li style="margin:0 15px 0 10px;">
-					<form class="navbar-search pull-left" action="/ajax/search.php" method="POST">
-						<input type="text" class="search-query" id="search" name="search" placeholder="Search...">
+					<form class="navbar-search pull-left" action="/search/" method="GET">
+						<input type="text" class="search-query" id="title" name="title" placeholder="Search...">
                     </form>
 				</li>
                 

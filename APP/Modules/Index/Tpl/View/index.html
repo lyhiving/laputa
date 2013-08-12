@@ -1,0 +1,245 @@
+<include file="./APP/Tpl/header.html" />
+    ﻿	<div class="container" >
+
+			<div class="row"> 
+    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > <a href="/tag/2/">{$video.tagname}</a> > <a href="#">{$video.title}</a></div>
+    </div>
+
+	<div class="row">
+		<div class="span12"> 
+            <div id="thumbnail" style="display:none;"><img src="{$video.imageUrl}" /></div>
+            <!-- 观看区域 开始 -->
+            {$video.content}
+            <!-- 观看区域 结束 -->
+		</div>
+    </div>
+
+	<div class="row" style="margin-top:10px">
+		<div class="span8">
+			<!-- 视频详情 开始 -->
+			<div id="video-detail" class="shadow" style="padding:10px;">
+                <div id="content-others" style="position:relative;float:left;">
+					<div id="content-title" style="font-weight: bold; font-size:16px;">{$video.title}</div>
+					<div id="information">
+					{$video.createdTime|date="Y年m月d日",###}&nbsp; · 围观{$video.viewed|intval}次 · 收藏{$video.like|intval}次 · 评论{$video.comment|intval}次&nbsp; | &nbsp;
+                    
+                    <if condition="$visitor[id]">
+                         <if condition="($visitor[id] == $video[userid])||($visitor[group] == 1)" >
+                         <a id="edit" href="/edit/{$video.id}/">编辑</a> · 
+                    	 <a id="delete" href="#delete_video" data-toggle="modal">删除</a> · 
+                         </if>
+                         <if condition="$visitor[id] != $video[userid]" >
+                         <a id="copyright" href="#my_video" data-toggle="modal">认领</a>
+                         </if>
+                     <else />
+                     	 <a id="copyright" href="#loginFront" data-toggle="modal">认领</a>
+                     </if>
+     			</div>
+                </div>         
+				<!-- 分享收藏 开始 -->
+				<div id="fenxiang" style="position:relative; float:right; margin-top:5px;">
+                    <!-- 百度分享按钮 开始 -->            
+                    <div id="videoshare" >
+                        <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'{$video.imageUrl}','text':'{$video.url} 我在艾墨镇看到一部不错的短片 《{$video.title}》 | 去@艾墨镇网 看视频无广告：'}">
+                        <a class="bds_tsina"></a>
+                        </div>
+                         <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'{$video.imageUrl}','text':'我在艾墨镇看到一部不错的短片 《{$video.title}》 | 去@艾墨镇网 看视频无广告'}">
+                        <a class="bds_renren"></a>
+                        <a class="bds_douban"></a>
+                        <a class="bds_diandian"></a>
+                        <a class="bds_qzone"></a>
+                        </div>
+                    </div>
+                    <!-- 百度分享按钮 结束 -->
+                    
+					<div id="favpoststatus" style="float:left; margin-top:-4px">
+                    
+                    <!-- 收藏视频 开始 -->
+                    <if condition="$visitor[id]">
+                    	<if condition="isfav($visitor[id], $video[id])">
+						<button onclick="FavPost('{$video.id}', 1)" class="btn btn-mini btn-inverse ajax" >取消收藏</button>
+                        <else />
+                        <button onclick="FavPost('{$video.id}', 0)" class="btn btn-mini btn-red ajax" >收藏</button>
+                        </if>
+                    <else />
+                    	<a href="#loginFront" role="button" data-toggle="modal" class="btn btn-mini btn-red" style="float:left; margin-top:-1px">收藏</a> 
+                    </if>
+                    <!-- 收藏视频 结束 --> 
+                    <button style="margin-left:3px" class="btn btn-mini btn-red ajax" data-toggle="collapse" data-target="#demo">选辑</button>
+                    </div>
+				</div>
+                <!-- 分享收藏 结束 -->
+                <!-- 视频说明 开始 -->
+                <div id="des" style=" margin-top:60px;padding-bottom:10px;color: #666;text-indent :0px;">
+                	<div id="demo" class="collapse"> 
+                                            <label class="checkbox inline">
+                          <input type="checkbox" id="collection3" value="3"  onclick="CollectionPost(3, 2166, 4)"> 中央美术学院动画系                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection2" value="2"  onclick="CollectionPost(2, 2166, 4)"> 中国传媒大学动画学院                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection4" value="4"  onclick="CollectionPost(4, 2166, 4)"> All ABOUT GOOGLE                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection5" value="5"  onclick="CollectionPost(5, 2166, 4)"> 法国高布兰学院                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection6" value="6"  onclick="CollectionPost(6, 2166, 4)"> 昂西动画节                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection7" value="7"  onclick="CollectionPost(7, 2166, 4)"> 信息可视化                        </label>
+					                        <label class="checkbox inline">
+                          <input type="checkbox" id="collection1" value="1"  checked="checked"  onclick="CollectionPost(1, 2166, 4)"> 无分类                        </label>
+						<div style="height:20px;"></div>
+                    </div>
+                	{$video.description|nl2br}
+                </div>
+                <!-- 视频说明 结束 -->
+                
+                <!-- 多说评论 开始 -->
+                <div class="ds-thread" data-thread-key="{$video.id}" data-title="{$video.title}" data-author-key="{$video.userid}" style="border-top:1px solid rgba(0, 0, 0, 0.13);margin:15px 0 0;padding:10px 0 0;"></div>  
+                <!-- 多说评论 结束 -->
+      		</div>
+            <!-- 视频详情 结束 -->
+
+		</div> 
+
+		<div class="span4">
+        	<!-- 个人信息 开始 -->
+			<div class="shadow" style="padding:10px; margin-bottom:20px;">
+            	<!-- 上半部分 开始 -->
+                <div id="card-top" style="height:60px">
+                    <div class="avatar" ><a href="/user/{$video.userid}/"><img src="{$user.avatar}" style="width:50px; height:50px" /></a></div>
+                    <div id="usertop" class="float-left" style="margin-left:10px">
+                    	<div id="name">
+                        <if condition="$user[verify]">
+                        	<div class="ellipsis float-left" style=" max-width:100px"><a href="/user/{$video.userid}/"  title="{$user.username}">{$user.username}</a></div>
+                        	<i title="认证用户" class="icon2-verify float-left" style="margin-left:5px"></i>
+                        <else />
+                        	<div class="ellipsis float-left" style=" max-width:120px"><a href="/user/{$video.userid}/"  title="{$user.username}">{$user.username}</a></div>
+                        </if>
+                        </div>
+                        <div id="contact" style="margin-top:25px">
+                        	<if condition="$user[extraweibo]"><a href="{$user.extraweibo}" target="_blank">Weibo</a> · </if>
+                            <if condition="$user[extrablog]"><a href="{$user.extrablog}" target="_blank">Blog</a> · </if>
+                            <if condition="$user[extraemail]"><a href="#extre_email" data-toggle="modal">Email</a></if>
+                        </div>
+                    </div>   
+                </div>
+                <!-- 上半部分 结束 -->
+                <div style="margin:0px -10px 0px -10px;" class="hr1"></div>
+                <!-- 下半部分 开始 -->
+                <div id="card-bottom" style="height:60px">
+                  <div class="information">
+						<div id="nums"> <a href="/user/{$video.userid}/" target="_blank">{$user.post|intval}</a></div>
+                        <div id="title"> 分享 </div>
+                    </div>   
+                    <div class="information">
+						<div id="nums"> <a href="/user/{$video.userid}/like/" target="_blank">{$user.fav|intval}</a></div>
+                        <div id="title"> 收藏 </div>
+                    </div>   
+                    <div class="information">
+						<div id="nums">{$user.like|intval}</div>
+                        <div id="title"> 关注 </div>
+                    </div>   
+                </div>
+                <!-- 下半部分 结束 -->
+      		</div>	
+            <!-- 个人信息 结束 -->
+            <!-- 视频标签 开始 -->
+			<div id="video-tag" style="margin-top:30px">
+            TAGS：<br />
+            {$video.tags}
+			            </div>
+            <!-- 视频标签 结束 -->
+        </div>  
+    </div>
+    
+	<div class="row" style="margin-top:10px">
+		<div class="span8">
+              <!-- 相关-->
+              <div id="content-video" class="shadow" style=" margin-top:10px;padding:20px 10px 0 10px;">
+              	<div class="column-title blue" style="margin-bottom:-20px">相关视频推荐</div>
+                <script type="text/javascript" id="wumiiRelatedItems"></script>
+              </div>
+              <!-- /相关-->
+      	</div>
+    </div>
+      
+</div>
+
+ <!-- /上方 -->
+
+<!-- Modal -->
+<div id="delete_video" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">删除提示</h3>
+  </div>
+  <div class="modal-body">
+    <p>&nbsp;&nbsp;亲！你真的打算删除这条分享吗？三思啊~</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">还是算了</button>
+    <a href="/ajax/delete_video.php?id=2166" role="button" class="btn btn-red">是滴</a>
+  </div>
+</div>
+
+<div id="my_video" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">认领作品</h3>
+  </div>
+  <div class="modal-body">
+  <div style="font-size: 14px; color: #666666; margin: 10px 0 20px 20px;">
+    <strong>Gavin Foo 你好<br />
+	这是你的作品吗？你现在可以通过填写下面的表格来认领作品<br /><br />
+
+    </strong>
+          	<form class="form-horizontal" action="/ajax/copyright.php" id="copyright" method="POST">
+         	<input id="uid" name="uid" type="hidden" value="4" />
+            <input id="vid" name="vid" type="hidden" value="2166" />
+				<div class="control-group" id="namegroup">
+					<label class="control-label2" for="name">姓名</label>
+					<div class="controls2">
+					  <input type="text" class="input span4" id="name" name="name" placeholder="请填写真实姓名哟">
+                      <span class="help-inline" id="nameInfo"></span>
+					</div>
+				</div>
+			  <div class="control-group">
+					<label class="control-label2" for="input01">说明</label>
+					<div class="controls2">
+					  <textarea placeholder="凡是一切能证明是你自己做的网址或者说明都可以哟" class="span4" name="reason" style="min-height:120px;max-width: 356px;" ></textarea>
+					</div>
+				</div>
+                
+				<div style="margin:10px 0 0 60px;">
+					<input type="submit" class="btn btn-red" value="恩，就这样吧！" />
+			  </div>
+		</form>
+        <span style="font-size: 90%">我们将进行人工审核 通过后将通过邮件通知你<br />你的信息 Email: fuxiaopang@msn.com | UID: 4</span> </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+</div>
+
+<div id="extre_email" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">联系作者</h3>
+  </div>
+  <div class="modal-body">
+    <p>&nbsp;&nbsp;我的电子邮件<br />&nbsp;&nbsp;{$user.extraemail}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+</div>
+
+<script type="text/javascript">
+    var wumiiPermaLink = "http://aimozhen.com/video/{$video.id}/"; //请用代码生成文章永久的链接
+    var wumiiTitle = "{$video.title}"; //请用代码生成文章标题
+    var wumiiTags = "<?php echo preg_replace('/\s/',',',$video[tags]);?>"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"    
+    var wumiiSitePrefix = "http://aimozhen.com/";
+    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<!-- /上方 -->
+<include file="./APP/Tpl/footer.html" />

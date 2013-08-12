@@ -37,6 +37,7 @@ function postreplace($data) {
     return $post;
 }
 
+// 获取头像
 function getavatar($user) {
     if ($user[weiboId]){
         import('Class.Avatar', APP_PATH);
@@ -49,6 +50,26 @@ function getavatar($user) {
         return  $link->link();
     }
 }
+
+// 获取视频Tag类名称
+function videogettag ($tid) {
+	$tag = M('tag')->find($tid);
+    return $tag[name];
+}
+
+// 获取全部Tag
+function getalltag() {
+    $tags = M('tag')->order('sort asc')->select();
+    return $tags;
+}
+
+// 收藏判断
+function isfav($user, $video) {
+    $where = array ('type'=>1,'userid'=>$user,'target'=>$video);
+    $num = M('action')->where($where)->count();
+    return $num > 0;
+}
+
 
 ?>
 

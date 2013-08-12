@@ -39,12 +39,10 @@ return array (
     'COOKIE_PATH'           => '/',             // Cookie路径
     'COOKIE_PREFIX'         => '',          // Cookie前缀 避免冲突
 
-
+    //URL路由
+    'LOAD_EXT_CONFIG' => 'route',
 
     'SHOW_PAGE_TRACE' =>true
 
-
-
-    //'LOAD_EXT_CONFIG' => 'verify'
 );
 ?>

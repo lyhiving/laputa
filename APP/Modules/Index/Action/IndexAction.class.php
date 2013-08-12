@@ -18,20 +18,28 @@ class IndexAction extends CommonAction {
 
     // 网站首页 最新视频
     public function Index() {
-        $this->redirect('Index/index/now');
+        self::listnew();
     }
 
-    public function now() {
+    public function listnew() {
 
         $page_size = 24;
-        $page_link = '/index/index/now';
-        $where = "";
+        $this->page_name = "new";
+
+        if ( !I('creator') ) {
+            $this->page_cat = "share";
+            $this->page_link = $page_link = '/share';
+            $where = array("verify" => 0);
+        } else {
+            $this->page_cat = "creator";
+            $this->page_link = $page_link = '/creator';
+            $where = array("verify" => 1);
+        }
         $order = "id DESC";
         $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
         $this->display('index');
-
 
     }
 
@@ -50,8 +58,21 @@ class IndexAction extends CommonAction {
     }
 
     // 认证视频
-    public function Verify() {
-        echo 111;
+    public function search() {
+
+        $search = I('title');
+
+        $page_size = 48;
+        $this->page_name = "search";
+        $this->page_link = $page_link = '/search/';
+        $where = "`title` LIKE  '%".trim($search)."%'";
+
+        $order = "id DESC";
+        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+
+        self::ListVideo($where, $order, $field, $page_size, $page_link);
+        $this->display('index');
+
     }
 
     // 随机视频
@@ -78,7 +99,7 @@ class IndexAction extends CommonAction {
 
         //判断页面是否到尽头
         $next_page = $page + 1;
-        if (ceil($count/$page_size)> $page) {
+        if (ceil($count/$page_size) > ($page)) {
         	$this->page_next = "<a href='$page_link/jspage/$next_page/'>下一页</a> ";
         }
 

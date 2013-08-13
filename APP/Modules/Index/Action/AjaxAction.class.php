@@ -16,16 +16,38 @@
  */
 class AjaxAction extends CommonAction {
 
-    // 自动加载方法
-    public function _initialize() {
-    }
-
-    // 首页
-    public function Index() {
-    }
 
     // 收藏视频
-    public function FavPost($vid, $uid) {
+    public function FavPost($vid=0) {
+        if (!CommonAction::$user) $this->redirect('/');
+        if(!IS_AJAX) _404('页面不存在...');
+        $uid = CommonAction::$user['id'] ;
+        $vid = I('vid');
+        if (I('faved')){
+        	//取消收藏
+            $where = array('userid' => $uid, 'type' => '1', 'target' => $vid );
+            $Action = M('action')->where($where)->find();
+            if ($Action[id]){
+            	M('action')->where($where)->delete();
+                M('video')->where(array('id' => $vid))->setDec('like');
+                M('user')->where(array('id' => $uid))->setDec('fav');
+                $data['content'] = '取消收藏';
+                $data['status'] = 1;
+            }
+        } else {
+        	//收藏
+            $data = array('userid' => $uid, 'type' => '1', 'target' => $vid, 'createdTime' => time() );
+            $result = M('action')->add($data);
+            if ($result){
+                M('video')->where(array('id' => $vid))->setInc('like');
+                M('user')->where(array('id' => $uid))->setInc('fav');
+                $data['content'] = '收藏';
+                $data['status'] = 1;
+            } else {
+            	$data['status'] = 0;
+            }
+        };
+        $this->ajaxReturn($data, 'json');
 
     }
 

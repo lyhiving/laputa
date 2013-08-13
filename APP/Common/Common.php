@@ -52,7 +52,7 @@ function getavatar($user) {
 }
 
 // 获取视频Tag类名称
-function videogettag ($tid) {
+function videogettag($tid) {
 	$tag = M('tag')->find($tid);
     return $tag[name];
 }
@@ -61,6 +61,12 @@ function videogettag ($tid) {
 function getalltag() {
     $tags = M('tag')->order('sort asc')->select();
     return $tags;
+}
+
+// 获取全部Collection
+function getallcoll() {
+    $colls = M('collection')->order('UpdateTime desc')->select();
+    return $colls;
 }
 
 // 收藏判断

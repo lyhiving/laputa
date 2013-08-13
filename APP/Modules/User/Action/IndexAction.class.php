@@ -16,9 +16,6 @@
  */
 class IndexAction extends CommonAction {
 
-    // 自动加载方法
-    public function _initialize() {
-    }
 
     // 用户首页
     public function Index() {

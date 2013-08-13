@@ -247,20 +247,23 @@ function iaspost(){
 
 // 收藏视频
 function FavPost(vid, faved){
-	link = '/ajax/fav.php?id='+vid ;
-	if (faved == 1) { link = link + '&cancel=1'} ;
-	$.get(link,function(data,status){
-		//alert("选辑数据：" + data + "\n状态：" + status);
-		if ( data == '收藏成功') {
-		document.getElementById('favpoststatus').innerHTML = '<button onclick="FavPost('+ vid +', 1)" class="btn btn-mini btn-inverse ajax" >取消收藏</button>';
-		$.globalMessenger().post({ message: '收藏成功！',type: 'success',showCloseButton: true });
-		} ;
-		if ( data == '取消收藏成功') {
-		document.getElementById('favpoststatus').innerHTML =  '<button onclick="FavPost('+ vid +', 0)" class="btn btn-mini btn-red ajax" >收藏</button>';
-		$.globalMessenger().post({ message: '取消收藏成功！',type: 'success',showCloseButton: true });
+	link = '/ajax/FavPost/';
+	$.post(link, {vid:vid, faved:faved}, function(data){
+		if(data.status) {
+			if(data.content == "收藏"){
+				document.getElementById('favpoststatus').innerHTML = '<button onclick="FavPost('+ vid +', 1)" class="btn btn-mini btn-inverse ajax" >取消收藏</button>';
+				$.globalMessenger().post({ message: '收藏成功！',type: 'success',showCloseButton: true });
+				};
+			if(data.content == "取消收藏"){
+				document.getElementById('favpoststatus').innerHTML =  '<button onclick="FavPost('+ vid +', 0)" class="btn btn-mini btn-red ajax" >收藏</button>';
+				$.globalMessenger().post({ message: '取消收藏成功！',type: 'success',showCloseButton: true });
+				};
+		} else {
+			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
 		}
-	});
+	}, 'json');
 };
+
 
 
 // 关注用户

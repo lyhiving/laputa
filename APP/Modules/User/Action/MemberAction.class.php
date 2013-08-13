@@ -23,6 +23,7 @@ class MemberAction extends CommonAction {
     // 登陆页面
     public function Login() {
         if (CommonAction::$user) $this->redirect('/');
+        $this->page_name = "login";
         $this->wrong = null;
         if ( $_GET["wrong"] ) {
             if ($_GET["wrong"] == 'infor') {
@@ -86,7 +87,7 @@ class MemberAction extends CommonAction {
        if (!IS_POST) _404('页面不存在...');
        $email = I('email');
        if (M('User')->field('id,email')->where(array('email' => $email))->find()) $this->redirect('/');
-	   
+
        if ( (I('hidden') != '') && (I('hidden') == md5($email)) ) {
            $data = array (
            'username' => I('name'),
@@ -95,7 +96,7 @@ class MemberAction extends CommonAction {
            'createdTime' => time(),
            'group' => 99
            );
-		   
+
            if (I('invitecode') == 'animator'){
            	$data[verify] = 1;
             $data[guest] = 0;

@@ -16,8 +16,30 @@
  */
 class SearchAction extends CommonAction {
 
-    // 首页
-    public function Index() {
+    //搜索类型判断
+    public function index() {
+    	if (I('type') == title) {
+            self::title();
+    	}
+
+    }
+
+    // 搜索视频标题
+    public function title() {
+
+        $search = I('q');
+
+        $page_size = 48;
+        $this->page_name = "search";
+        $this->page_link = $page_link = '/search/';
+        $where = "`title` LIKE  '%".trim($search)."%'";
+
+        $order = "id DESC";
+        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+
+        IndexAction::ListVideo($where, $order, $field, $page_size, $page_link);
+        $this->display('index/index');
+
 
     }
 }

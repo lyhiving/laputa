@@ -23,7 +23,7 @@
 					<div id="information">
 					{$video.createdTime|date="Y年m月d日",###}&nbsp; · 围观{$video.viewed|intval}次 · 收藏{$video.like|intval}次 · 评论{$video.comment|intval}次&nbsp; | &nbsp;
                     
-                    <if condition="$visitor[id]">
+                    <if condition="$visitor">
                          <if condition="($visitor[id] == $video[userid])||($visitor[group] == 1)" >
                          <a id="edit" href="/edit/{$video.id}/">编辑</a> · 
                     	 <a id="delete" href="#delete_video" data-toggle="modal">删除</a> · 
@@ -52,21 +52,22 @@
                     </div>
                     <!-- 百度分享按钮 结束 -->
                     
-					<div id="favpoststatus" style="float:left; margin-top:-4px">
+					<div id="favpoststatus" style="float:left; margin-top:-1px">
                     
                     <!-- 收藏视频 开始 -->
-                    <if condition="$visitor[id]">
+                    <if condition="$visitor">
                     	<if condition="isfav($visitor[id], $video[id])">
 						<button onclick="FavPost('{$video.id}', 1)" class="btn btn-mini btn-inverse ajax" >取消收藏</button>
                         <else />
                         <button onclick="FavPost('{$video.id}', 0)" class="btn btn-mini btn-red ajax" >收藏</button>
                         </if>
                     <else />
-                    	<a href="#loginFront" role="button" data-toggle="modal" class="btn btn-mini btn-red" style="float:left; margin-top:-1px">收藏</a> 
+                    	<a href="#loginFront" role="button" data-toggle="modal" class="btn btn-mini btn-red">收藏</a> 
                     </if>
-                    <!-- 收藏视频 结束 --> 
-                    <button style="margin-left:3px" class="btn btn-mini btn-red ajax" data-toggle="collapse" data-target="#demo">选辑</button>
+                    
                     </div>
+                    <!-- 收藏视频 结束 --> 
+                    <button style="float:left; margin:-1px 0 0 5px" class="btn btn-mini btn-red ajax" data-toggle="collapse" data-target="#demo">选辑</button>
 				</div>
                 <!-- 分享收藏 结束 -->
                 <!-- 视频说明 开始 -->

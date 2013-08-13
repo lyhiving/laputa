@@ -34,6 +34,7 @@ class ViewAction extends CommonAction {
             $user[avatar] = getavatar($user);
             $this->user = $user;
             $this->video = $video;
+            M('video')->where(array('id' => $vid))->setInc('viewed');
             $this->display();
         }
 

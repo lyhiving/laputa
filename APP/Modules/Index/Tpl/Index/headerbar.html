@@ -1,0 +1,51 @@
+    ﻿	<div class="container" >
+		<if condition="!$visitor[id]">
+		<div id="tips" class="hide alert" style="margin:-20px 30px 40px 0px;font-size:12px;">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		Hi，欢迎来到艾墨镇，这是一个关于独立影像的小镇。期待你一起来分享更多的内容，<strong><a href="#regFront" data-toggle="modal">点此入住</a></strong> 。
+	</div>
+    	</if>
+    		<div style="width:100%; height:20px; ">
+      
+          <div style="color:#AAA; float:left;margin:-10px 0 0 0">
+            <ul id="headerbar" style="margin-left:0px">
+              <li class="active"><a href="{$page_link}/">最新</a></li>
+              <li class="dropdown" > 
+                <a class="dropdown-toggle" id="drop4" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">最热 <b class="caret"></b></a>
+                <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/view/">最多观看</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/comment/">最多评论</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/fav/">最多收藏</a></li>
+                </ul>
+              </li>
+              <if condition="$page_cat == share">
+              <li ><a href="{$page_link}/discover/">随便看看</a></li>
+              <li class="dropdown" > 
+                <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
+                <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                    <foreach name="tags" item="each_tag">
+                    <li><a href="{$page_link}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.count})</span></a></li>
+                    </foreach>
+				</ul>
+              </li>
+              <elseif condition="$page_cat == creator"/>
+              <li ><a href="{$page_link}/author/">创作人</a></li>
+              <li class="dropdown" > 
+                <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
+                <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                    <foreach name="tags" item="each_tag">
+                    <li><a href="{$page_link}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.countOriginal})</span></a></li>
+                    </foreach>
+				</ul>
+              </li>
+              </if>  
+              
+            </ul> <!-- /tabs -->
+          </div> 
+        
+        
+		<div style="float:right;margin:-14px 0 0 10px"><wb:follow-button uid="3163946864" type="red_2" width="136" height="24" ></wb:follow-button></div>
+				<div style="color:#AAA; float:right;margin:-14px 0 0 0">艾墨镇共有 <strong>{$post_count}</strong> 部作品</div>
+		        
+	</div>
+    	<div class="hr2" style="margin:0 30px 15px 0;"></div>

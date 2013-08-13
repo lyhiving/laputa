@@ -17,10 +17,11 @@ return array (
 
     'URL_ROUTER_ON'   => true, //开启路由
     'URL_ROUTE_RULES' => array( //定义路由规则
-        'video/:id'    => 'Index/View/index',
+        'video/:id\d'    => 'Index/View/index',
+        'edit/:id\d'    => 'Index/Post/editvideo',
         'share'    => array('Index/Index/listnew', 'creator=0'),
         'creator'    => array('Index/Index/listnew', 'creator=1'),
-        'search'    => array('Index/Index/search')
+        'search'    => array('Index/Search/index')
 )
 
 );

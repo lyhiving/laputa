@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: lianghonghao <lianghonghao@baixing.com>
 // +----------------------------------------------------------------------
+//  allownetworking="internal"
 
 
 class Video {
@@ -126,7 +127,7 @@ class Video {
             return '';
 
         return <<<CONTENT
-   <embed src="/Public/player/youku.swf?showAd=0&VideoIDS={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
+   <embed src="/Public/player/loader.swf?showAd=0&VideoIDS={$id}&isAutoPlay=true" allowFullScreen="true" quality="high" width="1002" height="604" align="middle" allowScriptAccess="always" wmode="opaque" mode="transparent" type="application/x-shockwave-flash"></embed>
 CONTENT;
     }
 

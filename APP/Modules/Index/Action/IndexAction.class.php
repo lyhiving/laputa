@@ -57,23 +57,6 @@ class IndexAction extends CommonAction {
 
     }
 
-    // 认证视频
-    public function search() {
-
-        $search = I('title');
-
-        $page_size = 48;
-        $this->page_name = "search";
-        $this->page_link = $page_link = '/search/';
-        $where = "`title` LIKE  '%".trim($search)."%'";
-
-        $order = "id DESC";
-        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
-
-        self::ListVideo($where, $order, $field, $page_size, $page_link);
-        $this->display('index');
-
-    }
 
     // 随机视频
     public function Discover() {

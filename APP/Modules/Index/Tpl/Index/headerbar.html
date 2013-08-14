@@ -9,43 +9,43 @@
       
           <div style="color:#AAA; float:left;margin:-10px 0 0 0">
             <ul id="headerbar" style="margin-left:0px">
-              <li class="active"><a href="{$page_link}/">最新</a></li>
-              <li class="dropdown" > 
+              <if condition="$page_name == listnew"> <li class="active"> <else /> <li> </if><a href="/{$page_cat}/">最新</a></li>
+              <if condition="$page_name == hot"> <li class="dropdown active"> <else /> <li class="dropdown" > </if> 
                 <a class="dropdown-toggle" id="drop4" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">最热 <b class="caret"></b></a>
                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/view/">最多观看</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/comment/">最多评论</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="{$page_link}/hot/fav/">最多收藏</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/view/">最多观看</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/comment/">最多评论</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/fav/">最多收藏</a></li>
                 </ul>
               </li>
-              <if condition="$page_cat == share">
-              <li ><a href="{$page_link}/discover/">随便看看</a></li>
-              <li class="dropdown" > 
+          <if condition="$page_cat == share">
+              <if condition="$page_name == discover"> <li class="active"> <else /> <li> </if><a href="/{$page_cat}/discover/">随便看看</a></li>
+              <if condition="$page_name == tag"> <li class="dropdown active"> <else /> <li class="dropdown" > </if> 
                 <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
                 <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
                     <foreach name="tags" item="each_tag">
-                    <li><a href="{$page_link}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.count})</span></a></li>
+                    <li><a href="/{$page_cat}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.count})</span></a></li>
                     </foreach>
 				</ul>
               </li>
-              <elseif condition="$page_cat == creator"/>
-              <li ><a href="{$page_link}/author/">创作人</a></li>
-              <li class="dropdown" > 
+           <elseif condition="$page_cat == creator"/>
+              <if condition="$page_name == author"> <li class="active"> <else /> <li> </if><a href="/{$page_cat}/author/">创作人</a></li>
+              <if condition="$page_name == tag"> <li class="dropdown active"> <else /> <li class="dropdown" > </if> 
                 <a class="dropdown-toggle" id="drop5" role="button" data-hover="dropdown" data-toggle="dropdown" href="#">分类 <b class="caret"></b></a>
                 <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
                     <foreach name="tags" item="each_tag">
-                    <li><a href="{$page_link}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.countOriginal})</span></a></li>
+                    <li><a href="/{$page_cat}/tag/{$each_tag.id}/">{$each_tag.name}<span style="float:right; color:#ABABAB">({$each_tag.countOriginal})</span></a></li>
                     </foreach>
 				</ul>
               </li>
-              </if>  
+           </if>  
               
             </ul> <!-- /tabs -->
           </div> 
         
         
 		<div style="float:right;margin:-14px 0 0 10px"><wb:follow-button uid="3163946864" type="red_2" width="136" height="24" ></wb:follow-button></div>
-				<div style="color:#AAA; float:right;margin:-14px 0 0 0">艾墨镇共有 <strong>{$post_count}</strong> 部作品</div>
+				<div style="color:#AAA; float:right;margin:-14px 0 0 0">当前分类共有 <strong>{$post_count}</strong> 部作品</div>
 		        
 	</div>
     	<div class="hr2" style="margin:0 30px 15px 0;"></div>

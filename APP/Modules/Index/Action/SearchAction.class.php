@@ -37,7 +37,7 @@ class SearchAction extends CommonAction {
         $order = "id DESC";
         $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
 
-        IndexAction::ListVideo($where, $order, $field, $page_size, $page_link);
+        self::ListVideo($where, $order, $field, $page_size, $page_link);
         $this->display('index/index');
 
 

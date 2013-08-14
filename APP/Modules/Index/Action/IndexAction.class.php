@@ -24,7 +24,7 @@ class IndexAction extends CommonAction {
     public function listnew() {
 
         $page_size = 24;
-        $this->page_name = "new";
+        $this->page_name = "listnew";
 
         if ( !I('creator') ) {
             $this->page_cat = "share";
@@ -47,10 +47,53 @@ class IndexAction extends CommonAction {
     public function hot() {
 
         $page_size = 24;
-        $page_link = '/index/index/hot';
-        $where = "";
-        $order = "viewed DESC,id DESC";
+        $this->page_name = "hot";
+        $type = I('id');
+
+        if ( !I('creator') ) {
+            $this->page_cat = "share";
+            $this->page_link = $page_link = '/share/hot/'.$type;
+            $where = array("verify" => 0);
+        } else {
+            $this->page_cat = "creator";
+            $this->page_link = $page_link = '/creator/hot/'.$type;
+            $where = array("verify" => 1);
+        };
+
+        if ( $type == 'view' ) {
+            $order = "`viewed` desc, id desc";
+        } elseif ( $type == 'comment' ) {
+            $order = "`comment` desc, id desc";
+        } elseif ( $type == 'fav' ) {
+            $order = "`like` desc, id desc";
+        };
+
         $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+
+        self::ListVideo($where, $order, $field, $page_size, $page_link);
+        $this->display('index');
+
+    }
+
+    // 视频分类
+    public function tag() {
+
+       $page_size = 24;
+        $this->page_name = "tag";
+        $id = I('id');
+
+        if ( !I('creator') ) {
+            $this->page_cat = "share";
+            $this->page_link = $page_link = '/share/tag/'.$id;
+            $where = array("verify" => 0,"pre_tag" => $id);
+        } else {
+            $this->page_cat = "creator";
+            $this->page_link = $page_link = '/creator/tag/'.$id;
+            $where = array("verify" => 1,"pre_tag" => $id);
+        };
+
+        $order = "id DESC";
+        $field = "url,tags,collection,verify,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
         $this->display('index');
@@ -60,36 +103,22 @@ class IndexAction extends CommonAction {
 
     // 随机视频
     public function Discover() {
-        echo 111;
-    }
+        $page_size = 24;
+        $this->page_name = "discover";
 
-    // 视频筛选通用方法
-    public function ListVideo($where, $order, $field, $page_size, $page_link) {
-        $posts = M('video');
-        $count = $posts->where($where)->count();// 查询满足要求的总记录数
-        $this->post_count = $count;
+        $this->page_cat = "share";
+        $this->page_link = $page_link = '/share/discover';
+        $where = array("verify" => 0);
 
-        // 先设置小页面获取值
-        $jspage = isset($_GET['p']) ? intval($_GET['p']) : 1;
-        // 再设置传给数据库的标准值 $page
-        if (isset($_GET['jspage'])) { $page = $_GET['jspage']; } else { $page = ($jspage-1)*3+1 ;}
+        $order = "RAND( )";
+        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
 
-        import('Class.Page', APP_PATH);
-        $page_nav = new SubPages($page_size,($count/3),$jspage,10, $page_link."/p/",2);
-
-        $this->page_nav = $page_nav->subPageCss2() ;
-        $this->page_link = $page_link;
-
-        //判断页面是否到尽头
-        $next_page = $page + 1;
-        if (ceil($count/$page_size) > ($page)) {
-        	$this->page_next = "<a href='$page_link/jspage/$next_page/'>下一页</a> ";
-        }
-
-        $post = $posts->order($order)->where($where)->field($field, true)->page($page.','.$page_size)->select();
-        $this->post = postreplace($post);
+        self::ListVideo($where, $order, $field, $page_size, $page_link, 1);
+        $this->display('index');
 
     }
+
+
 
 }
 ?>

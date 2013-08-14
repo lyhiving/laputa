@@ -13,6 +13,7 @@
 /*
  * AMZ AJAX动作控制器
  * 主要作为用户关注、收藏、添加选集等动作
+ * Action [ FavPost => 1, LikeUser => 2 ]
  */
 class AjaxAction extends CommonAction {
 

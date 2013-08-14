@@ -49,5 +49,39 @@ class CommonAction extends Action{
 
     }
 
+
+
+    // 视频筛选通用方法
+    public function ListVideo($where, $order, $field, $page_size, $page_link, $nav = 0) {
+        $posts = M('video');
+        $count = $posts->where($where)->count();// 查询满足要求的总记录数
+        $this->post_count = $count;
+
+        // 先设置小页面获取值
+        $jspage = isset($_GET['p']) ? intval($_GET['p']) : 1;
+        // 再设置传给数据库的标准值 $page
+        if (isset($_GET['jspage'])) { $page = $_GET['jspage']; } else { $page = ($jspage-1)*3+1 ;}
+
+        if (!$nav) {
+            import('Class.Page', APP_PATH);
+            $page_nav = new SubPages($page_size,($count/3),$jspage,10, $page_link."/p/",2);
+            $this->page_nav = $page_nav->subPageCss2() ;
+        } else {
+            $this->page_nav = "<a href=".$page_link."/>再换一批</a> </div>";
+        };
+
+        $this->page_link = $page_link;
+        //判断页面是否到尽头
+        $next_page = $page + 1;
+        if (ceil($count/$page_size) > ($page)) {
+            $this->page_next = "<a href='$page_link/jspage/$next_page/'>下一页</a> ";
+        }
+
+        $post = $posts->order($order)->where($where)->field($field, true)->page($page.','.$page_size)->select();
+        $this->post = postreplace($post);
+
+    }
+
+
 }
 ?>

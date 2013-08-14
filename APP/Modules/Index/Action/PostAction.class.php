@@ -149,10 +149,22 @@ class PostAction extends CommonAction {
                     $data[imageUrl] = $info['img'];
                 };
 
-                if (I('verify')) { $data[verify] = I('verify'); };
+                if (I('verify')) {
+                    $data[verify] = 1;
+                    if (!$video[verify]) {
+                    	M('user')->where(array('id' => I('userid') ))->setInc('postOriginal');
+                        }
+                } else {
+                    $data[verify] = 0;
+                    if ($video[verify]) {
+                        M('user')->where(array('id' => I('userid') ))->setDec('postOriginal');
+                        }
+                };
 
                 if (M('video')->where(array('id' => $video[id]))->save($data)) {
                 	$this->redirect("/video/".$video[id]."/");
+                } else {
+                	$this->error('没有修改或修改发生问题',"/video/".$video[id]."/");
                 }
 
 

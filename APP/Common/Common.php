@@ -20,22 +20,6 @@ function p($arr) {
     echo '<pre>'. print_r($arr, true) . '<pre>';
 
  }
-// 视频资料替换
-function postreplace($data) {
-    foreach ($data as $v) {
-        if ($v['description']) { $v['description'] = trim(mb_substr($v['description'] ,0, 50,"UTF-8"));
-             } else { $v['description'] = "作品之美 胜于言表"; } ;
-
-        if (!$v['imageUrl']) { $v['imageUrl'] = "__PUBLIC__/images/noimage.jpg" ;}
-
-        $user = M('user')->field('username,email,weiboId')->select($v['userid']);
-
-        $v[username] = $user[0][username];
-        $v[useravatar] = getavatar($user[0]);
-        $post[] = $v;
-        }
-    return $post;
-}
 
 // 获取头像
 function getavatar($user) {
@@ -50,6 +34,39 @@ function getavatar($user) {
         return  $link->link();
     }
 }
+
+// 视频资料替换
+function postreplace($data) {
+    foreach ($data as $v) {
+        if ($v['description']) { $v['description'] = trim(mb_substr($v['description'] ,0, 50,"UTF-8"));
+             } else { $v['description'] = "作品之美 胜于言表"; } ;
+
+        if (!$v['imageUrl']) { $v['imageUrl'] = "__PUBLIC__/images/noimage.jpg" ;}
+
+        $user = M('user')->field('username,email,weiboId')->find($v['userid']);
+
+        $v[username] = $user[username];
+        $v[useravatar] = getavatar($user);
+        $post[] = $v;
+        }
+    return $post;
+}
+
+// 选辑资料替换
+function collreplace($data) {
+    foreach ($data as $c) {
+
+
+        $video = M('video')->field('imageUrl')->find($c['thumbid']);
+        $user = M('user')->field('username')->find($c['userid']);
+
+        $c[username] = $user[username];
+        $c[thumb] = $video[imageUrl];
+        $coll[] = $c;
+        }
+    return $coll;
+}
+
 
 // 获取视频Tag类名称
 function videogettag($tid) {

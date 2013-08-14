@@ -75,7 +75,7 @@ class MemberAction extends CommonAction {
         $user = M('User')->field('id,email')->where(array('email' => $regemail))->find();
 
         if ($user) {
-            echo "有";
+            $this->error('对不起 该用户名已存在');
             } else {
             $this->regemail = $regemail;
             $this->display();

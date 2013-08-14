@@ -1,0 +1,16 @@
+﻿<!-- 选辑-->
+<div class="span3 shadow" style="height:205px;padding:10px; margin-bottom:20px; margin-right:3px">
+	<div class="playbutton">
+		<span>
+			<a href="/collection/{$c.id}/" target="_blank" title="{$c.name}" >
+				<div style=" width:210px; height:160px;background: url('__PUBLIC__/images/play.png') no-repeat center center;">&nbsp;
+				</div>
+			</a>
+		</span>
+		<div class="img-rounded post-image" style="background: url('{$c.thumb}') no-repeat center center;background-size: 290px;background-color:#000000"></div>     					
+	</div>
+	<div style="margin-top: 170px;float:right"><span class="label label-inverse" style="line-height:20px;">&nbsp;{$c.count|intval}部&nbsp;</span></div>
+	<div class="collection-title"><a href="/collection/{$c.id}/" target="_blank" title="{$c.name}" >{$c.name}</a></div>
+	<div class="collection-infor">由 {$c.username} 创建</div>
+</div>
+<!-- 选辑 END--> 

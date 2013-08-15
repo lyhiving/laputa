@@ -111,9 +111,19 @@ class PostAction extends CommonAction {
 
                 if ($video[pre_tag]) {
                     $old_tag = M('tag')->find($video[pre_tag]);
-                    if ($old_tag[count] > 0)  M('tag')->where(array('id' => $video[pre_tag]))->setDec('count');
+                    if ($old_tag[count] > 0)  {
+                        if ($video[verify]){
+                            M('tag')->where(array('id' => $video[pre_tag]))->setDec('countOriginal');
+                        } else {
+                        	M('tag')->where(array('id' => $video[pre_tag]))->setDec('count');
+                        }
+                    }
                 }
-                M('tag')->where(array('id' => I('pre_tag') ))->setInc('count');
+                if (I('verify')){
+                    M('tag')->where(array('id' => I('pre_tag') ))->setInc('countOriginal');
+                } else {
+                    M('tag')->where(array('id' => I('pre_tag') ))->setInc('count');
+                }
 
                $data = array (
                'title' => I('title'),
@@ -122,17 +132,6 @@ class PostAction extends CommonAction {
                'description' => I('description'),
                );
 
-                if (I('collection')) {
-                    if ($video[collection]) {
-                        $old_coll = M('collection')->find($video[collection]);
-                        if ($old_coll[count] > 0)  M('collection')->where(array('id' =>
-                        $video[collection]))->setDec('count');
-                    }
-                    $new_coll = M('collection');
-                    $new_coll->where(array('id' => I('collection') ))->setInc('count');
-                    $new_coll->where(array('id' => I('collection') ))->setField('UpdateTime',time());
-                    $data[collection] = I('collection');
-                };
 
                 if (I('userid')) {
                     M('user')->where(array('id' => $video[userid]))->setDec('post');
@@ -167,9 +166,6 @@ class PostAction extends CommonAction {
                 	$this->error('没有修改或修改发生问题',"/video/".$video[id]."/");
                 }
 
-
-
-
            } else {
                 $this->error('您没有权限','/');
            }
@@ -181,10 +177,27 @@ class PostAction extends CommonAction {
     }
 
 
+    public function deletevideo() {
+       if (!CommonAction::$user) $this->redirect('/');
+       if (!IS_GET) _404('页面不存在...');
+       $visitor = CommonAction::$user;
 
+       $vid = I('id');
+       $video = M('video')->find($vid);
 
+       //验证有用户权限
+       if ( ($visitor[id] == $video[userid])||($visitor[group] == 1) ){
 
+            if (M('video')->delete($vid)) {
+                $this->success("该视频已经被删除~","/");
+            } else {
+                $this->error('没有修改或修改发生问题',"/video/".$video[id]."/");
+            }
 
+       } else {
+            $this->error('您没有权限','/');
+       }
+    }
 
 
 }

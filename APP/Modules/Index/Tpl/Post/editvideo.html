@@ -86,38 +86,19 @@
 			</if>
             
             <if condition="$visitor[group] == 1">
-               <!-- 精选区域 -->
-                
+      
+              
+               <!-- 管理区域 -->
                
-               <span style="color: #7F7F7F; font-weight: bold;">选辑专区</span>
+               <span style="color: #7F7F7F; font-weight: bold;">管理员专区</span>
                <div class="hr2"></div>
                
-				<div class="control-group">
-					<label class="control-label2" for="input01">选辑</label>
-					<div class="controls2">
-						<select name="collection" id="collection" class="span4" >
-                        <foreach name="colls" item="each_coll">
-                        	<if condition="($video[collection] == $each_coll[id])">
-                            <option value={$each_coll.id} selected="selected" >{$each_coll.name}</option> 
-                            <else />
-                            <option value={$each_coll.id} >{$each_coll.name}</option> 
-                            </if>
-                        </foreach>
-					</select>
-					</div></div>
-                    
                <div class="control-group">
 					<label class="control-label2" for="input01">UID</label>
 					<div class="controls2">
 					  <input type="text" class="input span4" id="userid" name="userid" value="{$video.userid}" >
 					</div>
 		  		</div>
-                           
-               <!-- 管理区域 -->
-               
-               <span style="color: #7F7F7F; font-weight: bold;">管理员专区</span>
-               <div class="hr2"></div>
-               
                <div class="control-group">
 					<label class="control-label2" for="input01">浏览</label>
 					<div class="controls2">

@@ -130,9 +130,7 @@ function vShareVideoFront(){
 			urlgroup.addClass("error");
 			urlInfo.text("不好意思 暂时不支持该网站的视频~");
 			return false;
-
 		}
-
 	}
 };
 
@@ -159,12 +157,79 @@ function vRegFormFront(){
 			Info.text("请输入标准的邮箱地址");
 			return false;
 		}
+	}
+};
 
+// 验证用户修改页面
+function vHomeSettingBasic() {
+	var form = $("#basic");var name = $("#username2");var namegroup = $("#namegroup");var nameInfo = $("#nameInfo");
+	name.blur(validateName);name.keyup(validateName);
+	form.submit(function(){
+		if(validateName())
+			return true
+		else
+			return false;
+	});
+	function validateName(){
+		if(name.val().length < 4){
+			namegroup.removeClass("info");
+			namegroup.addClass("error");
+			nameInfo.text("请不小少于三个字！");
+			return false;
+		}
+		else{
+			namegroup.removeClass("error");
+			namegroup.addClass("info");
+			nameInfo.text("输入正确");
+			return true;
+		}
+	}
+};
+function vHomeSettingPassword() {
+	var form = $("#password");var pass1 = $("#pass1");var pass1group = $("#pass1group");var pass1Info = $("#pass1Info");
+	var pass2 = $("#pass2");var pass2group = $("#pass2group");var pass2Info = $("#pass2Info");
+	pass1.blur(validatePass1);pass2.blur(validatePass2);
+	pass1.keyup(validatePass1);pass2.keyup(validatePass2);
+	form.submit(function(){
+		if(validatePass1() & validatePass2())
+			return true
+		else
+			return false;
+	});
+	function validatePass1(){
+		var a = $("#password1");var b = $("#password2");
+		if(pass1.val().length <5){
+			pass1group.addClass("error");
+			pass1Info.text("请不小少于五个字！");
+			return false;
+		}
+		else{			
+			pass1group.removeClass("error");
+			pass1group.addClass("info");
+			pass1Info.text("输入正确");
+			validatePass2();
+			return true;
+		}
+	}
+	function validatePass2(){
+		var a = $("#password1");var b = $("#password2");
+		if( pass1.val() != pass2.val() ){
+			pass2group.removeClass("info");
+			pass2group.addClass("error");
+			pass2Info.text("两个密码不相同！");
+			return false;
+		}
+		else{
+			pass2group.removeClass("error");
+			pass2group.addClass("info");
+			pass2Info.text("输入正确");
+			return true;
+		}
 	}
 };
 
 
-
+// 验证注册页面
 function vRegForm(){
 	var form = $("#reg");var name = $("#name");var namegroup = $("#namegroup");var nameInfo = $("#nameInfo");var pass1 = $("#pass1");var pass1group = $("#pass1group");var pass1Info = $("#pass1Info");var pass2 = $("#pass2");var pass2group = $("#pass2group");var pass2Info = $("#pass2Info");
 	name.blur(validateName);pass1.blur(validatePass1);pass2.blur(validatePass2);
@@ -286,34 +351,27 @@ function LikeUser(uid, liked){
 
 //选辑勾选
 function CollectionPost(cid, vid, uid){
+	link = '/ajax/CollPost/';
 	var checkboxval = $("#collection"+ cid).attr("checked");
-	link = '/ajax/collect.php';
-	if (checkboxval == "checked") {
-			$.post(link,
-			{
-				colletionid: cid,
-				videoid: vid,
-				cancel: 0
-			},
-			function(data,status){
-				$.globalMessenger().post({ message: '添加选辑'+data+'成功',type: 'success',showCloseButton: true });
-			});
+	if (checkboxval == "checked") { var colled = 0 } else { var colled = 1};
+	$.post(link, {colled:colled, cid:cid, vid:vid, uid:uid}, function(data){
+		if(data.status) {
+			if(data.content == "取消选辑"){
+				$.globalMessenger().post({ message: '取消选辑'+ data.title +'成功',type: 'success',showCloseButton: true });
+				};
+			if(data.content == "添加选辑"){
+				$.globalMessenger().post({ message: '添加选辑'+ data.title +'成功',type: 'success',showCloseButton: true });
+				};
 		} else {
-			$.post(link,
-			{
-				colletionid: cid,
-				videoid: vid,
-				cancel: 1
-				
-			},function(data,status){
-				$.globalMessenger().post({ message: '移除选辑'+data+'成功',type: 'success',showCloseButton: true });
-			});
+			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
 		}
-}
+	}, 'json');
+};
+
 
 // 用户页面快速修改
 function UserEdit() {
-	$.fn.editable.defaults.url = '/ajax/edit_user.php'; 
+	$.fn.editable.defaults.url = '/user/ajax/edituserfield'; 
 	$('#enable').click(function() {
        $('.editable').editable('toggleDisabled');
    }); 

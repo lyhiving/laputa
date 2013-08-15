@@ -29,12 +29,17 @@ class ViewAction extends CommonAction {
              } else { $video['description'] = "作品之美 胜于言表"; } ;
             $video[content] = self::content($video[url]);
             $video[tagname] = videogettag($video[pre_tag]);
-            $userfield = "username,verify,extraemail,extraweibo,extrablog,weiboId,post,fav,like";
+            $userfield = "username,verify,extraemail,extraweibo,extrablog,weiboId,post,follow,like";
             $user = M('user')->field($userfield)->find($video[userid]);
             $user[avatar] = getavatar($user);
             $this->user = $user;
             $this->video = $video;
             M('video')->where(array('id' => $vid))->setInc('viewed');
+            if($video[verify]){
+            	$this->page_cat = "creator";
+            } else {
+            	$this->page_cat = "share";
+            };
             $this->display();
         }
 

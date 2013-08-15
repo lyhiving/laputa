@@ -31,11 +31,14 @@ return array (
         'search'    => array('Index/Search/index'),
 
         //选辑列表正则控制
-        'collection/:id\d'    => 'Index/Index/collection',
+        'collection/:id\d'    => 'Index/Collection/view',
         'collection'    => 'Index/Collection/index',
 
         //用户列表
+        '/user\/(\d+)\/(like|share)/'    => 'User/View/:2?id=:1',
         'user/:id\d'    => 'USer/View/index',
+
+        'home/:fun'    => 'User/Index/:1',
 )
 
 );

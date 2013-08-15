@@ -1,3 +1,4 @@
+<?php $colls = getallcoll();?>
 <include file="./APP/Tpl/header.html" />
 	<div class="container" style="padding-top:25px">
 
@@ -66,27 +67,27 @@
                     </if>
                     
                     </div>
-                    <!-- 收藏视频 结束 --> 
+                    <!-- 收藏视频 结束 -->
+                    <if condition="$visitor">
                     <button style="float:left; margin:-1px 0 0 5px" class="btn btn-mini btn-red ajax" data-toggle="collapse" data-target="#demo">选辑</button>
+                    </if>
 				</div>
                 <!-- 分享收藏 结束 -->
                 <!-- 视频说明 开始 -->
                 <div id="des" style=" margin-top:60px;padding-bottom:10px;color: #666;text-indent :0px;">
                 	<div id="demo" class="collapse"> 
-                                            <label class="checkbox inline">
-                          <input type="checkbox" id="collection3" value="3"  onclick="CollectionPost(3, 2166, 4)"> 中央美术学院动画系                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection2" value="2"  onclick="CollectionPost(2, 2166, 4)"> 中国传媒大学动画学院                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection4" value="4"  onclick="CollectionPost(4, 2166, 4)"> All ABOUT GOOGLE                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection5" value="5"  onclick="CollectionPost(5, 2166, 4)"> 法国高布兰学院                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection6" value="6"  onclick="CollectionPost(6, 2166, 4)"> 昂西动画节                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection7" value="7"  onclick="CollectionPost(7, 2166, 4)"> 信息可视化                        </label>
-					                        <label class="checkbox inline">
-                          <input type="checkbox" id="collection1" value="1"  checked="checked"  onclick="CollectionPost(1, 2166, 4)"> 无分类                        </label>
+                    	<php>$vcolls = explode(",",$video[collection]);</php>
+                        <foreach name="colls" item="each_coll">
+                        	<if condition="in_array($each_coll[id],$vcolls)">
+                            <label class="checkbox inline">
+                          	<input type="checkbox" id="collection{$each_coll.id}" value="{$each_coll.id}" checked="checked" onclick="CollectionPost({$each_coll.id}, {$video.id}, {$visitor.id})"> {$each_coll.name}
+                            </label>
+                            <else />
+                            <label class="checkbox inline">
+                          	<input type="checkbox" id="collection{$each_coll.id}" value="{$each_coll.id}"  onclick="CollectionPost({$each_coll.id}, {$video.id}, {$visitor.id})"> {$each_coll.name}
+                            </label>
+                            </if>
+                        </foreach>
 						<div style="height:20px;"></div>
                     </div>
                 	{$video.description|nl2br}
@@ -132,11 +133,11 @@
                         <div id="title"> 分享 </div>
                     </div>   
                     <div class="information">
-						<div id="nums"> <a href="/user/{$video.userid}/like/" target="_blank">{$user.fav|intval}</a></div>
+						<div id="nums"> <a href="/user/{$video.userid}/like/" target="_blank">{$user.like|intval}</a></div>
                         <div id="title"> 收藏 </div>
                     </div>   
                     <div class="information">
-						<div id="nums">{$user.like|intval}</div>
+						<div id="nums">{$user.follow|intval}</div>
                         <div id="title"> 关注 </div>
                     </div>   
                 </div>
@@ -178,7 +179,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">还是算了</button>
-    <a href="/ajax/delete_video.php?id=2166" role="button" class="btn btn-red">是滴</a>
+    <a href="{:U('Index/Post/deletevideo',array('id'=>$video[id]))}" role="button" class="btn btn-red">是滴</a>
   </div>
 </div>
 

@@ -17,16 +17,44 @@
 class IndexAction extends CommonAction {
 
 
-    // 用户首页
-    public function Index() {
+    // 用户分享跳转
+    public function video() {
+        $visitor = CommonAction::$user;
+        if ($visitor){
+        	 $this->redirect('/user/'.$visitor[id].'/');
+        } else {
+        	 $this->redirect('/');
+        }
+    }
 
+    // 用户收藏跳转
+    public function like() {
+        $visitor = CommonAction::$user;
+        if ($visitor){
+             $this->redirect('/user/'.$visitor[id].'/like/');
+        } else {
+             $this->redirect('/');
+        }
+    }
+
+    // 用户关注跳转
+    public function follow() {
+        $this->error('开发中');
     }
 
     // 编辑用户
-    public function Edit() {
+    public function setting() {
 
+        $this->page_name = "setting";
+        $this->page_cat = "user";
+
+        //用户控制
+        $visitor = CommonAction::$user;
+        if (!$visitor) $this->redirect('/');
+        $this->user = $visitor;
+
+        $this->display();
     }
-
 
 }
 ?>

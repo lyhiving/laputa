@@ -67,11 +67,23 @@ function collreplace($data) {
     return $coll;
 }
 
+// 用户资料替换
+function userreplace($data) {
+    foreach ($data as $u) {
+
+        if (!$u[location]){ $u[location] = '尚未填写'; } ;
+        if (!$u[career]){ $u[career] = '尚未填写'; } ;
+        if (!$u[aboutme]){ $u[aboutme] = '欢迎访问我的主页'; } ;
+        $u[avatar] = getavatar($u);
+        $user[] = $u;
+        }
+    return $user;
+}
 
 // 获取视频Tag类名称
 function videogettag($tid) {
-	$tag = M('tag')->find($tid);
-    return $tag[name];
+    $tname = M('tag')->where(array('id' => $tid))->getField('name');
+    return $tname;
 }
 
 // 获取全部Tag
@@ -80,9 +92,15 @@ function getalltag() {
     return $tags;
 }
 
+// 获取视频Collection类名称
+function videogetColl($cid) {
+    $cname = M('collection')->where(array('id' => $cid))->getField('name');
+    return $cname;
+}
+
 // 获取全部Collection
 function getallcoll() {
-    $colls = M('collection')->order('UpdateTime desc')->select();
+    $colls = M('collection')->where('id>1')->order('UpdateTime desc')->select();
     return $colls;
 }
 

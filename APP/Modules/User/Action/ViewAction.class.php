@@ -83,7 +83,7 @@ class ViewAction extends CommonAction {
         $this->user = $user[0];
 
         //作品控制
-        $count = $user[0][like];
+        $count = $user[0][likecount];
         $where = array('userid' => $uid, 'type' => 1);
         $order = "createdTime DESC";
         $field = "target,createdTime";

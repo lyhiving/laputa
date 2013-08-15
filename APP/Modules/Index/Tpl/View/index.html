@@ -22,7 +22,7 @@
                 <div id="content-others" style="position:relative;float:left;">
 					<div id="content-title" style="font-weight: bold; font-size:16px;">{$video.title}</div>
 					<div id="information">
-					{$video.createdTime|date="Y年m月d日",###}&nbsp; · 围观{$video.viewed|intval}次 · 收藏{$video.like|intval}次 · 评论{$video.comment|intval}次&nbsp; | &nbsp;
+					{$video.createdTime|date="Y年m月d日",###}&nbsp; · 围观{$video.viewed|intval}次 · 收藏{$video.likecount|intval}次 · 评论{$video.comment|intval}次&nbsp; | &nbsp;
                     
                     <if condition="$visitor">
                          <if condition="($visitor[id] == $video[userid])||($visitor[group] == 1)" >
@@ -133,7 +133,7 @@
                         <div id="title"> 分享 </div>
                     </div>   
                     <div class="information">
-						<div id="nums"> <a href="/user/{$video.userid}/like/" target="_blank">{$user.like|intval}</a></div>
+						<div id="nums"> <a href="/user/{$video.userid}/like/" target="_blank">{$user.likecount|intval}</a></div>
                         <div id="title"> 收藏 </div>
                     </div>   
                     <div class="information">

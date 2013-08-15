@@ -29,10 +29,9 @@ class AjaxAction extends CommonAction {
         	//取消收藏
             $where = array('userid' => $uid, 'type' => '1', 'target' => $vid );
             $Action = M('action')->where($where)->find();
-            if ($Action[id]){
-            	M('action')->where($where)->delete();
-                M('video')->where(array('id' => $vid))->setDec('like');
-                M('user')->where(array('id' => $uid))->setDec('like');
+            if (M('action')->where($where)->delete()){
+                M('video')->where(array('id' => $vid))->setDec('likecount');
+                M('user')->where(array('id' => $uid))->setDec('likecount');
                 $data['content'] = '取消收藏';
                 $data['status'] = 1;
             }
@@ -41,8 +40,8 @@ class AjaxAction extends CommonAction {
             $data = array('userid' => $uid, 'type' => '1', 'target' => $vid, 'createdTime' => time() );
             $result = M('action')->add($data);
             if ($result){
-                M('video')->where(array('id' => $vid))->setInc('like');
-                M('user')->where(array('id' => $uid))->setInc('like');
+                M('video')->where(array('id' => $vid))->setInc('likecount');
+                M('user')->where(array('id' => $uid))->setInc('likecount');
                 $data['content'] = '收藏';
                 $data['status'] = 1;
             } else {

@@ -41,6 +41,7 @@ $(function(){
     });
 });
 
+
 // 验证码切换
 function change_code(obj){
 	$("#code").attr("src",verifyURL + '/' + Math.random());
@@ -289,9 +290,6 @@ function vRegForm(){
 };
 
 
-
-
-
 // 加载视频
 function iaspost(){
 	jQuery.ias({
@@ -308,6 +306,35 @@ function iaspost(){
 		loader: '<div class="row"><div style="text-align:center">正在载入 <img style="margin:0 0 2px 5px" src="/Public/images/preloader.gif"/></div></div>',
 	});
 };
+
+
+// 信息提示框
+function messageinfo(infoid,value){
+	if (infoid == 1) { 
+			msg = $.globalMessenger().post({ message: "你好，你有"+ value +"封消息未读",
+			  actions: { 
+			  	retry: {label: '查看',phrase: 'Retrying TIME',delay: 5,action: function (){window.open("/home/message/",'_self') }  },
+				cancel:{label: '关闭',action: function() {return msg.cancel(); } }
+			  } ,showCloseButton: true
+			});
+		}
+}
+
+// 显示站内信
+function ShowMessage(mid){
+	link = '/User/Ajax/getmessage/';
+	$.post(link, {mid:mid}, function(data){
+		if(data.status) {
+			document.getElementById('MessageViewContent').innerHTML =  '<p >'+ data.message +'</p>';
+			$('#MessageView').modal('show');
+			document.getElementById('MessageTitle-'+mid).style.color="333";
+			document.getElementById('MessageTitle-'+mid).style.fontWeight="";
+		} else {
+			$('#MessageView').modal('hide')
+			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
+		}
+	}, 'json');
+}
 
 
 // 收藏视频
@@ -327,7 +354,7 @@ function FavPost(vid, faved){
 			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
 		}
 	}, 'json');
-};
+}
 
 
 
@@ -346,7 +373,7 @@ function LikeUser(uid, liked){
 		$.globalMessenger().post({ message: '取消关注成功！',type: 'success',showCloseButton: true });
 		}
 	});
-};
+}
 
 
 //选辑勾选
@@ -366,7 +393,7 @@ function CollectionPost(cid, vid, uid){
 			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
 		}
 	}, 'json');
-};
+}
 
 
 // 用户页面快速修改

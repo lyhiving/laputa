@@ -1,0 +1,42 @@
+<include file="Public:header" />
+<div class="container" style="padding-top:25px">
+    
+	<div class="row">
+
+	  <div class="span12 shadow"> 
+
+		<div id="title" style="padding:20px;">
+      		<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">后台系统</span><br />
+      		<span style="color: #7F7F7F; font-weight: bold;">站内信群发</span>
+		</div>
+      
+		<div class="span6" style="margin-left:20px;"> 
+    	<form class="form-horizontal" id="sendmail" action="{:U('Admin/Ajax/addmessage')}" method="POST">
+        <input type="hidden" id="type" name="type" value="message" />
+            <div class="control-group" id="messagegroup">
+                <label class="control-label2" for="message">标题 </label>
+                <div class="controls2">
+                    <input type="text" class="input-xlarge" id="title" name="title" placeholder="信件标题~">
+                </div>
+            </div>
+            <div class="control-group" id="messagegroup">
+                <label class="control-label2" for="message">内容 </label>
+                <div class="controls2">
+                    <textarea placeholder="邮件内容。支持HTML哟~" class="span6" name="message" id="message" style="min-height:200px;" ></textarea>
+                </div>
+            </div>
+            
+            <div style="margin:10px 0 0 60px;">
+                <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
+                
+            </div>
+    	</form>
+    	</div>
+      
+	  </div>
+
+	</div>
+
+</div> <!-- /上方 -->
+
+<include file="./APP/Tpl/footer.html" />

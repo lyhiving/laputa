@@ -36,9 +36,15 @@ return array (
 
         //用户列表
         '/user\/(\d+)\/(like|share)/'    => 'User/View/:2?id=:1',
-        'user/:id\d'    => 'USer/View/index',
+        'user/:id\d'    => 'User/View/index',
 
         'home/:fun'    => 'User/Index/:1',
+
+
+        //后台控制
+        '/admin\/$'    => 'Admin/Index/index',
+        '/admin\/([A-Za-z0-9]+)$/'    => 'Admin/Index/:1',
+
 )
 
 );

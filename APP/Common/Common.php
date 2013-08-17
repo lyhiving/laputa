@@ -111,6 +111,22 @@ function isfav($user, $video) {
     return $num > 0;
 }
 
+// 站内信
+function messagereplace($data) {
+    $vid = CommonAction::$user[id];
+    foreach ($data as $m) {
+        $message = M('message')->where(array('object'=>$m[id],'target'=>$vid))->find();
+        if ($m[recId]==0){
+        	$m[fromname] = '系统邮件';
+        } else {
+            $m[fromname] = M('user')->where(array('id'=> $message[userid]))->getField('username');
+        };
+        if (!$m[title]) $m[title] = '无标题';
+        $m[status] = $message[status];
+        $messages[] = $m;
+        }
+    return $messages;
+}
 
 ?>
 

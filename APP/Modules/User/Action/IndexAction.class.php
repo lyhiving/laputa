@@ -56,5 +56,21 @@ class IndexAction extends CommonAction {
         $this->display();
     }
 
+    // 编辑用户
+    public function message() {
+
+        $this->page_name = "message";
+        $this->page_cat = "user";
+
+        cookie('__m', null, -8640000);
+        self::$user[message] = 0;
+        $vid = self::$user[id];
+        $where[recId] = array(in,array(0,$vid));
+        $messages = M('messagetext')->order('id DESC')->field('message',true)->where($where)->select();
+        $this->messages = messagereplace($messages);
+
+        $this->display();
+    }
+
 }
 ?>

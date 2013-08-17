@@ -13,7 +13,7 @@
 /*
  * AMZ AJAX动作控制器
  * 主要作为用户关注、收藏、添加选集等动作
- * Action [ FavPost => 1, LikeUser => 2 ]
+ * Action [ FavPost => 1, LikeUser => 2, CollVideo => 3 ]
  * ActionMulti [ CollPost => 1 ]
  */
 class AjaxAction extends CommonAction {
@@ -62,10 +62,10 @@ class AjaxAction extends CommonAction {
 
         if (I('colled')){
             //取消选辑
-            $where = array('object' => $vid ,'target' => $cid ,'type' => 1);
-            $Action = M('actionmulti')->where($where)->find();
+            $where = array('object' => $vid ,'target' => $cid ,'type' => 3);
+            $Action = M('action')->where($where)->find();
             if ($Action[id]){
-                M('actionmulti')->where($where)->delete();
+                M('action')->where($where)->delete();
                 M('collection')->where(array('id' => $cid))->setDec('count');
                 $value = self::ListCollsId($vid);
                 M("video")->where("id=$vid")->setField('collection',$value);
@@ -76,8 +76,8 @@ class AjaxAction extends CommonAction {
             }
         } else {
             //添加选辑
-            $data = array('userid' => $uid ,'object' => $vid ,'target' => $cid ,'type' => 1 ,'createdTime' => time() );
-            $result = M('actionmulti')->add($data);
+            $data = array('userid' => $uid ,'object' => $vid ,'target' => $cid ,'type' => 3 ,'createdTime' => time() );
+            $result = M('action')->add($data);
             if ($result){
                 M('collection')->where(array('id' => $cid))->setInc('count');
                 $value = self::ListCollsId($vid);
@@ -96,8 +96,8 @@ class AjaxAction extends CommonAction {
 
 
     public function ListCollsId($vid) {
-        $where = array('object' => $vid ,'type' => 1 );
-        $Actions = M('actionmulti')->where($where)->select();
+        $where = array('object' => $vid ,'type' => 3 );
+        $Actions = M('action')->where($where)->select();
         foreach ($Actions as $a) {$vids[] = $a[target];};
         $vids = join(",",$vids);
         return $vids ;

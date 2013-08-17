@@ -60,5 +60,29 @@ class AjaxAction extends CommonAction {
 
     }
 
+    public function getmessage() {
+        if(!IS_AJAX) _404('页面不存在...');
+
+        $mid = I('mid');
+        $message = M('messagetext')->where("id=$mid")->getField('message');
+
+        if ($message) {
+        	$data['message'] = nl2br($message);
+            $vid = CommonAction::$user[id];
+            M('message')->where(array('object'=>$mid,'target'=>$vid))->setField('status','1');
+            $data['status'] = 1;
+        } else {
+        	$data['status'] = 0;
+        }
+
+        $this->ajaxReturn($data, 'json');
+
+
+
+    }
+
+
+
+
 }
 ?>

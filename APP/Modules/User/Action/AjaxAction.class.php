@@ -74,14 +74,27 @@ class AjaxAction extends CommonAction {
         } else {
         	$data['status'] = 0;
         }
-
+        cookie('__m', null);
         $this->ajaxReturn($data, 'json');
-
-
 
     }
 
+    public function unreadmessage() {
+        if(!IS_AJAX) _404('页面不存在...');
 
+        $mid = I('mid');
+        $vid = CommonAction::$user[id];
+        $result = M('message')->where(array('object'=>$mid,'target'=>$vid))->setField('status','0');
+        if ($result) {
+        	$data['status'] = 1;
+        } else {
+        	$data['status'] = 0;
+        }
+
+        cookie('__m', null);
+        $this->ajaxReturn($data, 'json');
+
+    }
 
 
 }

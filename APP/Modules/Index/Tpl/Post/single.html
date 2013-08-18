@@ -3,11 +3,15 @@
 	<div class="playbutton">
 		<span>
 			<a href="/video/{$v.id}/" target="_blank" title="{$v.title}" >
-				<div style=" width:210px; height:160px;background: url('__PUBLIC__/images/play.png') no-repeat center center;">&nbsp;
-				</div>
+				<div style=" width:210px; height:160px;background: url('__PUBLIC__/images/play.png') no-repeat center center;">&nbsp;</div>
 			</a>
 		</span>
-		<div class="img-rounded post-image" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 290px;background-color:#000000"></div>     					
+        <if condition="$v[customImageName]">
+        	<div class="img-rounded post-image" style="background: url('/upload/thumb/{$v.customImageName}_420.jpg') no-repeat center center;background-size:102%;background-color:#000000"></div> 
+        <else />
+        	<div class="img-rounded post-image" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 290px;background-color:#000000"></div> 
+        </if>
+         					
 	</div>
     <div class="post-title"><a href="/video/{$v.id}/" target="_blank" title="{$v.title}" >{$v.title}</a></div>
     <div class="post-explain">{$v.description}</div>

@@ -1,5 +1,102 @@
 <?php $colls = getallcoll();?>
 <include file="./APP/Tpl/header.html" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/media/css/jquery.Jcrop.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/media/js/uploadify/uploadify.css" media="all">
+<script type="text/javascript" src="__PUBLIC__/media/js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/media/js/jquery.Jcrop.min.js"></script>
+<style type="text/css">
+.cf:before,.cf:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+.cf:after {
+	clear: both;
+}
+.cf {
+	*zoom: 1;
+}
+.upload-area {
+	position: relative;
+	float: left;
+	margin-right: 30px;
+	width: 210px;
+	height: 160px;
+	background-color: #F5F5F5;
+    border: 2px solid #E1E1E1;
+}
+.upload-area .file-tips {
+	position: absolute;
+	top: 80px;
+	left: 0;
+    padding: 0 15px;
+    width: 180px;
+    line-height: 1.4;
+    font-size: 12px;
+	color: #A8A8A3;
+    text-align: center;
+}
+.userup-icon {
+    display: inline-block;
+    margin-right: 3px;
+    width: 16px;
+    height: 16px;
+    vertical-align: -2px;
+}
+.uploadify-button {
+	line-height: 120px!important;
+	text-align: center;
+}
+.preview-area {
+	float: left;
+}
+.tcrop {
+    clear: right;
+    font-size: 14px;
+    font-weight: bold;
+}
+.update-pic .crop {
+    background: url("__PUBLIC__/images/mystery.png") no-repeat scroll center center #EEEEEE;
+    float: left;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.crop210 {
+    height: 160px;
+    width: 210px;
+}
+.update-pic .save-pic {
+    clear: left;
+    margin-right: 20px;
+}
+.update-pic .uppic-btn {
+    background-color: #348FD4;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 89px;
+}
+
+.preview img ,.crop img {
+	max-width: inherit;
+}
+.preview {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 11;
+	width: 210px;
+	height: 160px;
+	overflow: hidden;
+	background:#fff;
+	display: none;
+}
+</style>																					
 
     ﻿	<div class="container" >
 <div class="row"> <div class="span8 breadcrumb" style="margin-bottom:15px;"> <a href="/">艾墨镇</a> > <a href="#">编辑视频</a> > <a href="#">{$video.title}</a></div></div>
@@ -51,6 +148,13 @@
                <span style="color: #7F7F7F; font-weight: bold;">认证用户专区</span>
                <div class="hr2"></div>
                
+               <div class="control-group">
+               <label class="control-label2" for="input01">封面 </label>
+               		<div class="controls2">
+               		<a href="#UploadThumb" role="button" class="btn" data-toggle="modal">自定义视频封面</a><br>
+                    </div>
+               </div>
+
                <div class="control-group">
                         <label class="control-label2" for="input01">原创 </label>
                         <div class="controls2">
@@ -124,19 +228,27 @@
 		</div>
 		<!-- /编辑区域-->
 		<!--右侧预览区 -->
-                <div class="span3 shadow" style="height:332px;padding:10px; margin:-5px 0 0 50px">
+                <div class="span3 shadow" style="height:318px;padding:10px; margin:-5px 0 0 50px">
                 <div class="post-show"><img src="__PUBLIC__/images/seal.png" width="100" height="100" /></div>
                         <div class="playbutton"><span><a href="#" title="{$video.title}"><div style=" width:210px; height:160px;background: url('__PUBLIC__/images/play.png') no-repeat center center;">&nbsp;</div></a></span>
-          <div class="img-rounded post-image" style="background: url('{$video.imageUrl}') no-repeat center center;"></div> </div>
+                        
+                    <if condition="$video[customImageName]">
+                        <div id="videoThumb" class="img-rounded post-image" style="background: url('/upload/thumb/{$video.customImageName}_420.jpg') no-repeat center center;background-size:102%;background-color:#000000"></div> 
+                    <else />
+                        <div id="videoThumb" class="img-rounded post-image" style="background: url('{$video.imageUrl}') no-repeat center center;background-size: 290px;background-color:#000000"></div> 
+                    </if>                
+           </div>
                         <div class="post-title"><a href="#"><span id="posttitle">{$video.title}</span></a></div>
             			<div class="post-explain"><span id="postdes">{$video.description}</span></div>
 						<div class="post-infor">查看{$video.viewed|intval}次 <span class="ds-thread-count" data-thread-key="2170"></span>评论</div>
                         <div class="hr1"></div>
                         <div class="post-author"  style=" margin-top:10px;">
                         <div id="avatar" class="float-left"><a href="#"><img src="{$user.avatar}" width="32" height="32" /></a></div>
-                    <div id="post-detailed" class="float-left" style="margin-left:10px">
-                        <div id="post-author" style="color: #666666;font-size: 12px"><a href="#">{$user.username}</a>分享</div>
-                    </div></div>
+                        <div id="post-detailed" class="float-left" style="margin-left:10px;line-height:12px">
+                            <div id="post-author" class="ellipsis" style="width:170px;font-size:12px;line-height:18px;"><a href="/user/{$video.userid}/" title="{$user.username}">{$user.username}</a> </div>
+                            <div style="color: #bbb;font-size:11px;">{$video.createdTime|date="Y-n-d G:i",###}</div> 
+                        </div>
+                    </div>
         </div>
       
 		<!--右侧预览区 -->
@@ -144,5 +256,186 @@
       
       </div>
     </div> <!-- /上方 -->
+
+
+ 
+<!-- Modal -->
+<div id="UploadThumb" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="UploadThumb" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">上传自定义封面</h3>
+  </div>
+  <div class="modal-body" style="padding:30px 0 30px 50px;">
+    
+    <!-- 上传自定义封面 -->
+    <form action="{:U('Index/Ajax/cropImg')}" method="post" id="pic" class="update-pic cf">
+        <div class="upload-area">
+            <input type="file" id="user-pic">
+            <div class="file-tips">支持JPG,PNG<br>图片小于2MB<br>尺寸大于420*320</div>
+            <div class="preview hidden" id="preview-hidden"></div>
+        </div>
+        <div class="preview-area">
+        	<input type="hidden" name="id" value="{$video.id}" />
+            <input type="hidden" id="x" name="x" />
+            <input type="hidden" id="y" name="y" />
+            <input type="hidden" id="w" name="w" />
+            <input type="hidden" id="h" name="h" />
+            <input type="hidden" id='img_src' name='src'/>
+            <div class="crop crop210"><img id="crop-preview-210" src="" alt=""></div>
+        </div>
+    </form>
+    <!-- /上传自定义封面 -->
+    
+  </div>
+  <div class="modal-footer">
+    <button class="btn unset-pic" href="javascript:;" style="float:left">使用原截图</button>
+  	<button class="btn btn-red save-pic" href="javascript:;">保存</button>
+    <button class="btn reupload-img" href="javascript:$('#user-pic').uploadify('cancel','*');">重新上传</button>
+  </div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		//上传头像(uploadify插件)
+		$("#user-pic").uploadify({
+			'queueSizeLimit' : 1,
+			'removeTimeout' : 0.5,
+			'preventCaching' : true,
+			'multi'    : false,
+			'swf' 			: '__PUBLIC__/media/js/uploadify/uploadify.swf',
+			'uploader' 		: '{:U("Index/Ajax/uploadImg")}',
+			'buttonText' 	: '<i class="icon-picture"></i> 点我上传',
+			'width' 		: '210',
+			'height' 		: '160',
+			'fileTypeExts'	: '*.jpg; *.png;',
+			'onUploadSuccess' : function(file, data, response){
+				var data = $.parseJSON(data);
+				if(data['status'] == 0){
+					alert (data['info']);
+					return;
+				}
+				var preview = $('.upload-area').children('#preview-hidden');
+				preview.show().removeClass('hidden');
+				//两个预览窗口赋值
+				$('.crop').children('img').attr('src',data['data']+'?random='+Math.random());
+				//隐藏表单赋值
+				$('#img_src').val(data['data']);
+				//绑定需要裁剪的图片
+				var img = $('<img />');
+				preview.append(img);
+				preview.children('img').attr('src',data['data']+'?random='+Math.random());
+				var crop_img = preview.children('img');
+				crop_img.attr('id',"cropbox").show();
+				var img = new Image();
+				img.src = data['data']+'?random='+Math.random();
+				//根据图片大小在画布里居中
+				img.onload = function(){
+					var img_height = 0;
+					var img_width = 0;
+					var real_height = img.height;
+					var real_width = img.width;
+					if(real_height > real_width && real_height > 160){
+						var persent = real_height / 160;
+						real_height = 160;
+						real_width = real_width / persent;
+					}else if(real_width > real_height && real_width > 210){
+						var persent = real_width / 210;
+						real_width = 210;
+						real_height = real_height / persent;
+					}
+					if(real_height < 160){
+						img_height = (160 - real_height)/2;	
+					}
+					if(real_width < 210){
+						img_width = (219 - real_width)/2;
+					}
+					preview.css({width:(210-img_width)+'px',height:(160-img_height)+'px'});
+					preview.css({paddingTop:img_height+'px',paddingLeft:img_width+'px'});			
+				}
+				//裁剪插件
+				$('#cropbox').Jcrop({
+		            bgColor:'#333',   //选区背景色
+		            bgFade:true,      //选区背景渐显
+		            fadeTime:1000,    //背景渐显时间
+		            allowSelect:false, //是否可以选区，
+		            allowResize:true, //是否可以调整选区大小
+		            aspectRatio: 210 / 160,
+		            minSize : [420,320],//可选最小大小
+		            boxWidth : 210,		//画布宽度
+		            boxHeight : 160,	//画布高度
+		            onChange: showPreview,//改变时重置预览图
+		            onSelect: showPreview,//选择时重置预览图
+		            setSelect:[ 0, 0, 420, 320],//初始化时位置
+		            onSelect: function (c){	//选择时动态赋值，该值是最终传给程序的参数！
+			            $('#x').val(c.x);//需裁剪的左上角X轴坐标
+			            $('#y').val(c.y);//需裁剪的左上角Y轴坐标
+			            $('#w').val(c.w);//需裁剪的宽度
+			            $('#h').val(c.h);//需裁剪的高度
+		          }
+		        });
+				//提交裁剪好的图片
+				$('.save-pic').click(function(){
+					if($('#preview-hidden').html() == ''){
+						alert ('请先上传图片！');
+					}else{
+						link = '/Index/Ajax/cropImg/';
+						$.post(link, $("#pic").serialize(), function(data){
+							if(data.status) {
+								$('#UploadThumb').modal('hide');
+								$.globalMessenger().post({ message: '上传成功',type: 'success',showCloseButton: true });
+								document.getElementById('videoThumb').style.background="";
+								document.getElementById('videoThumb').innerHTML='<img src="/upload/thumb/'+data.pic+'" width="210" height="160"/>';
+							} else {
+								$('#UploadThumb').modal('hide');
+								$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
+							}
+						}, 'json');
+						
+					}
+				});
+				
+
+				//重新上传,清空裁剪参数
+				var i = 0;
+				$('.reupload-img').click(function(){
+					$('#preview-hidden').find('*').remove();
+					$('#preview-hidden').hide().addClass('hidden').css({'padding-top':0,'padding-left':0});
+				});
+		     }
+		});
+		
+				$('.unset-pic').click(function(){
+					link = '/Index/Ajax/unsetImg/';
+					var vid = <?php echo $video[id] ?>;
+					$.post(link, {vid:vid }, function(data){
+						if(data.status) {
+							$('#UploadThumb').modal('hide');
+							$.globalMessenger().post({ message: '取消成功',type: 'success',showCloseButton: true });
+							document.getElementById('videoThumb').style.background="";
+							document.getElementById('videoThumb').innerHTML='<img src="'+data.pic+'" width="210" height="160"/>';
+						} else {
+							$('#UploadThumb').modal('hide');
+							$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
+						}
+					}, 'json');
+
+				});
+		//预览图
+		function showPreview(coords){
+			var img_width = $('#cropbox').width();
+			var img_height = $('#cropbox').height();
+			  //根据包裹的容器宽高,设置被除数
+			  var rx = 210 / coords.w;
+			  var ry = 160 / coords.h; 
+			  $('#crop-preview-210').css({
+			    width: Math.round(rx * img_width) + 'px',
+			    height: Math.round(ry * img_height) + 'px',
+			    marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+			    marginTop: '-' + Math.round(ry * coords.y) + 'px'
+			  });
+
+		}
+	})
+	
+</script>
 
 <include file="./APP/Tpl/footer.html" />

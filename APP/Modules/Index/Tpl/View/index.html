@@ -8,7 +8,11 @@
 
 	<div class="row">
 		<div class="span12"> 
-            <div id="thumbnail" style="display:none;"><img src="{$video.imageUrl}" /></div>
+        	<if condition="$video[customImageName]">
+            	<div id="thumbnail" style="display:none;"><img src="/upload/thumb/{$video.customImageName}_420.jpg" /></div>
+            <else />
+            	<div id="thumbnail" style="display:none;"><img src="{$video.imageUrl}" /></div>
+            </if>
             <!-- 观看区域 开始 -->
             {$video.content}
             <!-- 观看区域 结束 -->

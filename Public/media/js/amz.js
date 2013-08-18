@@ -336,6 +336,18 @@ function ShowMessage(mid){
 	}, 'json');
 }
 
+function UnreadMessage(mid){
+	link = '/User/Ajax/unreadmessage/';
+	$.post(link, {mid:mid}, function(data){
+		if(data.status) {
+			$.globalMessenger().post({ message: '标记成功',type: 'success',showCloseButton: true });
+		} else {
+			$('#MessageView').modal('hide')
+			$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
+		}
+	}, 'json');
+}
+
 
 // 收藏视频
 function FavPost(vid, faved){

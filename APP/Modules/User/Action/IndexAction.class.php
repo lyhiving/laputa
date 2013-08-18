@@ -62,7 +62,7 @@ class IndexAction extends CommonAction {
         $this->page_name = "message";
         $this->page_cat = "user";
 
-        cookie('__m', null, -8640000);
+        cookie('__m', null);
         self::$user[message] = 0;
         $vid = self::$user[id];
         $where[recId] = array(in,array(0,$vid));

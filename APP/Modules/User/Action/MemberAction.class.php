@@ -108,10 +108,16 @@ class MemberAction extends CommonAction {
             $data[guest] = 1;
            }
 		   echo 112;
-           if( M('User')->add($data)) {
+		   $uid = M('User')->add($data);
+           if( $uid) {
             self::LoginMethod($email, $pwd = I('pass1', '', 'md5'));
 
-            $this->redirect('/');
+			
+			// 通知多说 同步用户
+            import('Class.DuoShuo', APP_PATH);
+            DuoShuo::syncUser($uid);
+			
+            $this->redirect('/home/setting/');
              }
 
             }
@@ -130,6 +136,7 @@ class MemberAction extends CommonAction {
     public function Logout() {
         cookie(__u, null, -8640000);
         cookie(__c, null, -8640000);
+        cookie('duoshuo_token', null, -8640000);
         session('[destroy]');
         $this->redirect('/');
     }
@@ -154,12 +161,19 @@ class MemberAction extends CommonAction {
 
         session('uid', $user['id']);
         session('username', $user['username']);
-        session('group', $user['group']);
-        session('guest', $user['guest']);
-        session('verify', $user['verify']);
 
         cookie('__u',$user['id']);
         cookie('__c',sha1($user['id'] . '3xtc' . $user['password']));
+
+        import('Class.JWT', APP_PATH);  // 多收评论
+		$token = array(
+		    "short_name"=> C('DUOSHUO_USER'),
+		    "user_key"=> $user['id'],
+		    "name"=> $user['username'],
+		);
+		$duoshuoToken = JWT::encode($token, C('DUOSHUO_SECRET'));
+		cookie('duoshuo_token',$duoshuoToken);
+
    }
 
 }

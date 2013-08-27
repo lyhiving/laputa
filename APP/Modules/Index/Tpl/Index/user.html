@@ -1,0 +1,56 @@
+<include file="./APP/Tpl/header.html" />
+<div class="container" style="padding-top:25px">
+
+  <div class="row" >
+	<div class="span9" >
+		
+		<div class="user-item" style="height:110px; width:95%;border-top: 2px solid #C0C0C0; padding:20px 0 ;">
+          <div class="avatar" style="height:80px; width:80px;">
+            <img class="img-rounded" src="http://tp1.sinaimg.cn/1573590751/180/0/1" width="80" height="80" />
+          </div>
+          
+          <div id="detailed" class="float-left" style="margin:0 0 0 10px">
+              <div id="name" >
+                <div class="user-detail-name ellipsis float-left" style="max-width:240px;">用户名
+                <span style="color:#969696; font-size:14px; margin-left:10px;">北京市</span>
+                </div>
+              </div>
+               <div id="user-detail-infor">
+                    已入住XXX天， N创作， N分享， N关注
+               </div>
+               
+            <if condition="$visitor">
+            	<div id="followuserstatus">
+                <if condition="isfollow($visitor[id], $user[id])">
+                <a class="my-btn my-btn-gray" onclick="FollowUser('{$user.id}', 1)" href="#" >已关注</a>
+                <else />
+                <a class="my-btn my-btn-red" onclick="FollowUser('{$user.id}', 0)" href="#" >关注</a>
+                </if>
+                </div>
+                <a class="my-btn my-btn-gray" href="#sendMessage" role="button" data-toggle="modal">发私信</a>
+            <else />
+            	<a class="my-btn my-btn-red" href="#loginFront" role="button" data-toggle="modal">关注</a>
+                <a class="my-btn my-btn-gray" href="#loginFront" role="button" data-toggle="modal">发私信</a>
+            </if>
+          </div>
+          
+          <img src="http://tp1.sinaimg.cn/1573590751/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
+          <img src="http://tp1.sinaimg.cn/1573590752/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
+          <img src="http://tp1.sinaimg.cn/1573590753/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
+        </div>
+
+
+		
+	</div>
+    
+	<div class="span3" style="margin-left:0;">
+        <div class="user-detail-block">
+        	<div class="user-detail-title">关于创作人</div>
+            在这里展示的是所有被认证过的原创作者。如果你也有自己的原创作品，不妨也发布在艾墨镇吧。<br>
+			如果有任何问题，可以联系我们。
+        </div>
+
+	</div>
+  </div>
+</div>
+<include file="./APP/Tpl/footer.html" />

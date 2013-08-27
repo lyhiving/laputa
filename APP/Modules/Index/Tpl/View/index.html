@@ -194,13 +194,13 @@
   </div>
   <div class="modal-body">
   <div style="font-size: 14px; color: #666666; margin: 10px 0 20px 20px;">
-    <strong>Gavin Foo 你好<br />
+    <strong>{$visitor.username} 你好<br />
 	这是你的作品吗？你现在可以通过填写下面的表格来认领作品<br /><br />
 
     </strong>
-          	<form class="form-horizontal" action="/ajax/copyright.php" id="copyright" method="POST">
-         	<input id="uid" name="uid" type="hidden" value="4" />
-            <input id="vid" name="vid" type="hidden" value="2166" />
+          	<form class="form-horizontal" action="{:U('Admin/Mail/copyright')}" id="copyright" method="POST">
+         	<input id="uid" name="uid" type="hidden" value="{$visitor.id}" />
+            <input id="vid" name="vid" type="hidden" value="{$video.id}" />
 				<div class="control-group" id="namegroup">
 					<label class="control-label2" for="name">姓名</label>
 					<div class="controls2">
@@ -219,7 +219,7 @@
 					<input type="submit" class="btn btn-red" value="恩，就这样吧！" />
 			  </div>
 		</form>
-        <span style="font-size: 90%">我们将进行人工审核 通过后将通过邮件通知你<br />你的信息 Email: fuxiaopang@msn.com | UID: 4</span> </div>
+        <span style="font-size: 90%">我们将进行人工审核 通过后将通过邮件通知你<br />你的信息 Email: {$visitor.email} | UID: {$visitor.id}</span> </div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>

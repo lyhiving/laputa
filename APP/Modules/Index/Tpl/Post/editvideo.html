@@ -1,9 +1,9 @@
 <?php $colls = getallcoll();?>
 <include file="./APP/Tpl/header.html" />
-<link rel="stylesheet" type="text/css" href="__PUBLIC__/media/css/jquery.Jcrop.min.css" media="all">
-<link rel="stylesheet" type="text/css" href="__PUBLIC__/media/js/uploadify/uploadify.css" media="all">
-<script type="text/javascript" src="__PUBLIC__/media/js/uploadify/jquery.uploadify.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/media/js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/media/addons/uploadify/uploadify.css" media="all">
+<script type="text/javascript" src="__PUBLIC__/media/addons/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/media/addons/jquery.Jcrop.min.js"></script>
+
 <style type="text/css">
 .cf:before,.cf:after {
 	display: table;
@@ -301,7 +301,7 @@
 			'removeTimeout' : 0.5,
 			'preventCaching' : true,
 			'multi'    : false,
-			'swf' 			: '__PUBLIC__/media/js/uploadify/uploadify.swf',
+			'swf' 			: '__PUBLIC__/media/addons/uploadify/uploadify.swf',
 			'uploader' 		: '{:U("Index/Ajax/uploadImg")}',
 			'buttonText' 	: '<i class="icon-picture"></i> 点我上传',
 			'width' 		: '210',

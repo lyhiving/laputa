@@ -38,7 +38,7 @@ function getavatar($user) {
 // 视频资料替换
 function postreplace($data) {
     foreach ($data as $v) {
-        if ($v['description']) { $v['description'] = trim(mb_substr($v['description'] ,0, 50,"UTF-8"));
+        if ($v['description']) { $v['description'] = trim(mb_substr($v['description'] ,0, 70,"UTF-8"));
              } else { $v['description'] = "作品之美 胜于言表"; } ;
 
         if (!$v['imageUrl']) { $v['imageUrl'] = "__PUBLIC__/images/noimage.jpg" ;}
@@ -111,6 +111,13 @@ function isfav($user, $video) {
     return $num > 0;
 }
 
+// 关注判断
+function isfollow($vid, $uid) {
+    $where = array ('type'=>2,'userid'=>$vid,'target'=>$uid);
+    $num = M('action')->where($where)->count();
+    return $num > 0;
+}
+
 // 站内信
 function messagereplace($data) {
     $vid = CommonAction::$user[id];
@@ -118,7 +125,9 @@ function messagereplace($data) {
         $message = M('message')->where(array('object'=>$m[id],'target'=>$vid))->find();
         if ($m[recId]==0){
         	$m[fromname] = '系统邮件';
+        	$m[userlink] = '#';
         } else {
+        	$m[userlink] = '/user/'.$message[userid].'/';
             $m[fromname] = M('user')->where(array('id'=> $message[userid]))->getField('username');
         };
         if (!$m[title]) $m[title] = '无标题';

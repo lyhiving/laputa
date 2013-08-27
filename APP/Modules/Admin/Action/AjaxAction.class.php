@@ -46,8 +46,32 @@ class AjaxAction extends CommonAction {
     }
 
 
+	public function guest() {
 
+		$uid = I('uid'); $email = I('email');
+		$guest = M('user')->where("id=$uid")->getField("guest");
+		if ($guest) {
+			M('user')->where("id=$uid")->setField("guest","0");
+			MailAction::guestConfirm($email);
+		}
 
+		$this->redirect("/user/$uid");
+
+	}
+
+	public function verify() {
+
+		$uid = I('uid'); $email = I('email');
+		$guest = M('user')->where("id=$uid")->getField("guest");
+		$verify = M('user')->where("id=$uid")->getField("verify");
+		if ($guest || (!$verify)){
+			M('user')->where("id=$uid")->setField("guest","0");
+			M('user')->where("id=$uid")->setField("verify","1");
+			MailAction::verifyConfirm($email);
+		}
+		$this->redirect("/user/$uid");
+
+	}
 
 }
 ?>

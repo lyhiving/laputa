@@ -1,11 +1,11 @@
 <include file="./APP/Tpl/header.html" />
 <div class="container" style="padding-top:25px">
-	
-    <include file="Public:headerbar" /> 
-    
+
+    <include file="Public:headerbar" />
+
 	<div class="row">
 
-      <div class="span12 shadow"> 
+      <div class="span12 shadow">
 
       <div id="title" style="padding:20px;">
       	<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">修改信息</span><br />
@@ -20,9 +20,9 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
-                  <!-- 编辑区域--> 
-                  <div class="span6" style="margin-left:0;"> 
-            
+                  <!-- 编辑区域-->
+                  <div class="span6" style="margin-left:0;">
+
                   <form class="form-horizontal" id="basic" action="{:U('User/Ajax/edituser')}" method="POST">
                   <input type="hidden" id="id" name="id" value="{$visitor.id}" />
                   <input type="hidden" id="type" name="type" value="basic" />
@@ -30,7 +30,7 @@
                                 <label class="control-label2">头像 </label>
                                 <div class="controls2">
                                 <if condition="!$visitor[weiboId]">
-                                <a href="https://api.weibo.com/oauth2/authorize?client_id=2517727821&response_type=code&redirect_uri=http://aimozhen.com/ajax/oauth/weibo.php" role="button" class="btn" >使用微博头像</a>
+                                <a href="https://api.weibo.com/oauth2/authorize?client_id=2517727821&response_type=code&redirect_uri=http://aimozhen.com/User/Weibo/avatar/" role="button" class="btn" >使用微博头像</a>
                                 <else />
                                 <a href="#" role="button" class="btn disabled" >已经绑定微博头像</a>
                                 </if>
@@ -55,10 +55,10 @@
                                     <input class="input-xlarge" id="uid" name="uid" type="text" readonly value="{$visitor.id}" />
                                 </div>
                             </div>
-                            
+
                             <div style="margin:10px 0 0 60px;">
                                 <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-                                
+
                             </div>
                     </form>
                     </div>
@@ -66,9 +66,9 @@
                     <script type="text/javascript"> $(function(){ vHomeSettingBasic();}); </script>
                 </div>
                 <div class="tab-pane" id="tab2">
-                  <!-- 编辑区域--> 
-                  <div class="span6" style="margin-left:0;"> 
-            
+                  <!-- 编辑区域-->
+                  <div class="span6" style="margin-left:0;">
+
                   <form class="form-horizontal" id="extre" action="{:U('User/Ajax/edituser')}" method="POST">
                   <input type="hidden" id="id" name="id" value="{$visitor.id}" />
                   <input type="hidden" id="type" name="type" value="extra" />
@@ -90,19 +90,19 @@
                                     <input class="input-xlarge" id="extrablog" name="extrablog" type="text" value="{$visitor.extrablog}" />
                                 </div>
                             </div>
-                            
+
                             <div style="margin:10px 0 0 60px;">
                                 <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-                                
+
                             </div>
                     </form>
                     </div>
                     <!-- /编辑区域-->
                 </div>
                 <div class="tab-pane" id="tab3">
-                  <!-- 编辑区域--> 
-                  <div class="span6" style="margin-left:0;"> 
-            
+                  <!-- 编辑区域-->
+                  <div class="span6" style="margin-left:0;">
+
                   <form class="form-horizontal" id="password" action="{:U('User/Ajax/edituser')}" method="POST">
                   <input type="hidden" id="id" name="id" value="{$visitor.id}" />
                   <input type="hidden" id="type" name="type" value="password" />
@@ -120,7 +120,7 @@
                                     <span class="help-inline" id="pass2Info"></span>
                                 </div>
                             </div>
-                            
+
                             <div style="margin:10px 0 0 60px;">
                                 <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
 
@@ -133,8 +133,8 @@
                 </div>
               </div>
             </div>
-      
-      
+
+
       </div>
 
       </div>

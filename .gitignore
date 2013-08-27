@@ -3,3 +3,6 @@
 .project
 .settings/
 APP/Runtime/*
+upload/temp/*
+upload/thumb/*
+/APP/Conf/config.php

@@ -25,8 +25,7 @@ class ViewAction extends CommonAction {
         	$this->error('该视频已经被删除');
         } else {
             //赋值视频、用户、标签数据
-            if ($video['description']) { $video['description'] = trim(mb_substr($video['description'] ,0, 50,"UTF-8"));
-             } else { $video['description'] = "作品之美 胜于言表"; } ;
+            if (!$video['description']) { $video['description'] = "作品之美 胜于言表"; } ;
             $video[content] = self::content($video[url]);
             $video[tagname] = videogettag($video[pre_tag]);
             $userfield = "username,verify,extraemail,extraweibo,extrablog,weiboId,post,follow,likecount";

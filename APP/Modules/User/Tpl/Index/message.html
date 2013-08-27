@@ -33,7 +33,7 @@
                   <a style="color:#333" href="#MessageView" onClick="ShowMessage('{$m.id}')" >{$m.title}</a>
                   </if>
                   </td>
-                  <td>{$m.fromname}</td>
+                  <td><a style="color:#424242" href="{$m.userlink}">{$m.fromname}</a></td>
                   <td>{$m.creatTime|date="Y年 n月 d日 H:i",###}</td>
 				  <td><a href="#" style="color:#333" onClick="UnreadMessage('{$m.id}')" >标为未读</span></a>
                 </tr>

@@ -120,7 +120,7 @@ class IndexAction extends CommonAction {
 
     // 用户列表
     public function author() {
-        $this->error('开发中');
+        $this->display('user');
 
     }
 

@@ -42,8 +42,10 @@ class AjaxAction extends CommonAction {
                 );
             M("User")->where("id=$uid")->save($data);
        }
-
-       $this->success('修改成功','/home/setting/','1');
+			// 通知多说 同步用户
+            import('Class.DuoShuo', APP_PATH);
+            DuoShuo::syncUser($uid);
+			$this->success('修改成功','/home/setting/','1');
 
     }
 
@@ -58,7 +60,72 @@ class AjaxAction extends CommonAction {
        $value = I('value');
        M("User")->where("id=$uid")->setField($field,$value);
 
+		// 通知多说 同步用户
+		import('Class.DuoShuo', APP_PATH);
+		DuoShuo::syncUser($uid);
+
     }
+
+
+    /**
+     * 关注用户
+     */
+    public function followuser() {
+        if (!CommonAction::$user) $this->redirect('/');
+        if(!IS_AJAX) _404('页面不存在...');
+        $vid = CommonAction::$user['id'] ;
+        $uid = I('uid');
+        if (I('faved')){
+        	//取消收藏
+            $where = array('userid' => $vid, 'type' => '2', 'target' => $uid );
+            $Action = M('action')->where($where)->find();
+            if (M('action')->where($where)->delete()){
+                M('user')->where(array('id' => $vid))->setDec('follow');
+                $data['content'] = '取消关注';
+                $data['status'] = 1;
+            }
+        } else {
+        	//收藏
+            $data = array('userid' => $vid, 'type' => '2', 'target' => $uid, 'createdTime' => time() );
+            $result = M('action')->add($data);
+            if ($result){
+                M('user')->where(array('id' => $vid))->setInc('follow');
+                $data['content'] = '关注';
+                $data['status'] = 1;
+            } else {
+            	$data['status'] = 0;
+            }
+        };
+        $this->ajaxReturn($data, 'json');
+
+    }
+
+/**
+ * 发送私信
+ */
+	public function sendMessage() {
+		$message = I('message');
+		if(!$message) $this->error('请输入内容');
+        if (!CommonAction::$user) $this->redirect('/');
+        if(!IS_POST) _404('页面不存在...');
+        $visitor = CommonAction::$user;
+        $uid = I('uid');
+
+		$data = array(
+            'title' => $visitor[username].' 发来的私信',
+            'message' => $message.'<br/> <a href="/user/'.$visitor[id].'/" target="_blank">点此回复Ta</a>',
+            'recId' => $uid,
+            'creatTime' => time()
+            );
+        $mid = M('messagetext')->add($data);
+    	if ( $mid ) {
+	        $data = array('userid' => $visitor[id] ,'object' => $mid ,'target' => $uid ,'createdTime' => time() );
+	        M('message')->add($data);
+	        $this->success('发送成功');
+    	} else {
+    		$this->error('发送失败');
+    	}
+	}
 
     public function getmessage() {
         if(!IS_AJAX) _404('页面不存在...');

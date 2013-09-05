@@ -52,6 +52,22 @@ function postreplace($data) {
     return $post;
 }
 
+// 用户资料替换
+function userpost($data) {
+    foreach ($data as $u) {
+
+        $u[avatar] = getavatar($u);
+
+        $days = abs(time() - $u[createdTime])/86400;   //入住天数
+        $u[days] = floor($days);
+        $where = array ('userid' => $u[id] ,'verify' => 1);
+        $videos = M('video')->where($where)->order('id DESC')->limit(3)->field("id,title,imageUrl,customImageName")->select();
+        $u[video] = $videos;
+        $user[] = $u;
+        }
+    return $user;
+}
+
 // 选辑资料替换
 function collreplace($data) {
     foreach ($data as $c) {
@@ -136,6 +152,21 @@ function messagereplace($data) {
         }
     return $messages;
 }
+
+// 认领作品
+function copyright($vid, $olduid, $newuid, $verify) {
+	if (CommonAction::$user['group']!=1) $this->redirect('/');
+	M('video')->where("id=$vid")->setField("userid",$newuid);
+
+	if ($verify) {
+    	M('user')->where("id=$newuid")->setInc('postOriginal');
+		M('user')->where("id=$olduid")->setDec('postOriginal');
+	}
+	M('user')->where("id=$newuid")->setInc('post');
+	M('user')->where("id=$olduid")->setDec('post');
+
+}
+
 
 ?>
 

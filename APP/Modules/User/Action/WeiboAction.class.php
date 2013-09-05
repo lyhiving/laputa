@@ -17,41 +17,52 @@ class WeiboAction extends CommonAction {
 
     //用户修改
     public function avatar() {
-		if(isset($_GET['code'])) {
+    	import('Class.Weibo', APP_PATH);
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/User/Weibo/avatar/' );
 
-			$code = $_GET['code'];
+		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
 
-			$ch = curl_init('https://api.weibo.com/oauth2/access_token');
+		if (isset($_REQUEST['code'])) {
+			$keys = array();
+			$keys['code'] = $_REQUEST['code'];
+			$keys['redirect_uri'] = WB_CALLBACK_URL;
+			try {
+				$token = $o->getAccessToken( 'code', $keys ) ;
+			} catch (OAuthException $e) {
+			}
+		}
 
-			curl_setopt($ch, CURLOPT_POST, true);
+		if ($token) {
 
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
+			$weibo = new SaeTClientV2( WB_AKEY , WB_SKEY , $token['access_token'] );
+			$uid = $token['uid'];
+			$user_message = $weibo->show_user_by_id( $uid );
+			$weibo->follow_by_id( '3163946864' );
 
-				'client_id' => C('WEIBO_ID'),
-
-				'client_secret' => C('WEIBO_SECRET'),
-
-				'grant_type' => 'authorization_code',
-
-				'code' => $code,
-
-				'redirect_uri' => 'http://aimozhen.com/User/Weibo/avatar/'
-
-
-
-			)));
-
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-			$user = json_decode(curl_exec($ch));
-
-			if ($user->uid) {
-				$visitor = CommonAction::$user;
-				$data = array('id'=>$visitor[id], 'weiboId' => $user->uid, 'extraweibo' => 'http://www.weibo.com/' . $user->uid );
-				M('user')->save($data);
+			// 微博地址种类判断
+			if ($user_message[domain]){
+				$domain = $user_message[domain];
+			} else {
+				$domain = $user_message[id];
 			}
 
+			$visitor = CommonAction::$user;
+			// 第一次自动微博
+			$status = urlencode("我刚刚入住了艾墨镇！这是一个不大的镇子，里面居住着一群热爱影像的镇民。这里拥有很多精彩的原创视频等待你来发掘！如果你也感兴趣欢迎来看看这里 @艾墨镇网 传送门： http://aimozhen.com");
+			$pic_path = "http://www.aimozhen.com/Public/images/email_header.jpg";
+			if ( !$visitor[weiboId]) {$weibo->upload( $status, $pic_path ); }
+
+
+			$data = array('id'=>$visitor[id], 'weiboId' => $user_message[id], 'location' => $user_message[location],
+							'extrablog' => $user_message[url],'extraweibo' => 'http://www.weibo.com/' . $domain );
+			if ( !$visitor[aboutme]) { $data[aboutme] = $user_message[description];};
+			M('user')->save($data);
+
+
 			$this->redirect("/home/setting");
+
+		} else {
+			$this->error('获取失败','/home/setting/');
 
 		}
 

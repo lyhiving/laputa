@@ -26,7 +26,7 @@ class MailAction extends CommonAction {
 	 * 系统邮件
 	 */
 	public function register() {
-
+		ignore_user_abort(true);
        if (!CommonAction::$user) $this->redirect('/');
        if (!IS_POST) _404('页面不存在...');
        if (!I('reason')) $this->error('没有内容');
@@ -59,6 +59,7 @@ EOF;
 	 * 用户邮件
 	 */
 	public function guestConfirm($email) {
+		ignore_user_abort(true);
 		if ($email) {
 			$this->toUser = $email;
 			$this->title = "艾墨镇 欢迎你！";
@@ -77,6 +78,7 @@ EOF;
 	 * 用户邮件
 	 */
 	public function verifyConfirm($email) {
+		ignore_user_abort(true);
 		if ($email) {
 			$this->toUser = $email;
 			$this->title = "艾墨镇 欢迎你！";
@@ -95,6 +97,7 @@ EOF;
 	 * 用户邮件
 	 */
 	public function copyright() {
+		ignore_user_abort(true);
 
        if (!CommonAction::$user) $this->redirect('/');
        if (!IS_POST) _404('页面不存在...');
@@ -118,7 +121,7 @@ EOF;
 <p>【新发布者】 $user[id]、$user[username]  |  $user[email]</p>
 <p>【申请说明】 $reason</p>
 <p> </p>
-<p>【一键同意（未开通）】 <a href="#" target="_blank">同意点这里</a></p>
+<p>【一键同意】 <a href="http://aimozhen.com/admin/ajax/copyright/vid/$vid/newuid/$uid/" target="_blank">同意点这里</a></p>
 EOF;
 
 		self::sendSystEmmail();
@@ -126,12 +129,79 @@ EOF;
 
 	}
 
+
+	/**
+	 * 作品认领邮件
+	 * 用户邮件
+	 */
+	public function copyrightConfirm($oldemail, $newemail, $vid) {
+		ignore_user_abort(true);
+		if ($oldemail) {
+			$this->toUser = $oldemail;
+			$this->title = "艾墨镇 作品认领通知！";
+			$this->fromName = "艾墨镇";
+			$this->content = '<p>亲爱的镇民 :</p>
+							<p>你发布的一部作品被原作者认领，系统已经将这部作品的发布者修正，如果你有疑义可以发送邮件到 admin@aimozhen.com 与我们取得联系。</p>
+							<p>被认领作品的地址是：<a href="http://aimozhen.com/video/'.$vid.'/">http://aimozhen.com/video/'.$vid.'/</a></p>
+							<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
+			self::temp();
+			self::sendMail();
+
+		}
+		if ($newemail) {
+			$this->toUser = $newemail;
+			$this->title = "艾墨镇 作品认领通知！";
+			$this->fromName = "艾墨镇";
+			$this->content = '<p>亲爱的镇民 :</p>
+							<p>你的认领请求已经被接受，系统已经将这部作品分配到你的账户，你可以登录系统后，再次编辑作品信息(比如重新设置为原创作品)，如果你有疑义可以发送邮件到 admin@aimozhen.com 与我们取得联系。</p>
+							<p>被认领作品的地址是：<a href="http://aimozhen.com/video/'.$vid.'/">http://aimozhen.com/video/'.$vid.'/</a></p>
+							<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
+			self::temp();
+			self::sendMail();
+
+		}
+
+		$this->redirect('http://aimozhen.com/video/'.$vid);
+	}
+
+	/**
+	 * 找回密码邮件
+	 * 用户邮件
+	 */
+	public function lostPassword() {
+
+		ignore_user_abort(true);
+		$email = I('email');
+		$user = M('user')->where(array('email' => $email))->field("id,email,username")->find();
+		if ($user[id]) {
+			$validate = md5(rand(10,100));
+			M('user')->where(array('email' => $email))->setField("validate", $validate);
+
+			$this->toUser = $email;
+			$this->title = "艾墨镇 找回密码";
+			$this->fromName = "艾墨镇";
+			$this->content = '	<p>亲爱的镇民 :</p>
+				<p>您的密码重设要求已经得到验证。请点击以下链接输入您新的密码：</p>
+				<p><a href="http://aimozhen.com/User/Member/forget/id/' .$user[id]. '/v/' .$validate. '/" target="_blank">http://aimozhen.com/User/Member/forget/id/' .$user[id]. '/v/' .$validate. '/</a></p>
+				<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
+			self::temp();
+			self::sendMail();
+			$this->success("请查收邮件");
+		} else {
+			$this->error("未找到用户请重试");
+		}
+	}
+
+
+
 	public function sendSystEmmail() {
+		ignore_user_abort(true);
 		import('Class.Mail', APP_PATH);
 		SendMail($this->toUser,$this->title,$this->content,$this->fromName);
 	}
 
 	public function sendMail() {
+		ignore_user_abort(true);
 		import('Class.Mail', APP_PATH);
 		SendMail($this->toUser,$this->title,$this->html,$this->fromName);
 	}
@@ -140,6 +210,7 @@ EOF;
 
 
 	public function temp() {
+		ignore_user_abort(true);
 $this->html = <<<EOF
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=320, target-densitydpi=device-dpi" />
@@ -286,7 +357,7 @@ body,td,th {
                 <td id="header" class="w640" width="640" align="center" bgcolor="#404040" style="border-collapse:collapse;" >
 
     <div align="center" style="text-align:center;" >
-        <a href="http://aimozhen.com/"><img id="customHeaderImage" label="Header Image" width="640" src="https://i2.createsend1.com/ti/i/14/83C/68D/040627/images/ps-header-template.020437.jpg" class="w640" border="0" align="top" style="display:inline;outline-style:none;text-decoration:none;" /></a>
+        <a href="http://aimozhen.com/"><img id="customHeaderImage" label="Header Image" width="640" src="http://www.aimozhen.com/Public/images/email_header.jpg" class="w640" border="0" align="top" style="display:inline;outline-style:none;text-decoration:none;" /></a>
     </div>
 
 
@@ -340,7 +411,8 @@ body,td,th {
     </tbody></table>
 </td>
                 </tr>
-                <tr style="border-collapse:collapse;" ><td class="w640" width="640" height="60" style="border-collapse:collapse;" ></td></tr>
+                <tr style="border-collapse:collapse;" >
+                  <td class="w640" width="640" height="60" style="border-collapse: collapse; font-size: 9px; color: #808080;" >* 上方焦点图版权归作者所有，如果你是版权所有者请与我们联系</td></tr>
             </tbody></table>
         </td>
 	</tr>

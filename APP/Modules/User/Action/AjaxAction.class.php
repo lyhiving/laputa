@@ -24,28 +24,16 @@ class AjaxAction extends CommonAction {
        if ($visitor[id]!=$uid) $this->redirect('/');
        if (!IS_POST) _404('页面不存在...');
 
-       if (I('type')=="basic") {
-            $data = array('username' => I('username'));
-            M("User")->where("id=$uid")->save($data);
-
-       } elseif (I('type')=="password") {
+       if  (I('type')=="password") {
             $password = md5(I('pass1'));
             $data = array('password' => $password);
             M("User")->where("id=$uid")->save($data);
 
-       } elseif (I('type')=="extra"){
-
-            $data = array(
-                'extraemail' => I('extraemail'),
-                'extraweibo' => I('extraweibo'),
-                'extrablog' => I('extrablog')
-                );
-            M("User")->where("id=$uid")->save($data);
        }
-			// 通知多说 同步用户
-            import('Class.DuoShuo', APP_PATH);
-            DuoShuo::syncUser($uid);
-			$this->success('修改成功','/home/setting/','1');
+		// 通知多说 同步用户
+        import('Class.DuoShuo', APP_PATH);
+        DuoShuo::syncUser($uid);
+		$this->success('修改成功','/home/setting/','1');
 
     }
 

@@ -39,20 +39,32 @@ class IndexAction extends CommonAction {
 
     // 用户关注跳转
     public function follow() {
-        $this->error('开发中');
+        $visitor = CommonAction::$user;
+        if ($visitor){
+             $this->redirect('/user/'.$visitor[id].'/follow/');
+        } else {
+             $this->redirect('/');
+        }
     }
 
     // 编辑用户
     public function setting() {
 
+        $visitor = CommonAction::$user;
+        if (!$visitor) $this->redirect('/');
+
+        import('Class.Weibo', APP_PATH);
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/User/Weibo/avatar/' );
+		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+		$this->code_url = $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
+
         $this->page_name = "setting";
         $this->page_cat = "user";
 
         //用户控制
-        $visitor = CommonAction::$user;
+
         if (!$visitor) $this->redirect('/');
         $this->user = $visitor;
-
         $this->display();
     }
 

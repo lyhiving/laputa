@@ -16,12 +16,9 @@
  */
 class CommentAction extends CommonAction {
 
-    // 自动加载方法
-    public function _initialize() {
-    }
-
     // 首页
-    public function Index() {
+    public function sync() {
+    	p($_GET);
     }
 }
 ?>

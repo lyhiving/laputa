@@ -35,7 +35,7 @@ class CommonAction extends Action{
                 self::$user = $temp_user;
             } elseif (self::cookieget('__u')) {
                 $temp_user = M('User')->find(intval(self::cookieget('__u')));
-                if (sha1($temp_user[id] . '3xtc' . $temp_user[password]) == self::cookieget('__c')) {
+                if (sha1($temp_user[id] . '3stc' . $temp_user[password]) == self::cookieget('__c')) {
                     self::$user = $temp_user;
                     }
             }
@@ -89,6 +89,7 @@ class CommonAction extends Action{
 
     }
 
+
     /**
      * Action 筛选作品列表
      * @param string $where   Action的排除属性
@@ -127,6 +128,61 @@ class CommonAction extends Action{
                 ->query('select %FIELD% from %TABLE% %WHERE% order by field(id,'.$Action.')',true);
         $this->post = postreplace($post);
     }
+
+
+
+    // 用户筛选通用方法
+    public function ListUser($where, $order, $field, $page_size, $page_link) {
+        $users = M('user');
+        $count = $users->where($where)->count();// 查询满足要求的总记录数
+        $this->post_count = $count;
+
+        // 先设置小页面获取值
+        $page = isset($_GET['p']) ? intval($_GET['p']) : 1;
+
+        import('Class.Page', APP_PATH);
+        $page_nav = new SubPages($page_size,$count,$page,10, $page_link."/p/",2);
+        $this->page_nav = $page_nav->subPageCss2() ;
+        $this->page_link = $page_link;
+
+
+        $user = $users->order($order)->where($where)->field($field, true)->page($page.','.$page_size)->select();
+        $this->user = userpost($user);
+
+    }
+
+    /**
+     * Action 筛选用户列表
+     * @param string $where   Action的排除属性
+     * @param string $order   Action的顺序属性
+     * @param string $field   Action的输出表属性
+     * @param string $page_size   页面容量
+     * @param string $count   输入筛选总计
+     * @param string $page_link   页面基本链接
+     */
+    public function ListActionUser($where, $order, $field, $page_size, $count, $page_link, $target='target') {
+
+        $this->post_count = $count;
+        // 先设置小页面获取值
+        $page = isset($_GET['p']) ? intval($_GET['p']) : 1;
+
+        import('Class.Page', APP_PATH);
+        $page_nav = new SubPages($page_size,$count,$page,10, $page_link."/p/",2);
+        $this->page_nav = $page_nav->subPageCss2() ;
+        $this->page_link = $page_link;
+
+
+        //列出相关数组
+        $Actions = M('action')->field($field)->order($order)->where($where)->page($page.','.$page_size)->select();
+        foreach ($Actions as $a) {$Action[] = $a[$target];};
+        $Action = join(",",$Action);
+        $ufield = "password";
+        $uwhere[id] = array('in',$Action);
+        $user = M()->table(C('DB_PREFIX')."user")->where($uwhere)->field($ufield,true)
+                ->query('select %FIELD% from %TABLE% %WHERE% order by field(id,'.$Action.')',true);
+        $this->users = userpost($user);
+    }
+
 
 }
 ?>

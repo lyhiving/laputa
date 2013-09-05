@@ -5,6 +5,14 @@
 		Hi，欢迎来到艾墨镇，这是一个关于独立影像的小镇。期待你一起来分享更多的内容，<strong><a href="#regFront" data-toggle="modal">点此入住</a></strong> 。
 	</div>
     	</if>
+		<if condition="!$visitor[weiboId] && $visitor[id]">
+		<div id="weiboID" class="hide alert alert-block" style="margin:-20px 30px 40px 0px;font-size:12px;">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>请绑定微博</h4>
+          绑定微博后会同步您的头像以及基础信息，发布作品时也可以同时分享到新浪微博哟！<strong><a href="/home/setting/">前去绑定</a></strong>
+        </div>
+    	</if>
+        
     		<div style="width:100%; height:20px; ">
       
           <div style="color:#AAA; float:left;margin:-10px 0 0 0">
@@ -15,7 +23,7 @@
                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/view/">最多观看</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/comment/">最多评论</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/fav/">最多收藏</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/{$page_cat}/hot/like/">最多收藏</a></li>
                 </ul>
               </li>
           <if condition="$page_cat == share">

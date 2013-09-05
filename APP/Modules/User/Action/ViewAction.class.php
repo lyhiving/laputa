@@ -92,6 +92,31 @@ class ViewAction extends CommonAction {
         $this->display('index');
     }
 
+    public function follow() {
 
+        $uid = I('id');
+        //页面控制
+        $page_size = 24;
+        $this->page_name = "follow";
+        $this->page_type = "users";
+        $this->page_cat = "user";
+        $this->page_link = $page_link = '/user/'.$uid.'/follow/';
+
+        //用户控制
+        $user = M('user')->where(array("id" => $uid))->select();
+        $user = userreplace($user);
+        $this->user = $user[0];
+
+        //作品控制
+        $count = $user[0][follow];
+        $where = array('userid' => $uid, 'type' => 2);
+        $order = "createdTime DESC";
+        $field = "target,createdTime";
+
+        self::ListActionUser($where, $order, $field, $page_size, $count, $page_link);
+
+
+        $this->display('index');
+    }
 }
 ?>

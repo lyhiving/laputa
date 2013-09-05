@@ -19,5 +19,9 @@ class PageAction extends CommonAction {
 		$this->display();
 	}
 
+	public function error404() {
+		$this->display();
+	}
+
 }
 ?>

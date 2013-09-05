@@ -133,10 +133,8 @@ class PostAction extends CommonAction {
                );
 
 
-                if (I('userid')) {
-                    M('user')->where(array('id' => $video[userid]))->setDec('post');
-                    M('user')->where(array('id' => I('userid') ))->setInc('post');
-                    $data[userid] = I('userid');
+                if ( I('userid') && (I('userid')!=$video[userid]) ) {
+                    copyright($vid, $video[userid], I('userid'), $video[verify]);
                 };
 
                 if (I('viewed')) { $data[viewed] = I('viewed'); };
@@ -160,11 +158,9 @@ class PostAction extends CommonAction {
                         }
                 };
 
-                if (M('video')->where(array('id' => $video[id]))->save($data)) {
-                	$this->redirect("/video/".$video[id]."/");
-                } else {
-                	$this->error('没有修改或修改发生问题',"/video/".$video[id]."/");
-                }
+                M('video')->where(array('id' => $video[id]))->save($data);
+                $this->redirect("/video/".$video[id]."/");
+
 
            } else {
                 $this->error('您没有权限','/');
@@ -198,6 +194,8 @@ class PostAction extends CommonAction {
             $this->error('您没有权限','/');
        }
     }
+
+
 
 
 }

@@ -1,144 +1,135 @@
 <include file="./APP/Tpl/header.html" />
+<link href="http://static.aimozhen.com/Public/media/addons/x-editable/bootstrap-editable.css" rel="stylesheet"/>
+<script src="http://static.aimozhen.com/Public/media/addons/x-editable/bootstrap-editable.min.js"></script>
+
 <div class="container" style="padding-top:25px">
 
-    <include file="Public:headerbar" />
-
 	<div class="row">
+		<div class="span12 shadow">
+			<div id="title" style="padding:20px;">
+      		<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">修改信息</span><br />
+      		<span style="color: #7F7F7F; font-weight: bold;">请分项修改</span>
+			</div>
+		</div>
+	</div>
+    
+	<div class="row">
+		<div class="span12 shadow">
+        <div style="padding:20px;">
+       	  <button id="enable" class="btn btn-mini btn-link float-right" style="color: #555555">编辑模式</button>
+            
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th colspan="2">可修改项目</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="10%">昵称</td>
+                  <td><a href="#" id="username" data-pk="{$user.id}" data-placement="right" data-placeholder="好听的大名" data-title="请输入新名字">{$user.username}</a></td>
+                </tr>
+                <tr>
+                  <td>头像</td>
+                  <td>
+                    <if condition="!$visitor[weiboId]">
+                    <a href="{$code_url}" >使用新浪微博头像</a>(可能需要少许等待)
+                    <else />
+                    <a href="{$code_url}" >重新绑定微博信息</a>(可能需要少许等待)
+                    </if>
+                    </td>
+                </tr>
+                
+                <tr>
+                  <td>所在地</td>
+                  <td><a href="#" id="location" data-pk="{$user.id}" data-placement="right" data-placeholder="北京·朝阳" data-title="请输入所在地">{$user.location}</a></td>
+                </tr>
+                <tr>
+                  <td>职业</td>
+                  <td><a href="#" id="career" data-pk="{$user.id}" data-placement="right" data-placeholder="苦逼的小美工" data-title="请输入您的职业">{$user.career}</a></td>
+                </tr>
+                <tr>
+                  <td>一句话介绍</td>
+                  <td><a href="#" id="aboutme" data-pk="{$user.id}" data-placement="bottom" data-placeholder="很简短的介绍" data-title="请输入一段简短的介绍">{$user.aboutme}</a></td>
+                </tr>
+                
+                <tr>
+                  <td>微博</td>
+                  <td><a href="#" id="extraweibo" data-pk="{$user.id}" data-placement="right" data-placeholder="http://" data-title="请输入微博地址">{$user.extraweibo}</a></td>
+                </tr>
+                <tr>
+                  <td>博客</td>
+                  <td><a href="#" id="extrablog" data-pk="{$user.id}" data-placement="right" data-placeholder="http://" data-title="请输入个人博客地址">{$user.extrablog}</a></td>
+                </tr>
+                <tr>
+                  <td>公开Email</td>
+                  <td><a href="#" id="extraemail" data-pk="{$user.id}" data-placement="right" data-placeholder="公开的电子邮件" data-title="请输入Email">{$user.extraemail}</a></td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+                
+            <table class="table table-striped" style="margin-top:20px;">
+              <thead>
+                <tr>
+                  <th colspan="2">不可修改项目</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td width="10%">登陆Email</td>
+                  <td>{$user.email}</td>
+                </tr>
+                <tr>
+                  <td>UID</td>
+                  <td>{$user.id}</td>
+                </tr>
+              </tbody>
+            </table> 
+          <form class="form-horizontal" id="password" action="{:U('User/Ajax/edituser')}" method="POST">
+          <input type="hidden" id="id" name="id" value="{$user.id}" />
+          <input type="hidden" id="type" name="type" value="password" />
+            <table class="table table-striped" style="margin-top:20px;">
+              <thead>
+                <tr>
+                  <th colspan="3">修改密码</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+					<div id="pass1group" class="control-group my-input">
+					  <input style="width:90%;" type="password" id="pass1" name="pass1" placeholder="如需修改请输入">
+                      <span class="help-inline" id="pass1Info"></span>
+					</div>
+                  </td>
+                  <td>
+					<div id="pass2group"  class="control-group my-input">
+					  <input style="width:90%;" type="password" id="pass2" name="pass2" placeholder="请再输入一遍">
+                      <span class="help-inline" id="pass2Info"></span>
+					</div>
+                  </td>
+                  <td>
+                  	<a id="save-edit" href="#" class="my-btn my-btn-red" role="button" style="height:30px; padding-top:5px">修改</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+		</form>   
+        </div>
+		</div>
+	</div>
+    
+    
+    
 
-      <div class="span12 shadow">
+</div> <!-- /上方 --> 
+<script> $(function(){ 
+	UserEdit(); vHomeSettingPassword();
+	$('#save-edit').click(function(){
+	  document.getElementById("password").submit();
+	});
 
-      <div id="title" style="padding:20px;">
-      	<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">修改信息</span><br />
-      	<span style="color: #7F7F7F; font-weight: bold;">请分项修改</span>
-
-	  </div>
-            <div class="tabbable" style="padding:0px 0px 20px 20px;"> <!-- Only required for left/right tabs -->
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" data-toggle="tab">基础信息</a></li>
-                <li><a href="#tab2" data-toggle="tab">我的名片</a></li>
-                <li><a href="#tab3" data-toggle="tab">个人密码</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab1">
-                  <!-- 编辑区域-->
-                  <div class="span6" style="margin-left:0;">
-
-                  <form class="form-horizontal" id="basic" action="{:U('User/Ajax/edituser')}" method="POST">
-                  <input type="hidden" id="id" name="id" value="{$visitor.id}" />
-                  <input type="hidden" id="type" name="type" value="basic" />
-                  			<div class="control-group">
-                                <label class="control-label2">头像 </label>
-                                <div class="controls2">
-                                <if condition="!$visitor[weiboId]">
-                                <a href="https://api.weibo.com/oauth2/authorize?client_id=2517727821&response_type=code&redirect_uri=http://aimozhen.com/User/Weibo/avatar/" role="button" class="btn" >使用微博头像</a>
-                                <else />
-                                <a href="#" role="button" class="btn disabled" >已经绑定微博头像</a>
-                                </if>
-                                </div>
-                            </div>
-                            <div class="control-group" id="namegroup">
-                                <label class="control-label2" for="name">昵称 </label>
-                                <div class="controls2">
-                                    <input type="text" class="input-xlarge" id="username2" name="username" value="{$visitor.username}" placeholder="好名字是好生活的开始~">
-                                     <span class="help-inline" id="nameInfo"></span>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label2" for="input01">Email </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" id="email" name="email" type="text" readonly value="{$visitor.email}" />
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label2" for="input01">UID </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" id="uid" name="uid" type="text" readonly value="{$visitor.id}" />
-                                </div>
-                            </div>
-
-                            <div style="margin:10px 0 0 60px;">
-                                <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-
-                            </div>
-                    </form>
-                    </div>
-                    <!-- /编辑区域-->
-                    <script type="text/javascript"> $(function(){ vHomeSettingBasic();}); </script>
-                </div>
-                <div class="tab-pane" id="tab2">
-                  <!-- 编辑区域-->
-                  <div class="span6" style="margin-left:0;">
-
-                  <form class="form-horizontal" id="extre" action="{:U('User/Ajax/edituser')}" method="POST">
-                  <input type="hidden" id="id" name="id" value="{$visitor.id}" />
-                  <input type="hidden" id="type" name="type" value="extra" />
-                            <div class="control-group">
-                                <label class="control-label2" for="input01">电邮 </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" id="extraemail" name="extraemail" type="text" value="{$visitor.extraemail}" />
-                                </div>
-                            </div>
-                           <div class="control-group">
-                                <label class="control-label2" for="input01">微博 </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" id="extraweibo" name="extraweibo" type="text" value="{$visitor.extraweibo}"  />
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label2" for="input01">博客 </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" id="extrablog" name="extrablog" type="text" value="{$visitor.extrablog}" />
-                                </div>
-                            </div>
-
-                            <div style="margin:10px 0 0 60px;">
-                                <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-
-                            </div>
-                    </form>
-                    </div>
-                    <!-- /编辑区域-->
-                </div>
-                <div class="tab-pane" id="tab3">
-                  <!-- 编辑区域-->
-                  <div class="span6" style="margin-left:0;">
-
-                  <form class="form-horizontal" id="password" action="{:U('User/Ajax/edituser')}" method="POST">
-                  <input type="hidden" id="id" name="id" value="{$visitor.id}" />
-                  <input type="hidden" id="type" name="type" value="password" />
-                            <div class="control-group" id="pass1group">
-                                <label class="control-label2" for="pass1">密码 </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" type="password" id="pass1" name="pass1" />
-                                    <span class="help-inline" id="pass1Info"></span>
-                                </div>
-                            </div>
-                            <div class="control-group" id="pass2group">
-                                <label class="control-label2" for="pass2">重复 </label>
-                                <div class="controls2">
-                                    <input class="input-xlarge" type="password" id="pass2" name='pass2' />
-                                    <span class="help-inline" id="pass2Info"></span>
-                                </div>
-                            </div>
-
-                            <div style="margin:10px 0 0 60px;">
-                                <input id="send" name="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-
-                            </div>
-                    </form>
-
-                    </div>
-                    <!-- /编辑区域-->
-                    <script type="text/javascript"> $(function(){ vHomeSettingPassword();}); </script>
-                </div>
-              </div>
-            </div>
-
-
-      </div>
-
-      </div>
-
-</div> <!-- /上方 -->
-
+}); </script>
 <include file="./APP/Tpl/footer.html" />

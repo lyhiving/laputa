@@ -35,14 +35,15 @@ class DuoShuo {
 		return  $result;
 	}
 
+	// 未更新
 	public function syncPost($video_id) {
-		$config = Config::get('env.duoshuo');
+
 		$video = new Video($video_id);
 		$url = 'http://api.duoshuo.com/threads/import.json';
 
 		$data = array(
-			'short_name' => $config['short_name'],
-			'secret' => $config['secret'],
+			'short_name' => C('DUOSHUO_USER'),
+			'secret' => C('DUOSHUO_SECRET'),
 			'threads' => array(
 			 )
 		);
@@ -58,24 +59,21 @@ class DuoShuo {
 
 
 	public function syncCommentNum($post_id) {
-		$config = Config::get('env.duoshuo');
-		$handle = fopen("http://api.duoshuo.com/threads/counts.json?short_name=".$config['short_name']."&threads=".$post_id,"rb");
-		$content = "";
+		$handle = fopen("http://api.duoshuo.com/threads/counts.json?short_name=".C('DUOSHUO_USER')."&threads=".$post_id,"rb");
+		$all = "";
 		while (!feof($handle)) {
-			$content .= fread($handle, 100000);
+			$content .= fread($handle, 1000000);
 		}
 		fclose($handle);
 		$content = json_decode($content);
-		//print_r ($content);
 
 		foreach ($content->response as $key) { ;
-
-			$video = new Video($key->thread_key);
-			$video->comment = $key->comments;
-			$video->save();
+			M('video')->where("id=".$key->thread_key)->setField("comment",$key->comments);
+			$all .= "VIDEO - $key->thread_key | -- $key->comments <br/>";
 	     }
 
-		 return 'ALL DONE !';
+
+		 return $all;
 	}
 
 	public function syncComment($nums) {

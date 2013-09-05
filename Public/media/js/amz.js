@@ -29,6 +29,18 @@ $(function(){
 		setCookie('tips', 1, 2)
 		
 	})
+	
+	if (!getCookie('weiboID')) {
+		$('#weiboID').show()
+	}
+	$('#weiboID .close').on('click', function(e){
+		e.preventDefault()
+		$('#weiboID').hide()
+		setCookie('weiboID', 1, 2)
+		
+	})
+	
+	
 
 });
 
@@ -162,30 +174,6 @@ function vRegFormFront(){
 };
 
 // 验证用户修改页面
-function vHomeSettingBasic() {
-	var form = $("#basic");var name = $("#username2");var namegroup = $("#namegroup");var nameInfo = $("#nameInfo");
-	name.blur(validateName);name.keyup(validateName);
-	form.submit(function(){
-		if(validateName())
-			return true
-		else
-			return false;
-	});
-	function validateName(){
-		if(name.val().length < 4){
-			namegroup.removeClass("info");
-			namegroup.addClass("error");
-			nameInfo.text("请不小少于三个字！");
-			return false;
-		}
-		else{
-			namegroup.removeClass("error");
-			namegroup.addClass("info");
-			nameInfo.text("输入正确");
-			return true;
-		}
-	}
-};
 function vHomeSettingPassword() {
 	var form = $("#password");var pass1 = $("#pass1");var pass1group = $("#pass1group");var pass1Info = $("#pass1Info");
 	var pass2 = $("#pass2");var pass2group = $("#pass2group");var pass2Info = $("#pass2Info");
@@ -321,6 +309,7 @@ function messageinfo(infoid,value){
 
 // 显示站内信
 function ShowMessage(mid){
+	event.preventDefault();
 	link = '/User/Ajax/getmessage/';
 	$.post(link, {mid:mid}, function(data){
 		if(data.status) {
@@ -336,6 +325,7 @@ function ShowMessage(mid){
 }
 
 function UnreadMessage(mid){
+	event.preventDefault();
 	link = '/User/Ajax/unreadmessage/';
 	$.post(link, {mid:mid}, function(data){
 		if(data.status) {
@@ -348,8 +338,16 @@ function UnreadMessage(mid){
 }
 
 
+// 显示私信
+function SendMessage(uid){	
+	event.preventDefault();
+	document.getElementById('sendMessage-uid').value = uid;
+	$('#sendMessage').modal('show');
+}
+
 // 收藏视频
 function FavPost(vid, faved){
+	event.preventDefault();
 	link = '/ajax/FavPost/';
 	$.post(link, {vid:vid, faved:faved}, function(data){
 		if(data.status) {
@@ -371,15 +369,16 @@ function FavPost(vid, faved){
 
 // 关注用户
 function FollowUser(uid, faved){
+	event.preventDefault();
 	link = '/User/Ajax/followuser/';
 	$.post(link, {uid:uid, faved:faved}, function(data){
 		if(data.status) {
 			if(data.content == "关注"){
-				document.getElementById('followuserstatus').innerHTML = '<a class="my-btn my-btn-gray" onclick="FollowUser('+ uid +', 1)" href="#" >已关注</a>';
+				document.getElementById('followuserstatus-'+uid).innerHTML = '<a class="my-btn my-btn-gray" onclick="FollowUser('+ uid +', 1)" href="#" >已关注</a>';-
 				$.globalMessenger().post({ message: '关注成功！',type: 'success',showCloseButton: true });
 				};
 			if(data.content == "取消关注"){
-				document.getElementById('followuserstatus').innerHTML =  '<a class="my-btn my-btn-red" onclick="FollowUser('+ uid +', 0)" href="#" >关注</a>';
+				document.getElementById('followuserstatus-'+uid).innerHTML =  '<a class="my-btn my-btn-red" onclick="FollowUser('+ uid +', 0)" href="#" >关注</a>';
 				$.globalMessenger().post({ message: '取消关注成功！',type: 'success',showCloseButton: true });
 				};
 		} else {
@@ -412,39 +411,58 @@ function CollectionPost(cid, vid, uid){
 // 用户页面快速修改
 function UserEdit() {
 	$.fn.editable.defaults.url = '/user/ajax/edituserfield'; 
+	$.fn.editable.defaults.emptytext = '尚未填写'; 
 	$('#enable').click(function() {
        $('.editable').editable('toggleDisabled');
    }); 
-   
     $('#username').editable({
 		type: 'text',
 	 	validate: function(value) {
       	  if($.trim(value) == '') return '请不要留空哟~';
+		  if($.trim(value).length < 4) return '请不要少于4个字哟';
+        },
+	});
+
+
+    $('#extraweibo').editable({
+		type: 'text',
+	 	validate: function(value) {
+		  if($.trim(value)){
+		    if($.trim(value).indexOf('http://')<0) return '请输入http://';
+		  }
+        },
+	});	
+    $('#extrablog').editable({
+		type: 'text',
+	 	validate: function(value) {
+		  if($.trim(value)){
+		    if($.trim(value).indexOf('http://')<0) return '请输入http://';
+		  }
+        },
+	});	
+    $('#extraemail').editable({
+		type: 'text',
+	 	validate: function(value) {
+		  if($.trim(value)){
+		    if($.trim(value).indexOf('@')<0 || $.trim(value).indexOf('.')<0) return '请输入正确的邮箱的地址';
+		  }
         },
 	});
 	
     $('#location').editable({
 		type: 'text',
-	 	validate: function(value) {
-      	  if($.trim(value) == '') return '请不要留空哟~';
-        },
 	});
 	
     $('#career').editable({
 		type: 'text',
-	 	validate: function(value) {
-      	  if($.trim(value) == '') return '请不要留空哟~';
-        },
 	});
 	
     $('#aboutme').editable({
 		type: 'textarea',
 	 	validate: function(value) {
-      	  if($.trim(value) == '') return '请不要留空哟~';
 		  if($.trim(value).length > 50) return '请不要超过50个字哟';
         },
 	});
-	
 	 $('.editable').editable('toggleDisabled');
 
 };

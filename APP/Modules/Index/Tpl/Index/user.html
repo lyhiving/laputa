@@ -1,43 +1,20 @@
 <include file="./APP/Tpl/header.html" />
-<div class="container" style="padding-top:25px">
-
+<div class="container" style="padding-top:10px;">
+    <strong><span style="font-size: 24px">创作人</span></strong><br>
+	<span style="color: #AAA">有{$post_count}位原创作者在这里展示</span>
+    
   <div class="row" >
-	<div class="span9" >
-		
-		<div class="user-item" style="height:110px; width:95%;border-top: 2px solid #C0C0C0; padding:20px 0 ;">
-          <div class="avatar" style="height:80px; width:80px;">
-            <img class="img-rounded" src="http://tp1.sinaimg.cn/1573590751/180/0/1" width="80" height="80" />
-          </div>
-          
-          <div id="detailed" class="float-left" style="margin:0 0 0 10px">
-              <div id="name" >
-                <div class="user-detail-name ellipsis float-left" style="max-width:240px;">用户名
-                <span style="color:#969696; font-size:14px; margin-left:10px;">北京市</span>
-                </div>
-              </div>
-               <div id="user-detail-infor">
-                    已入住XXX天， N创作， N分享， N关注
-               </div>
-               
-            <if condition="$visitor">
-            	<div id="followuserstatus">
-                <if condition="isfollow($visitor[id], $user[id])">
-                <a class="my-btn my-btn-gray" onclick="FollowUser('{$user.id}', 1)" href="#" >已关注</a>
-                <else />
-                <a class="my-btn my-btn-red" onclick="FollowUser('{$user.id}', 0)" href="#" >关注</a>
-                </if>
-                </div>
-                <a class="my-btn my-btn-gray" href="#sendMessage" role="button" data-toggle="modal">发私信</a>
-            <else />
-            	<a class="my-btn my-btn-red" href="#loginFront" role="button" data-toggle="modal">关注</a>
-                <a class="my-btn my-btn-gray" href="#loginFront" role="button" data-toggle="modal">发私信</a>
-            </if>
-          </div>
-          
-          <img src="http://tp1.sinaimg.cn/1573590751/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
-          <img src="http://tp1.sinaimg.cn/1573590752/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
-          <img src="http://tp1.sinaimg.cn/1573590753/180/0/1" style="margin-left:10px" width="80" height="80" class="img-rounded float-right">
-        </div>
+  
+	<div class="span9" style="padding:5px; ">
+    <div style=" height:25px;border-bottom: 2px solid #C0C0C0 ; width:95%"></div>
+	<foreach name="user" item="u">
+        <include file="Post:user" /> 
+    </foreach>
+      
+      
+    <div class="pagination pagination-small pagination-centered">
+        {$page_nav}
+    </div>
 
 
 		
@@ -52,5 +29,41 @@
 
 	</div>
   </div>
+</div>
+
+<script>
+$('a[data-toggle=tooltip]').mouseover(function() { 
+
+ $(this).tooltip('show'); 
+
+  }) 
+    jQuery(".user-item").hover(function(){
+        jQuery(this).find("#more-button").fadeIn(200);
+    },function(){
+        jQuery(this).find("#more-button").fadeOut(200);
+    });
+</script>
+
+<div id="sendMessage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sendMessage" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">发送私信</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" action="{:U('User/Ajax/sendMessage')}" id="sendMessage" method="POST">
+    <input id="sendMessage-uid" name="uid" type="hidden" value="#" />
+      <div class="control-group">
+            <label class="control-label2" for="input01">说明</label>
+            <div class="controls2">
+              <textarea placeholder="请填写私信内容" class="span4" id="message" name="message" style="min-height:120px;max-width: 356px;" ></textarea>
+            </div>
+        </div>
+		
+  </div>
+  <div class="modal-footer">
+    <input type="submit" class="btn btn-red" value="恩，发射！" />
+    <button class="btn float-left" data-dismiss="modal" aria-hidden="true">关闭</button>
+  </div>
+  </form>
 </div>
 <include file="./APP/Tpl/footer.html" />

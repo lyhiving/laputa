@@ -15,9 +15,8 @@
                 <tr>
                   <th width="5%">#</th>
                   <th width="50%">信件标题</th>
-                  <th width="15%">发信人</th>
-                  <th width="20%">发信时间</th>
-                  <th width="10%">操作(测试用)</th>
+                  <th width="20%">发信人</th>
+                  <th width="25%">发信时间</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,7 +34,6 @@
                   </td>
                   <td><a style="color:#424242" href="{$m.userlink}">{$m.fromname}</a></td>
                   <td>{$m.creatTime|date="Y年 n月 d日 H:i",###}</td>
-				  <td><a href="#" style="color:#333" onClick="UnreadMessage('{$m.id}')" >标为未读</span></a>
                 </tr>
               </foreach>
               </tbody>

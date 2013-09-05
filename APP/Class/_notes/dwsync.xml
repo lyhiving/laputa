@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="Avatar.class.php" server="aimozhen.com/laputa/" local="130206430771176178" remote="130218557400000000" Dst="0" />
-<file name="DuoShuo.class.php" server="aimozhen.com/laputa/" local="130218559655143277" remote="130218562800000000" Dst="0" />
+<file name="DuoShuo.class.php" server="aimozhen.com/laputa/" local="130223979422005205" remote="130223982600000000" Dst="0" />
 <file name="JWT.class.php" server="aimozhen.com/laputa/" local="130218533102169675" remote="130218557400000000" Dst="0" />
 <file name="Mail.class.php" server="aimozhen.com/laputa/" local="130218079945203551" remote="130218557400000000" Dst="0" />
 <file name="Page.class.php" server="aimozhen.com/laputa/" local="130207252595986218" remote="130218557400000000" Dst="0" />
 <file name="Video.class.php" server="aimozhen.com/laputa/" local="130208960552600008" remote="130218557400000000" Dst="0" />
 <file name="VideoUrlParser.class.php" server="aimozhen.com/laputa/" local="130207267129104109" remote="130218557400000000" Dst="0" />
+<file name="Avatar.class.php" server="aimozhen.com/aimozhen.com/" local="130206430771176178" remote="130228422600000000" Dst="0" />
+<file name="JWT.class.php" server="aimozhen.com/aimozhen.com/" local="130218533102169675" remote="130228422600000000" Dst="0" />
+<file name="Page.class.php" server="aimozhen.com/aimozhen.com/" local="130207252595986218" remote="130228422600000000" Dst="0" />
+<file name="Video.class.php" server="aimozhen.com/aimozhen.com/" local="130208960552600008" remote="130228422600000000" Dst="0" />
+<file name="DuoShuo.class.php" server="aimozhen.com/aimozhen.com/" local="130223979422005205" remote="130228422600000000" Dst="0" />
+<file name="VideoUrlParser.class.php" server="aimozhen.com/aimozhen.com/" local="130207267129104109" remote="130228422600000000" Dst="0" />
+<file name="Mail.class.php" server="aimozhen.com/aimozhen.com/" local="130218079945203551" remote="130228422600000000" Dst="0" />
+<file name="Weibo.class.php" server="aimozhen.com/aimozhen.com/" local="130228443013029833" remote="130228445400000000" Dst="0" />
 </dwsync>

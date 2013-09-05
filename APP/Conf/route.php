@@ -35,7 +35,7 @@ return array (
         'collection'    => 'Index/Collection/index',
 
         //用户列表
-        '/user\/(\d+)\/(like|share)/'    => 'User/View/:2?id=:1',
+        '/user\/(\d+)\/(like|share|follow)/'    => 'User/View/:2?id=:1',
         'user/:id\d'    => 'User/View/index',
 
         'home/:fun'    => 'User/Index/:1',

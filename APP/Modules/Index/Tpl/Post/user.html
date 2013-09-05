@@ -1,0 +1,47 @@
+﻿﻿<!-- 用户-->
+<div class="user-item">
+  <div class="avatar float-left">
+    <img class="img-rounded avatar" src="{$u.avatar}"/>
+  </div>
+  
+  <div class="detailed float-left">
+      <div class="name" >
+        <div class="user-detail-name float-left" style="max-width:240px;"><a href="/user/{$u.id}/">{$u.username}</a> <span>{$u.location}</span>
+        </div>
+      </div>
+       <div id="user-detail-infor">
+            已入住{$u.days}天， {$u.postOriginal|intval}创作， {$u[post] - $u[postOriginal]|intval}分享， {$u.follow|intval}关注
+       </div>
+        
+       <div id="more-button" class="hide" >
+        <if condition="$visitor">
+            <div id="followuserstatus-{$u.id}">
+            <if condition="isfollow($visitor[id], $u[id])">
+            <a class="my-btn my-btn-gray" onclick="FollowUser('{$u.id}', 1)" href="#" >已关注</a>
+            <else />
+            <a class="my-btn my-btn-red" onclick="FollowUser('{$u.id}', 0)" href="#" >关注</a>
+            </if>
+            </div>
+            <a class="my-btn my-btn-gray" href="#" onclick="SendMessage('{$u.id}')">发私信</a>
+        <else />
+            <a class="my-btn my-btn-red" href="#loginFront" role="button" data-toggle="modal">关注</a>
+            <a class="my-btn my-btn-gray" href="#loginFront" role="button" data-toggle="modal">发私信</a>
+        </if>
+        </div>
+  </div>
+  	
+    <foreach name="u[video]" item="v">
+    <div class="float-right">
+      <a target="_blank" href="/video/{$v.id}/" data-toggle="tooltip" data-placement="top" data-original-title="{$v.title}" title="{$v.title}">
+        <if condition="$v[customImageName]">
+            <div class="thumb img-rounded" style="background: url('/upload/thumb/{$v.customImageName}_420.jpg') no-repeat center center;background-size: 120px;"> </div>
+        <else />
+        	<div class="thumb img-rounded" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 150px;"></div>
+        </if>
+	  </a>
+    </div>
+    </foreach>
+    
+</div>
+
+<!-- 用户 END-->﻿

@@ -73,5 +73,28 @@ class AjaxAction extends CommonAction {
 
 	}
 
+	public function copyright() {
+
+
+		$vid = I('vid'); $newuid = I('newuid');
+		$video = M('video')->where("id=$vid")->field("userid,verify")->find();
+
+		if ($newuid == $video['userid']  ) {
+			$this->redirect("/video/$vid/");
+
+		} else {
+			copyright($vid, $video['userid'], $newuid, $video['verify']);
+
+			$oldemail = M('user')->where("id=$video[userid]")->getField('email');
+			$newemail = M('user')->where("id=$newuid")->getField('email');
+			MailAction::copyrightConfirm($oldemail, $newemail, $vid);
+		}
+
+
+	}
+
+
+
+
 }
 ?>

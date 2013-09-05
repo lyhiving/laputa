@@ -32,13 +32,14 @@ class SearchAction extends CommonAction {
         $page_size = 48;
         $this->page_name = "search";
         $this->page_link = $page_link = '/search/';
+        $this->search = trim($search);
         $where = "`title` LIKE  '%".trim($search)."%'";
 
         $order = "id DESC";
         $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
-        $this->display('index/index');
+        $this->display('index');
 
 
     }

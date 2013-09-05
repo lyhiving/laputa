@@ -27,14 +27,14 @@
            </div>
            
             <if condition="$visitor">
-            	<div id="followuserstatus">
+            	<div id="followuserstatus-{$user.id}">
                 <if condition="isfollow($visitor[id], $user[id])">
                 <a class="my-btn my-btn-gray" onclick="FollowUser('{$user.id}', 1)" href="#" >已关注</a>
                 <else />
                 <a class="my-btn my-btn-red" onclick="FollowUser('{$user.id}', 0)" href="#" >关注</a>
                 </if>
                 </div>
-                <a class="my-btn my-btn-gray" href="#sendMessage" role="button" data-toggle="modal">发私信</a>
+                <a class="my-btn my-btn-gray" href="#" onclick="SendMessage('{$user.id}')">发私信</a>
             <else />
             	<a class="my-btn my-btn-red" href="#loginFront" role="button" data-toggle="modal">关注</a>
                 <a class="my-btn my-btn-gray" href="#loginFront" role="button" data-toggle="modal">发私信</a>
@@ -54,35 +54,15 @@
         <a href="/user/{$user.id}/share/">分享</a></div>
         <if condition="$page_name == like"> <div class="link active"> <else /> <div class="link"> </if>
         <a href="/user/{$user.id}/like/">收藏</a></div>
+        <if condition="$page_name == follow"> <div class="link active"> <else /> <div class="link"> </if>
+        <a href="/user/{$user.id}/follow/">关注</a></div>
       </div>
     </div>
     </if>
-        
-    <if condition="$post_count">
-        <div class="row amzcontent">
-            <foreach name="post" item="v">
-                <include file="./APP/Modules/Index/Tpl/Post/single.html" /> 
-            </foreach>
-        </div>
-          
-        <div class="row amznavigation">
-            <div class="amznext" style="text-align:center">
-                {$page_next}      
-            </div>
-        </div>
-          
-        <div id="realpagination" class="row" style=" margin-top:50px;display:none">
-            <div class="pagination pagination-small pagination-centered">
-                {$page_nav}
-            </div>
-        </div>
+    <if condition="$page_type == users">
+	<include file="Public:users" />
     <else />
-        <div class="row" style=" margin:30px 0 100px 0;text-align: center">
-            <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">还木有作品</p>
-            <p><?=$user->username?>还木有分享作品<br />
-                <br />
-            </p>
-        </div>
+    <include file="Public:posts" />
     </if>
 </div>
 
@@ -126,7 +106,7 @@
   </div>
   <div class="modal-body">
     <form class="form-horizontal" action="{:U('User/Ajax/sendMessage')}" id="sendMessage" method="POST">
-    <input id="uid" name="uid" type="hidden" value="{$user.id}" />
+    <input id="sendMessage-uid" name="uid" type="hidden" value="#" />
       <div class="control-group">
             <label class="control-label2" for="input01">说明</label>
             <div class="controls2">

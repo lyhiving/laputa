@@ -1,0 +1,30 @@
+    <if condition="$post_count">
+        <foreach name="users" item="u">
+            <include file="./APP/Modules/Index/Tpl/Post/user.html" /> 
+        </foreach>
+          
+          
+        <div class="pagination pagination-small pagination-centered">
+            {$page_nav}
+        </div>
+    <else />
+        <div class="row" style=" margin:30px 0 100px 0;text-align: center">
+            <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">还木有用户</p>
+            <p><?=$user->username?>还木有关注用户<br />
+                <br />
+            </p>
+        </div>
+    </if>
+    
+<script>
+$('a[data-toggle=tooltip]').mouseover(function() { 
+
+ $(this).tooltip('show'); 
+
+  }) 
+    jQuery(".user-item").hover(function(){
+        jQuery(this).find("#more-button").fadeIn(200);
+    },function(){
+        jQuery(this).find("#more-button").fadeOut(200);
+    });
+</script>

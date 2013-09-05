@@ -1,12 +1,13 @@
 <include file="./APP/Tpl/header.html" />
 <div class="container" style="padding-top:25px">
-	
-    <include file="Public:headerbar" /> 
-    
-<if condition="$post_count">
-    <div class="row amzcontent">
+
+	<div class="row"> 
+    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > 搜索 > {$search}</div>
+        </div>
+		
+	<div class="row amzcontent">
         <foreach name="post" item="v">
-      		<include file="./APP/Modules/Index/Tpl/Post/single.html" /> 
+      		<include file="Post:single" /> 
         </foreach>
 	</div>
       
@@ -21,14 +22,6 @@
 			{$page_nav}
 		</div>
 	</div>
-<else />
-    <div class="row" style=" margin:30px 0 100px 0;text-align: center">
-        <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">还木有作品</p>
-        <p><?=$user->username?>还木有分享作品<br />
-            <br />
-        </p>
-    </div>
-</if>
 
 </div> <!-- /上方 -->
 

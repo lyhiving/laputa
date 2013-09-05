@@ -16,7 +16,7 @@
 
 return array (
     //开启分组模式
-    'APP_GROUP_LIST' => 'Index,User,Admin',
+    'APP_GROUP_LIST' => 'Index,User,Admin,Api',
     'DEFAULT_GROUP' =>'Index',
     'APP_GROUP_MODE' => 1,
     'APP_GROUP_PATH' => 'Modules',
@@ -59,7 +59,9 @@ return array (
     //URL路由
     'LOAD_EXT_CONFIG' => 'route',
 
-    'SHOW_PAGE_TRACE' =>true
+    'SHOW_PAGE_TRACE' => true ,
+	//'TMPL_EXCEPTION_FILE'=>'./App/Tpl/404.html' ,
+
 
 );
 ?>

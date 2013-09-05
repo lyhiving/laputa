@@ -64,8 +64,8 @@ class IndexAction extends CommonAction {
             $order = "`viewed` desc, id desc";
         } elseif ( $type == 'comment' ) {
             $order = "`comment` desc, id desc";
-        } elseif ( $type == 'fav' ) {
-            $order = "`like` desc, id desc";
+        } elseif ( $type == 'like' ) {
+            $order = "likecount desc, id desc";
         };
 
         $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
@@ -120,9 +120,28 @@ class IndexAction extends CommonAction {
 
     // 用户列表
     public function author() {
+
+        $page_size = 24;
+        $this->page_name = "author";
+
+
+        $this->page_cat = "creator";
+        $this->page_link = $page_link = '/creator/author';
+        $where = array("verify" => 1);
+
+        $order = "postOriginal DESC";
+        $field = "";
+
+        self::ListUser($where, $order, $field, $page_size, $page_link);
+
         $this->display('user');
 
+
     }
+
+
+
+
 
 }
 ?>

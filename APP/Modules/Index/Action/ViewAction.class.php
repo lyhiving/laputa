@@ -39,6 +39,7 @@ class ViewAction extends CommonAction {
             } else {
             	$this->page_cat = "share";
             };
+            $this->page_name = "view";
             $this->display();
         }
 

@@ -52,6 +52,19 @@ function postreplace($data) {
     return $post;
 }
 
+// 视频封面替换
+function videothumb($data){
+    foreach ($data as $v) {
+        if ($v['customImageName']) {
+        	$v['imageUrl'] = "http://aimozhen.com/upload/thumb/".$v['customImageName']."_420.jpg";
+         } ;
+
+        $post[] = $v;
+        }
+    return $post;
+}
+
+
 // 用户资料替换
 function userpost($data) {
     foreach ($data as $u) {
@@ -116,7 +129,7 @@ function videogetColl($cid) {
 
 // 获取全部Collection
 function getallcoll() {
-    $colls = M('collection')->where('id>1')->order('UpdateTime desc')->select();
+    $colls = M('collection')->order('UpdateTime desc')->select();
     return $colls;
 }
 

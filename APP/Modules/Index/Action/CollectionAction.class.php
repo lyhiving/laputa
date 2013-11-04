@@ -24,7 +24,7 @@ class CollectionAction extends CommonAction {
 
         $this->page_cat = "collection";
         $this->page_link = $page_link = '/collection';
-        $where = "id > 1";
+        $where = "";
 
         $order = "`UpdateTime` desc, id desc";
         $field = "";

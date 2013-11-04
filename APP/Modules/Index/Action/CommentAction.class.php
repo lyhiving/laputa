@@ -18,7 +18,10 @@ class CommentAction extends CommonAction {
 
     // 首页
     public function sync() {
-    	p($_GET);
+    	import('Class.DuoShuo', APP_PATH);
+        $id = DuoShuo::syncComment(1);
+        DuoShuo::syncCommentNum($id);
+
     }
 }
 ?>

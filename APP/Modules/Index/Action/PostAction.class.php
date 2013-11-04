@@ -146,15 +146,16 @@ class PostAction extends CommonAction {
                     $data[imageUrl] = $info['img'];
                 };
 
-                if (I('verify')) {
+                if (I('userid')) { $userid = I('userid'); } else { $userid = $visitor[id]; }
+				if (I('verify')) {
                     $data[verify] = 1;
                     if (!$video[verify]) {
-                    	M('user')->where(array('id' => I('userid') ))->setInc('postOriginal');
+                    	M('user')->where(array('id' => $userid ))->setInc('postOriginal');
                         }
                 } else {
                     $data[verify] = 0;
                     if ($video[verify]) {
-                        M('user')->where(array('id' => I('userid') ))->setDec('postOriginal');
+                        M('user')->where(array('id' => $userid ))->setDec('postOriginal');
                         }
                 };
 

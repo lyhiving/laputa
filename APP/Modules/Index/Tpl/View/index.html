@@ -3,7 +3,7 @@
 	<div class="container" style="padding-top:25px">
 
 	<div class="row"> 
-    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > <a href="/tag/2/">{$video.tagname}</a> > <a href="#">{$video.title}</a></div>
+    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > <a href="/{$page_cat}/tag/{$video.pre_tag}/">{$video.tagname}</a> > <a href="#">{$video.title}</a></div>
     </div>
 
 	<div class="row">
@@ -45,10 +45,10 @@
 				<div id="fenxiang" style="position:relative; float:right; margin-top:5px;">
                     <!-- 百度分享按钮 开始 -->            
                     <div id="videoshare" >
-                        <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'{$video.imageUrl}','text':'{$video.url} 我在艾墨镇看到一部不错的短片 《{$video.title}》 | 去@艾墨镇网 看视频无广告：'}">
+                        <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'<?=$video[imageUrl]?>','text':'<?=$video[url]?> 我在艾墨镇看到一部不错的短片 《<?=$video[title]?>》 | 去@艾墨镇网 看视频无广告：'}">
                         <a class="bds_tsina"></a>
                         </div>
-                         <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'{$video.imageUrl}','text':'我在艾墨镇看到一部不错的短片 《{$video.title}》 | 去@艾墨镇网 看视频无广告'}">
+                         <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'pic':'<?=$video[imageUrl]?>','text':'我在艾墨镇看到一部不错的短片 《<?=$video[title]?>》 | 去@艾墨镇网 看视频无广告'}">
                         <a class="bds_renren"></a>
                         <a class="bds_douban"></a>
                         <a class="bds_diandian"></a>
@@ -141,7 +141,7 @@
                         <div id="title"> 收藏 </div>
                     </div>   
                     <div class="information">
-						<div id="nums">{$user.follow|intval}</div>
+						<div id="nums"><a href="/user/{$video.userid}/follow/" target="_blank">{$user.follow|intval}</a></div>
                         <div id="title"> 关注 </div>
                     </div>   
                 </div>

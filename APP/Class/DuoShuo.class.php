@@ -57,7 +57,7 @@ class DuoShuo {
 		return  $result;
 	}
 
-
+	//更新文章数目
 	public function syncCommentNum($post_id) {
 		$handle = fopen("http://api.duoshuo.com/threads/counts.json?short_name=".C('DUOSHUO_USER')."&threads=".$post_id,"rb");
 		$all = "";
@@ -76,11 +76,10 @@ class DuoShuo {
 		 return $all;
 	}
 
+	//获取最近更新ID
 	public function syncComment($nums) {
-			$config = Config::get('env.duoshuo');
 
-			$handle = fopen("http://api.duoshuo.com/log/list.json?short_name=".$config['short_name']."&secret=".$config['secret']."&limit=".$nums."&order=desc","rb");
-			$content = "";
+			$handle = fopen("http://api.duoshuo.com/log/list.json?short_name=".C('DUOSHUO_USER')."&secret=".C('DUOSHUO_SECRET')."&limit=".$nums."&order=desc","rb");
 			$allid = '';
 			while (!feof($handle)) {
 				$content .= fread($handle, 10000);

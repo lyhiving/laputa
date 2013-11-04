@@ -132,7 +132,7 @@ function vShareVideoFront(){
 			urlInfo.text("来自乐视网站 验证通过 请继续点击发布");
 			return true;
 		}
-		if(url.val().indexOf('www.yinyuetai.com/video/')>-1){
+		if(url.val().indexOf('yinyuetai.com/video/')>-1){
 			urlgroup.removeClass("error");
 			urlgroup.addClass("info");
 			urlInfo.text("来自音悦台 验证通过 请继续点击发布");

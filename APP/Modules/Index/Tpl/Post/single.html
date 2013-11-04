@@ -6,7 +6,7 @@
     <else />
     	<div id="post-thumb" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 290px;"></div>
     </if>
-    	<a class="post-infor" href="/video/{$v.id}/" target="_blank">
+    	<a class="post-infor" href="/video/{$v.id}/" target="_blank" title="{$v.title}">
         	<span id="post-title">{$v.title}</span>
             <span id="post-description">{$v.description}</span>
             <span id="post-date">{$v.createdTime|date="Y年n月d日",###}</span>

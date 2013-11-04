@@ -336,7 +336,7 @@ class VideoUrlParser
      * http://www.yinyuetai.com/video/713721
      * http://player.yinyuetai.com/video/player/713721/v_0.swf
      */
-    private function _parseyinyuetai($url){
+    private function _parseYinyuetai($url){
         preg_match("#/video/(\d+)#", $url, $matches);
 		$yid = $matches[1];
 
@@ -344,8 +344,10 @@ class VideoUrlParser
 
         $html = self::_fget($url);
 
-        preg_match("/<meta property=\"og\:image\" content=\"(.*)\?t=(.*)\"\/>/", $html, $matches);
+        preg_match("/<meta property=\"og\:image\" content=\"(.*)\"\/>/", $html, $matches);
 		$ypic = $matches[1];
+		preg_match("/<meta name=\"keywords\" content=\"(.*)\"\/>/", $html, $matches);
+		$title = $matches[1];
 		
         $data['img'] = $ypic;
         $data['title'] = $title;

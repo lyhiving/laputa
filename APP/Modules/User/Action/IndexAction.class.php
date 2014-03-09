@@ -18,10 +18,10 @@ class IndexAction extends CommonAction {
 
 
     // 用户分享跳转
-    public function video() {
+    public function view() {
         $visitor = CommonAction::$user;
         if ($visitor){
-        	 $this->redirect('/user/'.$visitor[id].'/');
+        	 $this->redirect('/'.$visitor[shortname].'/');
         } else {
         	 $this->redirect('/');
         }
@@ -31,7 +31,7 @@ class IndexAction extends CommonAction {
     public function like() {
         $visitor = CommonAction::$user;
         if ($visitor){
-             $this->redirect('/user/'.$visitor[id].'/like/');
+             $this->redirect('/'.$visitor[shortname].'/like/');
         } else {
              $this->redirect('/');
         }
@@ -41,7 +41,7 @@ class IndexAction extends CommonAction {
     public function follow() {
         $visitor = CommonAction::$user;
         if ($visitor){
-             $this->redirect('/user/'.$visitor[id].'/follow/');
+             $this->redirect('/'.$visitor[shortname].'/follow/');
         } else {
              $this->redirect('/');
         }
@@ -54,7 +54,7 @@ class IndexAction extends CommonAction {
         if (!$visitor) $this->redirect('/');
 
         import('Class.Weibo', APP_PATH);
-		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/User/Weibo/avatar/' );
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/user/weibo/avatar/' );
 		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
 		$this->code_url = $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
 
@@ -63,7 +63,6 @@ class IndexAction extends CommonAction {
 
         //用户控制
 
-        if (!$visitor) $this->redirect('/');
         $this->user = $visitor;
         $this->display();
     }
@@ -71,8 +70,8 @@ class IndexAction extends CommonAction {
     // 编辑用户
     public function message() {
 
-        $this->page_name = "message";
-        $this->page_cat = "user";
+        $visitor = CommonAction::$user;
+        if (!$visitor) $this->redirect('/');
 
         cookie('__m', null);
         self::$user[message] = 0;
@@ -81,6 +80,12 @@ class IndexAction extends CommonAction {
         $messages = M('messagetext')->order('id DESC')->field('message',true)->where($where)->select();
         $this->messages = messagereplace($messages);
 
+        $this->page_name = "message";
+        $this->page_cat = "user";
+
+        //用户控制
+
+        $this->user = $visitor;
         $this->display();
     }
 

@@ -1,145 +1,182 @@
-
-﻿<a id="gotop" href="#">   
-  <span>▲<strong>TOP</strong></span> 
-</a>
-      <div id="footer" class="container" style="text-align: center; font-size: 12px; color:#C0C0C0">
-        <p>&copy; <a href="http://animetaste.org/" target="_blank">AnimeTaste.org</a> · <a href="/page/about/" target="_blank">About</a> ·  <a href="mailto:admin@aimozhen.com" class="Email">Contact</a> · Made with ❤ in Shanghai · Thanks <a href="http://twitter.github.com/bootstrap/" class="Bootstrap">Bootstrap</a> · <a href="http://www.miibeian.gov.cn" target="_blank">沪ICP备13003160号</a></p>
-        <p>&nbsp;</p>
+﻿<a id="gotop" class="hidden-sm hidden-xs" href="#"><span>▲<strong>TOP</strong></span></a>
+<div id="footer">
+  <div class="container"> <a href="/"><img id="logo" class="hidden-sm hidden-xs" src="/public/images/logo_white@2X.png" /></a>
+  	<div id="divider" class="hidden-sm hidden-xs"></div>
+    <div id="more"> <a href="/page/about/">关于</a> · <a href="http://animetaste.net" target="_blank">AT!杂志</a> · <a href="http://bingtanghuluer.com/" target="_blank">冰糖葫芦儿</a> · 沪ICP备13003160号<br>
+      @ Copyright 2012-2014 <a href="http://animetaste.org/" target="_blank">AnimeTaste.org</a>. Thanks <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Design by <a href="http://www.plidezus.com/" target="_blank">Plidezus</a> & <a href="http://fuxiaopang.com/" target="_blank">Gavin Foo</a> </div>
+  </div>
 </div>
 
-     <!-- /下方     <a id="issue" href="/page/issue/">   
-  <span>用户<br />反馈</span> 
-</a>
--->
 
-    <!-- javascript ================================================== -->
-	<script src="http://static.aimozhen.com/Public/media/js/bootstrap.min.js?t=20130824"></script>
-    <script src="__PUBLIC__/media/js/amz.js?t=20131012"></script>
-    
-	<script type="text/javascript" src="http://libs.baidu.com/underscore/1.3.3/underscore-min.js"></script>
-    <script type="text/javascript" src="http://libs.baidu.com/backbone/0.9.2/backbone-min.js"></script>
-    <script type="text/javascript" src="http://static.aimozhen.com/Public/media/addons/messenger/messenger-in-future.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://static.aimozhen.com/Public/media/addons/messenger/messenger-in-future.min.css"/>
 
-    <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=652974" ></script>
-	<script type="text/javascript" id="bdshell_js"></script>
-	<script type="text/javascript">
-	var bds_config = {'wbUid':3163946864,'snsKey':{'tsina':'2517727821'}};
-	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-	</script>
+<if condition="!$visitor">
 
-        
-    
+<!-- 登录 -->
+<div class="modal fade" id="loginFront" tabindex="-1" role="dialog" aria-labelledby="loginFrontLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="loginFrontLabel">登录</h4>
+      </div>
+      <div class="modal-body square">   
+        <form class="form-horizontal" action="{:U('User/Member/FrontLoginVerify')}" method="POST">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">邮件</label>
+            <div class="col-sm-9">
+              <input name="email" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-9">
+              <input name="password" type="password" class="form-control">
+            </div>
+          </div>
+          <div id="userlink" class="form-group">
+            <div class="col-sm-offset-2 col-sm-9">
+              <div class="checkbox">
+                <a href="{:U('User/Member/weiboLoginVerify')}" style="color:#d9534f">通过微博登陆</a>
+                <a href="#forget" data-toggle="modal" data-dismiss="modal">找回密码</a>
+                <a href="#regFront" data-toggle="modal" data-dismiss="modal">没有账号？</a>
+                <label>
+                  <input name="checkbox" type="checkbox" checked> 记住我哟
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9">
+              <button type="submit" class="btn btn-warning btn-block">登录</button>
+            </div>
+          </div>
+        </form>
+      </div>    
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal --> 
 
-<div id="loginFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>登录</h3>
-  </div>
-    <div class="modal-body">
-    <form action="{:U('User/Member/FrontLoginVerify')}" method="POST">
-        <div class="modal-body">
-				邮件&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="email" /> &nbsp;&nbsp; <a href="#regFront" data-toggle="modal" style="font-size:80%">没有账号？</a> <br />
-				密码&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="password" /> &nbsp;&nbsp; <a href="#forget" data-toggle="modal" style="font-size:80%">找回密码</a> <br /></div>
-            &nbsp;&nbsp;<input type="submit" value="登录" class="btn btn-red"/>
+<!-- 注册 -->
+<div class="modal fade" id="regFront" tabindex="-1" role="dialog" aria-labelledby="regFrontLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="regFrontLabel">注册</h4>
+      </div>
+      
+      <form action="{:U('User/Member/Register')}" id="regFormFront" method="POST" >
+        <div class="modal-body square">
+          <div class="form-group" id="reggroup" style="margin-top:-15px">
+            <label class="control-label" id="emailInfo"></label>
+            <input type="text" class="form-control input-lg"  name="email" id="regemail" placeholder="电子邮件地址" />
+          </div>
+          <div class="info">欢迎来到艾墨镇 请在上方填写你常用的邮箱</div>
+          <input id="regsubmit"  class="btn btn-warning btn-block disabled" type="submit" value="下一步" role="button"/>
         </div>
-    </form>
-    </div>
-</div>
+      </form>  
+	  <script type="text/javascript"> $(function(){ vRegFormFront();}); </script> 
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal -->  
 
-<div id="regFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>注册</h3>
-  </div>
-    <div class="modal-body">
-    <form action="{:U('User/Member/Register')}" id="regFormFront" method="POST" >
-        <div class="modal-body">
-            <div class="control-group" id="emailgroup">
-            <input type="text" name="email" id="regemail" class="input-block-level share-video" placeholder="电子邮件地址"/>
-            <span class="help-inline" id="emailInfo"></span>
-			<div style="font-size: 14px; color: #919191; margin: 10px 0 20px 0;"><strong>欢迎来到艾墨镇 请在上方填写你常用的邮箱</strong></div>
-        		</div>
-             <input id="send" type="submit" value="下一步" data-loading-text="读取中..." role="button"  class="btn btn-red"/>
-
+<!-- 找回密码 -->
+<div class="modal fade" id="forget" tabindex="-1" role="dialog" aria-labelledby="forgetLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="forgetLabel">找回密码</h4>
+      </div>
+      <form action="{:U('Admin/Mail/lostPassword')}" method="POST" >
+        <div class="modal-body square">
+          <div class="form-group" >
+            <input type="text" class="form-control input-lg"  name="email" placeholder="电子邮件地址" />
+          </div>
+          <div class="info">请填写用来登录的邮件地址 我们将向你发送一份身份确认邮件<br>如果提交多次仍没有收到邮件请与我们联系 admin@aimozhen.com</div>
+          <input class="btn btn-warning btn-block" type="submit" value="下一步" role="button"/>
         </div>
-    </form>
-    </div>
-</div>
+      </form>  
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal --> 
 
-<div id="forget" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" style="color: #FFFFFF" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>找回密码</h3>
-  </div>
-    <div class="modal-body">
-    <form action="{:U('Admin/Mail/lostPassword')}" method="POST">
-        <div class="modal-body">
-   		  <p>请填写用来登录的邮件地址 我们将向你发送一份身份确认邮件<br />
-			<span style="font-size: 80%">如果提交多次仍没有收到邮件请与我们联系 admin@aimozhen.com</span></p>
-			<input type="text" name="email" placeholder="电子邮件地址"/> <br />
-            <input type="submit" data-loading-text="Loading..." value="确认" class="btn btn-red"/>
-        </div>
-    </form>
-    </div>
-</div>
-
-<div id="shareFront" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-<if condition="!$visitor[guest]">
-  <div class="modal-header">
-    <button type="button" class="close" style="color: #FFFFFF" aria-hidden="true" data-dismiss="modal">×</button>
-    <h3>分享视频</h3>
-  </div>
-  <div class="modal-body">
-    <form action="{:U('Index/Post/addvideo')}" id="shareVideoFront" method="POST" >
-        <div class="modal-body">
-            <div class="control-group" id="urlgroup">
-            <input type="text" name="url" id="url" class="input-block-level share-video" placeholder="请输入你想要分享的视频页面地址"/>
-            <span class="help-inline" id="urlInfo"></span>
-			<div style="font-size: 14px; color: #919191; margin: 10px 0 20px 0;"><strong>支持优酷，土豆，音悦台，新浪博客，乐视，56，酷6等视频网站<br />艾墨镇的氛围和你息息相关，希望你能给我们带来更多精彩的分享</strong></div>
-        		</div>
-             <input id="send" type="submit" value="发布" data-loading-text="读取中..." role="button"  class="btn btn-red"/>
-
-        </div>
-    </form>
-    <script type="text/javascript"> $(function(){ vShareVideoFront(); vRegFormFront();}); </script>
-  </div>
-  
 <else / >
 
-  <div class="modal-header">
-    <button type="button" class="close" style="color: #FFFFFF" aria-hidden="true" data-dismiss="modal">×</button>
-    <h3>内侧申请</h3>
-  </div>
-  <div class="modal-body">
-		<div class="control-group" id="urlgroup">
-			<div style="font-size: 14px; color: #666666; margin: 10px 0 20px 0;"><strong>我们期待精彩的分享，所以目前只有通过内测邀请的用户才能分享哦，如果你也愿意和大家一起分享，请点击下面按钮<br /><br />
-			<a role="button" class="btn btn-block btn-red" style="height:30px;width:90px;" href="/page/register/">申请内测</a></strong><br /></div>
-		</div>
-  </div>
+<!-- 分享 -->
+<div class="modal fade" id="shareFront" tabindex="-1" role="dialog" aria-labelledby="addPostLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+<if condition="!$visitor[guest]">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addPostLabel">分享视频</h4>
+      </div>
+      <form action="{:U('Index/Post/addvideo')}" id="shareVideoFront" method="POST" >
+        <div class="modal-body square">
+          <div class="form-group" id="urlgroup" style="margin-top:-15px">
+            <label class="control-label" id="urlInfo"></label>
+            <input type="text" class="form-control input-lg"  name="url" id="url" placeholder="请粘贴你想要分享的视频页面地址" />
+          </div>
+          <div class="info"> 支持优酷，土豆，音悦台，新浪博客，乐视，56，酷6等视频网站<br />
+            艾墨镇的氛围和你息息相关，希望你能给我们带来更多精彩的分享 </div>
+          <input id="submit"  class="btn btn-warning btn-block disabled" type="submit" value="发布" role="button"/>
+        </div>
+      </form>
+      <script type="text/javascript"> $(function(){ vShareVideoFront(); }); </script> 
+<else / >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addPostLabel">分享权限申请</h4>
+      </div>
+        <div class="modal-body">
+          <div class="info"> 我们期待精彩的分享，所以目前只有通过验证的用户才能分享哦，如果你也愿意和大家一起分享，请点击下面按钮 </div>
+          <a role="button" class="btn btn-warning btn-block" href="/page/register/">申请分享权限</a>
+        </div>
 </if>
-</div>  
-  
- 
+        
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal --> 
+
+</if>
+
+<!-- JavaScript
+    ================================================== --> 
+
+<script src="http://static.aimozhen.com/public/static/js/jquery-ias.min.js"></script> 
+<script src="/public/static/js/amz.js?version=2.15"></script> 
+
+
+<script src="http://cdn.bootcss.com/messenger/1.3.3/js/messenger.min.js"></script>
+<script src="http://cdn.bootcss.com/messenger/1.3.3/js/messenger-theme-future.js"></script>
+<link href="http://cdn.bootcss.com/messenger/1.3.3/css/messenger.css" rel="stylesheet">
+<link href="http://cdn.bootcss.com/messenger/1.3.3/css/messenger-theme-future.css" rel="stylesheet">
+
 <if condition="$visitor[message]">
 <script type="text/javascript"> $(function(){ messageinfo( 1,"{$visitor.message}" ); }); </script>
 </if>
- 
+
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=652974" ></script> 
+<script type="text/javascript" id="bdshell_js"></script> 
 <script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0123a2f162a7829ef691d1b9702258e3' type='text/javascript'%3E%3C/script%3E"));
+	var bds_config = {'wbUid':3163946864,'snsKey':{'tsina':'2517727821'}};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
 
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-11082147-7']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0123a2f162a7829ef691d1b9702258e3' type='text/javascript'%3E%3C/script%3E"));
+	
+	
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-11082147-7']);
+	_gaq.push(['_trackPageview']);
+	
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 
-</body>
-</html>
+
+</body></html>

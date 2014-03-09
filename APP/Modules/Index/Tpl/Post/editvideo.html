@@ -1,104 +1,21 @@
 <?php $colls = getallcoll();?>
 <include file="./APP/Tpl/header.html" />
-<script src="http://static.aimozhen.com/Public/media/addons/icheck/jquery.icheck.min.js"></script>
-<link href="http://static.aimozhen.com/Public/media/addons/icheck/square/red.css" rel="stylesheet">
-<if condition="$visitor[verify]">
-    <link rel="stylesheet" type="text/css" href="http://static.aimozhen.com/Public/media/addons/uploadify/uploadify.css" media="all">
-    <script type="text/javascript" src="http://static.aimozhen.com/Public/media/addons/uploadify/jquery.uploadify.min.js"></script>
-    <script type="text/javascript" src="http://static.aimozhen.com/Public/media/addons/jquery.Jcrop.min.js"></script>
-	<style type="text/css">
-.cf:before,.cf:after {
-	display: table;
-	content: "";
-	line-height: 0;
-}
-.cf:after {
-	clear: both;
-}
-.cf {
-	*zoom: 1;
-}
-.upload-area {
-	position: relative;
-	float: left;
-	margin-right: 30px;
-	width: 210px;
-	height: 160px;
-	background-color: #F5F5F5;
-    border: 2px solid #E1E1E1;
-}
-.upload-area .file-tips {
-	position: absolute;
-	top: 80px;
-	left: 0;
-    padding: 0 15px;
-    width: 180px;
-    line-height: 1.4;
-    font-size: 12px;
-	color: #A8A8A3;
-    text-align: center;
-}
-.userup-icon {
-    display: inline-block;
-    margin-right: 3px;
-    width: 16px;
-    height: 16px;
-    vertical-align: -2px;
-}
-.uploadify-button {
-	line-height: 120px!important;
-	text-align: center;
-}
-.preview-area {
-	float: left;
-}
-.tcrop {
-    clear: right;
-    font-size: 14px;
-    font-weight: bold;
-}
-.update-pic .crop {
-    background: url("__PUBLIC__/images/mystery.png") no-repeat scroll center center #EEEEEE;
-    float: left;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-.crop210 {
-    height: 160px;
-    width: 210px;
-}
-.update-pic .save-pic {
-    clear: left;
-    margin-right: 20px;
-}
-.update-pic .uppic-btn {
-    background-color: #348FD4;
-    color: #FFFFFF;
-    display: block;
-    float: left;
-    font-size: 16px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    vertical-align: middle;
-    width: 89px;
-}
 
-.preview img ,.crop img {
-	max-width: inherit;
-}
-.preview {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 11;
-	width: 210px;
-	height: 160px;
-	overflow: hidden;
-	background:#fff;
-	display: none;
-}
-</style>																					
+<script src="http://cdn.bootcss.com/iCheck/1.0.1/icheck.min.js"></script>
+<link href="http://cdn.bootcss.com/iCheck/1.0.1/skins/square/red.css" rel="stylesheet">
+<script src="http://cdn.bootcss.com/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap-datepicker/1.3.0/js/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<link href="http://cdn.bootcss.com/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" rel="stylesheet">
+
+<if condition="$visitor[verify]">
+
+<link rel="stylesheet" type="text/css" href="http://static.aimozhen.com/public/static/addons/Jcrop/jquery.Jcrop.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="http://static.aimozhen.com/public/static/addons/Jcrop/postImage.css" media="all">
+<script type="text/javascript" src="http://static.aimozhen.com/public/static/addons/Jcrop/jquery.Jcrop.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="http://static.aimozhen.com/public/static/addons/uploadify-v3.21/uploadify.css" media="all">
+<script type="text/javascript" src="http://static.aimozhen.com/public/static/addons/uploadify-v3.21/jquery.uploadify.min.js"></script>
+
 </if>
 <div class="container" >
 
@@ -111,123 +28,141 @@
     
     <div class="row">
       <!-- 编辑区域--> 
-		<div class="span9"> 
-		<div style=" height:25px;border-top: 2px solid #C0C0C0 ; width:95%"></div>
-      <form id="edit-video" class="form-horizontal" action="{:U('Index/Post/editvideopost')}" method="POST">
-				<input type="hidden" name="id" value="{$video.id}" />
-				<div class="control-group">
-					<label class="control-label2">标题</label>
-					<div class="controls2 my-input">
-						<input type="text" name="title" placeholder="视频的名字" value="{$video.title}" oninput="document.getElementById('post-title').innerHTML=this.value;" onpropertychange="document.getElementById('post-title').innerHTML=this.value;">
-					</div>
-				</div>
-                
-				<div class="control-group">
-					<label class="control-label2">描述</label>
-					<div class="controls2 my-input">
-					  <textarea placeholder="只转不评的同志不是好同志。"name="description" style="min-height:200px;"  oninput="document.getElementById('post-description').innerHTML=this.value;" onpropertychange="document.getElementById('post-description').innerHTML=this.value;">{$video.description}</textarea>
-					</div>
-				</div>
+		<div class="col-md-9 square"> 
+		<form id="edit-video" class="form-horizontal" action="{:U('Index/Post/editvideopost')}" method="POST">
+		  <input type="hidden" name="id" value="{$video.id}" />
+            
+          <div class="form-group">
+            <label class="col-sm-1 control-label">标题</label>
+            <div class="col-sm-10">
+              <input name="title" value="{$video.title}" type="text" class="form-control input-lg" placeholder="视频的名字" oninput="document.getElementById('post-title').innerHTML=this.value;" onpropertychange="document.getElementById('post-title').innerHTML=this.value;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">描述</label>
+            <div class="col-sm-10">
+              <textarea name="description" style="resize:none;" value="{$video.title}" rows="8" class="form-control input-lg" placeholder="只转不评的同志不是好同志" oninput="document.getElementById('post-description').innerHTML=this.value;" onpropertychange="document.getElementById('post-description').innerHTML=this.value;">{$video.description}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">时间</label>
+            <div class="col-sm-10">
+                <div id="datepicker" class="input-group date">
+                  <input name="createdTime" value="{$video.createdTime|date="Y 年 m 月 d 日",###}" type="text" class="form-control input-lg" readonly>
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label">分类</label>
+            <div class="col-sm-10" style="margin:10px 0 10px -20px;">
+                <foreach name="tags" item="each_tag">
+                  <label class="checkbox-inline" style="width:120px; margin-left:0;">
+                    <if condition="($video[pre_tag] == $each_tag[id])">
+                    <input name="pre_tag" type="radio" value="{$each_tag.id}" checked>
+                    <else />
+                    <input name="pre_tag" type="radio" value="{$each_tag.id}">
+                    </if>
+                    &nbsp;&nbsp;{$each_tag.name}
+                  </label>
+                </foreach>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">标签</label>
+            <div class="col-sm-10">
+              <input name="tags" value="{$video.tags}" type="text" class="form-control input-lg" placeholder='使用","分隔'>
+            </div>
+          </div>
+
                
-				<div class="control-group">
-					<label class="control-label2">分类</label>
-				  <div class="controls2" style="width:560px;">
-                        <foreach name="tags" item="each_tag">
-                        	<if condition="($video[pre_tag] == $each_tag[id])">
-                            <div class="float-left"><input type="radio" name="pre_tag" value="{$each_tag.id}" checked></div>
-                            <else />
-                            <div class="float-left"><input type="radio" name="pre_tag" value="{$each_tag.id}"></div>
-                            </if>
-                            <div class="tag-name">{$each_tag.name}</div>
-                        </foreach>
-					</div>
-				</div>
-               
-				<div class="control-group">
-					<label class="control-label2">标签</label>
-					<div class="controls2 my-input">
-					  <input style="width:250px;" type="text" name="tags" placeholder="使用空格分隔" value="{$video.tags}">
-					</div>
-				</div>
-                
-               
-               <!-- 认证区域 -->                 
+        <!-- 认证区域 -->                 
         <if condition="$visitor[verify]">
-				<div class="control-group">
-					<div class="controls2">
-                    	<div class="float-left">
-                            <if condition="($video[verify])">
-                            <input id="verify" name="verify" type="checkbox" value="1" checked="CHECKED" >
-                            <else />
-                            <input id="verify" name="verify" type="checkbox"  >
-                            </if>
-                        </div>
-                        <div class="float-left" style="margin-left:10px">这是我原创作品</div>
-					</div>
-				</div>
+          <div class="form-group" style="margin-top:20px;">
+            <div class="col-sm-10 col-md-offset-1">
+                <if condition="($video[verify])">
+                <input id="verify" name="verify" type="checkbox" value="1" checked>
+                <else />
+                <input id="verify" name="verify" type="checkbox" > 
+                </if>
+                &nbsp;&nbsp;这是我原创作品
+            </div>
+          </div>
 		</if>
         
 		<if condition="$visitor[group] == 1">
         <div id="admin" class="collapse">
-				<div class="control-group">
-					<label class="control-label2">UID</label>
-					<div class="controls2 my-input">
-					  <input style="width:250px;" type="text" name="userid" value="{$video.userid}">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label2">浏览</label>
-					<div class="controls2 my-input">
-					  <input style="width:250px;" type="text" name="viewed" value="{$video.viewed}">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label2">地址</label>
-					<div class="controls2 my-input">
-					  <input type="text" name="url" value="{$video.url}">
-					</div>
-				</div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">UID</label>
+            <div class="col-sm-5">
+              <input name="userid" value="{$video.userid}" type="text" class="form-control input-lg">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">浏览</label>
+            <div class="col-sm-5">
+              <input name="viewed" value="{$video.viewed}" type="text" class="form-control input-lg">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">地址</label>
+            <div class="col-sm-10">
+              <input name="url" value="{$video.url}" type="text" class="form-control input-lg">
+            </div>
+          </div>
         </div>
 		</if>
                             
-		<div style="margin:10px 0 0 60px;">
-          <a id="save-edit" href="#" class="my-btn my-btn-red" role="button">发布</a>
-		</div>
+          <div class="form-group" style="margin-top:40px;">
+            <div class="col-sm-10 col-md-offset-1">
+                <button type="submit" class="btn btn-danger btn-lg btn-block">发布</button>
+            </div>
+          </div>
 		</form>
 		</div>
 		<!-- /编辑区域-->
 		<!--右侧预览区 -->
-	<div class="span3" style="margin:-30px 0 0 0;">
+	<div class="col-md-3" style="margin:-30px 0 0 0;">
       <div class="edit-video-block">
-        	<div class="edit-video-title">效果预览</div>
-
-            ﻿<!-- 作品-->
-            <div class="span3 shadow" style="height:190px;padding:10px; margin-left:0px;">
-                <div class="post-short">
-                <if condition="$video[customImageName]">
-                    <div id="post-thumb" style="background: url('/upload/thumb/{$video.customImageName}_420.jpg') no-repeat center center;background-size:102%;"></div>
-                <else />
-                    <div id="post-thumb" style="background: url('{$video.imageUrl}') no-repeat center center;background-size: 290px;"></div>
-                </if>
-                    <a class="post-infor" href="#" >
-                        <span id="post-title">{$video.title}</span>
-                        <span id="post-description">{$video.description}</span>
-                        <span id="post-date">{$video.createdTime|date="Y年n月d日",###}</span>
-                    </a>
-                </div>
-            
-                <div id="post-extra">
-                    <a href="#" title="{$user.username}">
-                    <img class="img-rounded float-left" style="width:18px; height:18px;" src="{$user.avatar}" />
-                    <div id="post-author">{$user.username}</div>
-                    </a>
-                    <div id="post-viewd"><img src="__PUBLIC__/images/icon-views-sm.png"/> {$video.viewed|intval}</div>
-                </div>
+      
+          <div class="hr-block">
+            <div class="title">效果预览</div>
+            <div class="content row">
+            	<!-- 效果预览 --> 
+                <div class="amzvideo col-md-12">
+                  <div class="shadow">
+                    <div class="post-short">
+                    <if condition="$video[customImageName]">
+                        <div class="post-thumb" style="background: url('/upload/thumb/{$video.customImageName}_420.jpg') no-repeat center center;background-size:102%;"></div>
+                    <else />
+                        <div class="post-thumb" style="background: url('{$video.imageUrl}') no-repeat center center;background-size: 150%;"></div>
+                    </if>
+                      <a class="post-infor" href="#" title="{$video.title}" hidden >
+                          <span class="post-title">{$video.title}</span>
+                          <span class="post-description">{$video.description}</span>
+                          <span class="post-date">{$video.createdTime|date="Y年n月d日",###}</span> 
+                      </a>
+                    </div><!-- /.post-short -->
+                    <div class="post-extra">
+                      <a href="#" title="{$user.username}">
+                        <img class="img-rounded" src="{$user.avatar}">
+                        <div class="post-author">{$user.username}</div>
+                      </a>
+                      <div class="function">
+                        <li><span class="glyphicon glyphicon-play-circle"></span> {$video.viewed|intval}<li>
+                      </div>
+                    </div>
+                  </div><!-- /.amzvideo --> 
+                </div><!-- / 效果预览 --> 
             </div>
-            <!-- 作品 END-->﻿
-		<a class="my-btn-large my-btn-gray" style="width:110%;margin-top:20px;" href="#UploadThumb" role="button" data-toggle="modal">使用自定义截图</a>
+          </div>
+
+        <if condition="$visitor[verify]">
+        <button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#UploadThumb">自定义截图</button>
+        </if>
         <if condition="$visitor[group] == 1">
-        <a class="my-btn-large my-btn-gray" style="width:110%;margin-top:20px;" href="#" data-toggle="collapse" data-target="#admin">管理员操作面板</a>	
+        <button type="button" class="btn btn-default btn-lg btn-block" data-toggle="collapse" data-target="#admin">管理员操作面板</button>
         </if>
 
       </div>
@@ -241,35 +176,46 @@
   
 <script>
 $(document).ready(function(){
-  $('input').iCheck({
-    checkboxClass: 'icheckbox_square-red',
-    radioClass: 'iradio_square-red'
-  });
-  $('#save-edit').click(function(){
-	  document.getElementById("edit-video").submit();
-	  });
+	$('input').iCheck({
+		checkboxClass: 'icheckbox_square-red',
+		radioClass: 'iradio_square-red'
+	});
+	$('#datepicker').datepicker({
+		format: "yyyy 年 mm 月 dd 日",
+		weekStart: 1,
+		todayBtn: "linked",
+		language: "zh-CN",
+		keyboardNavigation: false,
+		forceParse: false,
+		autoclose: true,
+		todayHighlight: true
+	});
+	
 });
+
 </script>
 
 <if condition="$visitor[verify]">
 
-<!-- Modal -->
-<div id="UploadThumb" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="UploadThumb" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">上传自定义封面</h3>
-  </div>
-  <div class="modal-body" style="padding:30px 0 30px 50px;">
-    
+
+<!-- 自定义封面 -->
+<div class="modal fade" id="UploadThumb" tabindex="-1" role="dialog" aria-labelledby="UploadThumbLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="UploadThumbLabel">上传自定义封面</h4>
+      </div>
+      
     <!-- 上传自定义封面 -->
-    <form action="{:U('Index/Ajax/cropImg')}" method="post" id="pic" class="update-pic cf">
+    <form action="{:U('Index/Ajax/cropImg')}" method="post" id="pic" class="update-pic cf" style=" width:450px; margin:20px auto 0 auto;">
         <div class="upload-area">
             <input type="file" id="user-pic">
-            <div class="file-tips">支持JPG,PNG<br>图片小于2MB<br>尺寸大于420*320</div>
+            <div class="file-tips">支持JPG,PNG,GIF<br>图片小于2MB<br>尺寸不小于420*320</div>
             <div class="preview hidden" id="preview-hidden"></div>
         </div>
         <div class="preview-area">
-        	<input type="hidden" name="id" value="{$video.id}" />
+            <input type="hidden" id="vid" name="id" value="{$video.id}" />
             <input type="hidden" id="x" name="x" />
             <input type="hidden" id="y" name="y" />
             <input type="hidden" id="w" name="w" />
@@ -280,158 +226,16 @@ $(document).ready(function(){
     </form>
     <!-- /上传自定义封面 -->
     
-  </div>
-  <div class="modal-footer">
-    <button class="btn unset-pic" href="javascript:;" style="float:left">使用原截图</button>
-  	<button class="btn btn-red save-pic" href="javascript:;">保存</button>
-    <button class="btn reupload-img" href="javascript:$('#user-pic').uploadify('cancel','*');">重新上传</button>
-  </div>
-</div>
-<script type="text/javascript">
-	$(function(){
-		//上传头像(uploadify插件)
-		$("#user-pic").uploadify({
-			'queueSizeLimit' : 1,
-			'removeTimeout' : 0.5,
-			'preventCaching' : true,
-			'multi'    : false,
-			'swf' 			: '__PUBLIC__/media/addons/uploadify/uploadify.swf',
-			'uploader' 		: '{:U("Index/Ajax/uploadImg")}',
-			'buttonText' 	: '<i class="icon-picture"></i> 点我上传',
-			'width' 		: '210',
-			'height' 		: '160',
-			'fileTypeExts'	: '*.jpg; *.png;',
-			'onUploadSuccess' : function(file, data, response){
-				var data = $.parseJSON(data);
-				if(data['status'] == 0){
-					alert (data['info']);
-					return;
-				}
-				var preview = $('.upload-area').children('#preview-hidden');
-				preview.show().removeClass('hidden');
-				//两个预览窗口赋值
-				$('.crop').children('img').attr('src',data['data']+'?random='+Math.random());
-				//隐藏表单赋值
-				$('#img_src').val(data['data']);
-				//绑定需要裁剪的图片
-				var img = $('<img />');
-				preview.append(img);
-				preview.children('img').attr('src',data['data']+'?random='+Math.random());
-				var crop_img = preview.children('img');
-				crop_img.attr('id',"cropbox").show();
-				var img = new Image();
-				img.src = data['data']+'?random='+Math.random();
-				//根据图片大小在画布里居中
-				img.onload = function(){
-					var img_height = 0;
-					var img_width = 0;
-					var real_height = img.height;
-					var real_width = img.width;
-					if(real_height > real_width && real_height > 160){
-						var persent = real_height / 160;
-						real_height = 160;
-						real_width = real_width / persent;
-					}else if(real_width > real_height && real_width > 210){
-						var persent = real_width / 210;
-						real_width = 210;
-						real_height = real_height / persent;
-					}
-					if(real_height < 160){
-						img_height = (160 - real_height)/2;	
-					}
-					if(real_width < 210){
-						img_width = (219 - real_width)/2;
-					}
-					preview.css({width:(210-img_width)+'px',height:(160-img_height)+'px'});
-					preview.css({paddingTop:img_height+'px',paddingLeft:img_width+'px'});			
-				}
-				//裁剪插件
-				$('#cropbox').Jcrop({
-		            bgColor:'#333',   //选区背景色
-		            bgFade:true,      //选区背景渐显
-		            fadeTime:1000,    //背景渐显时间
-		            allowSelect:false, //是否可以选区，
-		            allowResize:true, //是否可以调整选区大小
-		            aspectRatio: 210 / 160,
-		            minSize : [420,320],//可选最小大小
-		            boxWidth : 210,		//画布宽度
-		            boxHeight : 160,	//画布高度
-		            onChange: showPreview,//改变时重置预览图
-		            onSelect: showPreview,//选择时重置预览图
-		            setSelect:[ 0, 0, 420, 320],//初始化时位置
-		            onSelect: function (c){	//选择时动态赋值，该值是最终传给程序的参数！
-			            $('#x').val(c.x);//需裁剪的左上角X轴坐标
-			            $('#y').val(c.y);//需裁剪的左上角Y轴坐标
-			            $('#w').val(c.w);//需裁剪的宽度
-			            $('#h').val(c.h);//需裁剪的高度
-		          }
-		        });
-				//提交裁剪好的图片
-				$('.save-pic').click(function(){
-					if($('#preview-hidden').html() == ''){
-						alert ('请先上传图片！');
-					}else{
-						link = '/Index/Ajax/cropImg/';
-						$.post(link, $("#pic").serialize(), function(data){
-							if(data.status) {
-								$('#UploadThumb').modal('hide');
-								$.globalMessenger().post({ message: '上传成功',type: 'success',showCloseButton: true });
-								document.getElementById('post-thumb').style.background="";
-								document.getElementById('post-thumb').innerHTML='<img src="/upload/thumb/'+data.pic+'" width="210" height="160"/>';
-							} else {
-								$('#UploadThumb').modal('hide');
-								$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
-							}
-						}, 'json');
-						
-					}
-				});
-				
+      <div class="modal-footer">
+        <button class="btn btn-default unset-pic" role="button" style="float:left">使用原截图</button>
+        <button class="btn btn-danger save-pic" role="button" data-loading-text="上传中...">保存</button>
+        <button class="btn btn-default reupload-img" href="javascript:$('#user-pic').uploadify('cancel','*');">重新上传</button>
+      </div>
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal -->  
 
-				//重新上传,清空裁剪参数
-				var i = 0;
-				$('.reupload-img').click(function(){
-					$('#preview-hidden').find('*').remove();
-					$('#preview-hidden').hide().addClass('hidden').css({'padding-top':0,'padding-left':0});
-				});
-		     }
-		});
-		
-				$('.unset-pic').click(function(){
-					link = '/Index/Ajax/unsetImg/';
-					var vid = <?php echo $video[id] ?>;
-					$.post(link, {vid:vid }, function(data){
-						if(data.status) {
-							$('#UploadThumb').modal('hide');
-							$.globalMessenger().post({ message: '取消成功',type: 'success',showCloseButton: true });
-							document.getElementById('post-thumb').style.background="";
-							document.getElementById('post-thumb').innerHTML='<img src="'+data.pic+'" width="210" height="160"/>';
-						} else {
-							$('#UploadThumb').modal('hide');
-							$.globalMessenger().post({ message: '服务器开小差了~ 请刷新后重试~',type: 'error',showCloseButton: true });
-						}
-					}, 'json');
-
-				});
-		//预览图
-		function showPreview(coords){
-			var img_width = $('#cropbox').width();
-			var img_height = $('#cropbox').height();
-			  //根据包裹的容器宽高,设置被除数
-			  var rx = 210 / coords.w;
-			  var ry = 160 / coords.h; 
-			  $('#crop-preview-210').css({
-			    width: Math.round(rx * img_width) + 'px',
-			    height: Math.round(ry * img_height) + 'px',
-			    marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-			    marginTop: '-' + Math.round(ry * coords.y) + 'px'
-			  });
-
-		}
-	})
-	
-</script>
-
+<script type="text/javascript" src="/public/static/addons/Jcrop/postImage.js"></script>
 </if>
 
 <include file="./APP/Tpl/footer.html" />

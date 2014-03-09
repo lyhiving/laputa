@@ -11,14 +11,15 @@
 
 
 /*
- * 微博绑定头像控制器
+ * 微博头像控制器
  */
 class WeiboAction extends CommonAction {
+
 
     //用户修改
     public function avatar() {
     	import('Class.Weibo', APP_PATH);
-		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/User/Weibo/avatar/' );
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/user/weibo/avatar/' );
 
 		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
 
@@ -40,20 +41,24 @@ class WeiboAction extends CommonAction {
 			$weibo->follow_by_id( '3163946864' );
 
 			// 微博地址种类判断
-			if ($user_message[domain]){
-				$domain = $user_message[domain];
-			} else {
-				$domain = $user_message[id];
-			}
+			if ($user_message[domain]){$domain = $user_message[domain];} else {$domain = $user_message[id];}
 
 			$visitor = CommonAction::$user;
+			$guest = 0;
+			// if ($user_message[followers_count] < 1000) {$guest = 1;} 微博关注数量控制属性
+			if ($user_message[verified]) {$verified = 1; $guest = 0;} else {$verified = $visitor['verify'];}
+
+
 			// 第一次自动微博
 			$status = urlencode("我刚刚入住了艾墨镇！这是一个不大的镇子，里面居住着一群热爱影像的镇民。这里拥有很多精彩的原创视频等待你来发掘！如果你也感兴趣欢迎来看看这里 @艾墨镇网 传送门： http://aimozhen.com");
-			$pic_path = "http://www.aimozhen.com/Public/images/email_header.jpg";
+			$pic_path = "http://www.aimozhen.com/public/images/email_header.jpg";
 			if ( !$visitor[weiboId]) {$weibo->upload( $status, $pic_path ); }
 
+			if($visitor[guest] == 0){ $guest = 0;}
+			if($visitor[verified]){ $verified = 1; }
 
 			$data = array('id'=>$visitor[id], 'weiboId' => $user_message[id], 'location' => $user_message[location],
+							'verify' => $verified, 'guest' => $guest,
 							'extrablog' => $user_message[url],'extraweibo' => 'http://www.weibo.com/' . $domain );
 			if ( !$visitor[aboutme]) { $data[aboutme] = $user_message[description];};
 			M('user')->save($data);

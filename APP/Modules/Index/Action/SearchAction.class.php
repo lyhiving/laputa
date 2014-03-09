@@ -36,7 +36,7 @@ class SearchAction extends CommonAction {
         $where = "`title` LIKE  '%".trim($search)."%'";
 
         $order = "id DESC";
-        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+        $field = "url,pre_tag,tags,collection,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
         $this->display('index');

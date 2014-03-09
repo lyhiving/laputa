@@ -1,0 +1,86 @@
+.main{
+	margin: 0 auto;
+	padding: 15px;
+	width: 750px;
+	font-family: "microsoft yahei";
+	background-color: #F5F5F5;
+}
+.cf:before,.cf:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+.cf:after {
+	clear: both;
+}
+.cf {
+	*zoom: 1;
+}
+.upload-area {
+	position: relative;
+	float: left;
+	margin-right: 30px;
+	width: 210px;
+	height: 160px;
+	background-color: #F5F5F5;
+}
+.upload-area .file-tips {
+	position: absolute;
+	top: 90px;
+	left: 0;
+    padding: 0 15px;
+    width: 170px;
+    line-height: 1.4;
+    font-size: 12px;
+	color: #A8A8A3;
+    text-align: center;
+}
+.uploadify-button {
+	line-height: 120px!important;
+	text-align: center;
+}
+.preview-area {
+	float: left;
+}
+.tcrop {
+    clear: right;
+    font-size: 14px;
+    font-weight: bold;
+}
+.update-pic .crop {
+    background: url("/public/images/mystery.png") no-repeat scroll center center #EEEEEE;
+    float: left;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.crop210 {
+    height: 160px;
+    width: 210px;
+}
+.update-pic .save-pic {
+    clear: left;
+    margin-right: 20px;
+}
+.update-pic .uppic-btn {
+    background-color: #348FD4;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 89px;
+}
+.preview {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 11;
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	background:#fff;
+	display: none;
+}

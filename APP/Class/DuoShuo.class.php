@@ -22,7 +22,7 @@ class DuoShuo {
 			'name' => $user[username],
 			'avatar_url' => getavatar($user),
 			'email' => $user[email],
-			'url' => 'http://aimozhen.com/user/'.$user[id].'/',
+			'url' => 'http://aimozhen.com/'.$user[shortname].'/',
 			'created_at' => date('Y-m-d H:i:s', $user[createdTime])
 			);
 		$result = self::request_by_curl($url,http_build_query($data));

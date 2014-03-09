@@ -46,7 +46,20 @@ class AjaxAction extends CommonAction {
 
        $field = I('name');
        $value = I('value');
-       M("User")->where("id=$uid")->setField($field,$value);
+       if ($field == 'shortname'){
+	        $newid = M('user')->where(array('shortname' => $value))->getField('id');
+			if ($newid) {
+				$data['status'] = 'error';
+				$data['msg'] = '用户名存在';
+			} else {
+				M("user")->where("id=$uid")->setField('shortname',$value);
+				$data['status'] = 'success';
+			}
+	        $this->ajaxReturn($data, 'json');
+       } else {
+       		M("user")->where("id=$uid")->setField($field,$value);
+       }
+
 
 		// 通知多说 同步用户
 		import('Class.DuoShuo', APP_PATH);
@@ -88,6 +101,27 @@ class AjaxAction extends CommonAction {
 
     }
 
+    /**
+     * 关注用户
+     */
+    public function featureVideo() {
+        if (!CommonAction::$user) $this->redirect('/');
+        if(!IS_AJAX) _404('页面不存在...');
+        $uid = I('uid');
+        $vid = I('vid');
+
+        $result = M('user')->where("id=$uid")->setField('featureId',$vid);
+
+		if ($result) {
+			$data['status'] = 'success';
+		} else {
+			$data['status'] = 'error';
+		}
+        $this->ajaxReturn($data, 'json');
+
+    }
+
+
 /**
  * 发送私信
  */
@@ -101,7 +135,7 @@ class AjaxAction extends CommonAction {
 
 		$data = array(
             'title' => $visitor[username].' 发来的私信',
-            'message' => $message.'<br/> <a href="/user/'.$visitor[id].'/" target="_blank">点此回复Ta</a>',
+            'message' => $message.'<br/> <a href="/'.$visitor[shortname].'/" target="_blank">点此回复Ta</a>',
             'recId' => $uid,
             'creatTime' => time()
             );

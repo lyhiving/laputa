@@ -18,8 +18,9 @@ return array (
 
     'URL_ROUTER_ON'   => true, //开启路由
     'URL_ROUTE_RULES' => array( //定义路由规则
-        'video/:id\d'    => 'Index/View/index',
+        'view/:id\d'    => 'Index/View/index',
         'edit/:id\d'    => 'Index/Post/editvideo',
+		'page/:fun'    => 'Index/Page/:1',
 
         //视频列表正则控制
         '/share\/(tag|hot)\/([A-Za-z0-9]+)/'    => array('Index/Index/:1?id=:2', 'creator=0'),
@@ -34,16 +35,20 @@ return array (
         'collection/:id\d'    => 'Index/Collection/view',
         'collection'    => 'Index/Collection/index',
 
-        //用户列表
-        '/user\/(\d+)\/(like|share|follow)/'    => 'User/View/:2?id=:1',
-        'user/:id\d'    => 'User/View/index',
-
-        'home/:fun'    => 'User/Index/:1',
-
-
         //后台控制
-        '/admin\/$'    => 'Admin/Index/index',
-        '/admin\/([A-Za-z0-9]+)$/'    => 'Admin/Index/:1',
+        '/(admin|api|user|index|user)\/([A-Za-z0-9]+)\/([A-Za-z0-9]+)/'    => ':1/:2/:3',
+        '/(admin|api|user|index|user)\/([A-Za-z0-9]+)/'    => ':1/Index/:2',
+
+		'home/:fun'    => 'User/Index/:1',
+
+        //用户列表
+        '/([a-z][a-z0-9]{4,50})\/(like|share|follow)/'    => 'User/View/:2?shortname=:1',
+        '/([a-z][a-z0-9]{4,50})/'    => 'User/View/index?shortname=:1',
+
+
+
+
+
 
 )
 

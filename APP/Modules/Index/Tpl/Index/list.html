@@ -1,0 +1,26 @@
+<include file="./APP/Tpl/header.html" />
+<include file='headerbar' />
+
+<div class="container">
+ 
+	<div class="row amzcontent">
+        <foreach name="post" item="v">
+      		<include file='Post:single' /> 
+        </foreach>
+	</div>
+      
+	<div class="row amznavigation">
+		<div class="amznext" style="text-align:center">
+			{$page_next}      
+		</div>
+	</div>
+      
+    <div id="realpagination" class="row" hidden >
+        <ul class="pagination pagination-sm">
+          {$page_nav}
+        </ul>
+    </div>
+
+</div> <!-- /上方 -->
+
+<include file="./APP/Tpl/footer.html" />

@@ -18,8 +18,8 @@ class UserAction extends Action {
 
 	public function creator() {
 		if ( I('limit') ) { $limit = $_GET['limit']; } else { $limit = 10; };
-		$field = "id,username,createdTime,email,weiboId,postOriginal";
-		$users = M('user')->order('id desc')->where("verify>0 and postOriginal>0")->field($field)->limit($limit)->select();
+		$field = "id,username,shortname,createdTime,email,weiboId,postOriginal";
+		$users = M('user')->order('lastPost desc')->where("verify>0 and postOriginal>0")->field($field)->limit($limit)->select();
 
 		self::output($users);
 

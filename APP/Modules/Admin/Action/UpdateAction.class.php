@@ -15,8 +15,14 @@
  */
 class UpdateAction extends CommonAction {
 
-	public function video() {
+	public function admin() {
 		if (CommonAction::$user['group']!=1) $this->redirect('/');
+		header("Content-Type: text/html; charset=UTF-8") ;
+	}
+
+	public function video() {
+		import('Class.Video', APP_PATH);
+		self::admin();
 		$max_id = M('video')->max('id');
 		echo $max_id.'<br>';
 
@@ -27,7 +33,15 @@ class UpdateAction extends CommonAction {
 			if (!$video){
 				$num ++;
 			} else {
+				$uid = $video['userid'];
 				$allid .= $video[id].",";
+
+        		$Video = new Video($video[url]);
+				M('video')->where("id=$num")->setField('videoSite', $Video->sourceSite());
+
+				if ($video['verify'] == 1) {
+					M('user')->where("id=$uid")->setField('lastPost',$video['id']);
+				}
 				$num ++;
 			}
 		}
@@ -35,12 +49,13 @@ class UpdateAction extends CommonAction {
 		import('Class.DuoShuo', APP_PATH);
         $result = DuoShuo::syncCommentNum($allid);
 
+		header("Content-type: text/html; charset=utf-8");
 		echo ($result);
 
 	}
 
 	public function tag() {
-		if (CommonAction::$user['group']!=1) $this->redirect('/');
+		self::admin();
 		$max_id = M('tag')->max('id');
 		echo $max_id.'<br>';
 
@@ -66,7 +81,7 @@ class UpdateAction extends CommonAction {
 	}
 
 	public function collection() {
-		if (CommonAction::$user['group']!=1) $this->redirect('/');
+		self::admin();
 		$max_id = M('collection')->max('id');
 		echo $max_id.'<br>';
 
@@ -87,7 +102,7 @@ class UpdateAction extends CommonAction {
 	}
 
 	public function user() {
-		if (CommonAction::$user['group']!=1) $this->redirect('/');
+		self::admin();
 		$max_id = M('user')->max('id');
 		echo $max_id.'<br>';
 
@@ -98,6 +113,12 @@ class UpdateAction extends CommonAction {
 			if (!$user){
 				$num ++;
 			} else {
+				if (!$user['shortname']){
+					M('user')->where("id=$num")->setField('shortname',"user".$num);
+				}
+				if ($user['weiboId']){
+					M('user')->where("id=$num")->setField('guest',"0");
+				}
 				$postCount = M('video')->where("userid=$num")->count();
 
 				$postOriginalWhere = array('userid'=>$num, 'verify'=> 1);
@@ -108,6 +129,7 @@ class UpdateAction extends CommonAction {
 
 				$followWhere = array('userid'=>$num, 'type'=> 2);
 				$followCount = M('action')->where($followWhere)->count();
+				
 
 				$data = array(
 					'post' => $postCount,
@@ -122,6 +144,7 @@ class UpdateAction extends CommonAction {
 				$num ++;
 			}
 		}
+		header("Content-type: text/html; charset=utf-8");
 		echo $all.'<br/>';
 
 	}
@@ -130,7 +153,7 @@ class UpdateAction extends CommonAction {
 
 
 	public function autocoll() {
-		if (CommonAction::$user['group']!=1) $this->redirect('/');
+		self::admin();
 		$max_id = M('video')->max('id');
 		echo $max_id.'<br>';
 
@@ -158,7 +181,105 @@ class UpdateAction extends CommonAction {
 
 
 
+	public function youkuTag() {
+		self::admin();
+		$max_id = M('video')->max('id');
+		//$max_id = 1800;
+		echo $max_id.'<br>';
 
+		$all = '';
+		$num = 0;
+		while ($num <= $max_id) {
+			$video = M('video')->where("id=$num")->find();
+			if (!$video){
+				$num ++;
+			} else {
+				if (!$video['tags']) {
+					if(strpos($video['url'], 'youku')) {
+						import('Class.VideoUrlParser', APP_PATH);
+						$info = VideoUrlParser::parse($video['url']);
+						//echo $video['url'].'<br>';
+						$data = array(
+							'id' => $video['id'],
+							'tags' => $info['tags']
+						);
+						p($data);
+						M('video')->save($data);
+					}
+				}
+				$num ++;
+			}
+		}
+
+		echo ($all);
+
+	}
+
+	public function tudouTag() {
+		self::admin();
+		$max_id = M('video')->max('id');
+		//$max_id = 1800;
+		echo $max_id.'<br>';
+
+		$all = '';
+		$num = 0;
+		while ($num <= $max_id) {
+			$video = M('video')->where("id=$num")->find();
+			if (!$video){
+				$num ++;
+			} else {
+				if (!$video['tags']) {
+					if(strpos($video['url'], 'tudou')) {
+						import('Class.VideoUrlParser', APP_PATH);
+						$info = VideoUrlParser::parse($video['url']);
+						//echo $video['url'].'<br>';
+						$data = array(
+							'id' => $video['id'],
+							'tags' => $info['tags']
+						);
+						p($data);
+						M('video')->save($data);
+					}
+				}
+				$num ++;
+			}
+		}
+
+		echo ($all);
+
+	}
+
+
+	public function replaceTag() {
+		self::admin();
+		$max_id = M('video')->max('id');
+		//$max_id = 100;
+		echo $max_id.'<br>';
+
+		$all = '';
+		$num = 0;
+		while ($num <= $max_id) {
+			$video = M('video')->where("id=$num")->find();
+			if (!$video){
+				$num ++;
+			} else {
+				if ($video['tags']) {
+					$newtag = preg_replace('/\s/', ',', $video['tags']);
+					//echo $newtag."<br>";
+					$data = array(
+						'id' => $video['id'],
+						'tags' => $newtag
+					);
+					p($data);
+					M('video')->save($data);
+				}
+				$num ++;
+			}
+		}
+
+		echo ($all);
+
+	}
 
 
 

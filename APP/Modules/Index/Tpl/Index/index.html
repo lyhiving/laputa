@@ -1,6 +1,7 @@
 <include file="./APP/Tpl/header.html" />
-<include file="headerbar" />
-		
+
+ <div class="container">
+ 
 	<div class="row amzcontent">
         <foreach name="post" item="v">
       		<include file="Post:single" /> 
@@ -13,11 +14,17 @@
 		</div>
 	</div>
       
-	<div id="realpagination" class="row" style=" margin-top:50px;display:none">
-		<div class="pagination pagination-small pagination-centered">
-			{$page_nav}
+		<div id="realpagination" class="row">
+            <ul class="pagination pagination-sm">
+              <li><a href="#">&laquo;</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#">&raquo;</a></li>
+            </ul>
 		</div>
-	</div>
 
 </div> <!-- /上方 -->
 

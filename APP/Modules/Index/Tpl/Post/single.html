@@ -1,24 +1,36 @@
-﻿﻿<!-- 作品-->
-<div class="span3 shadow amzvideo" style="height:190px;padding:10px; margin-bottom:30px; margin-right:2px">
+<if condition="$page_cat == user">
+	<div class="amzvideo col-sm-4">
+<else />
+	<div class="amzvideo col-md-3 col-sm-4">
+</if>
+  <div class="shadow">
     <div class="post-short">
     <if condition="$v[customImageName]">
-    	<div id="post-thumb" style="background: url('/upload/thumb/{$v.customImageName}_420.jpg') no-repeat center center;background-size:102%;"></div>
+    	<div class="post-thumb" style="background: url('/upload/thumb/{$v.customImageName}_420.jpg') no-repeat center center;background-size:102%;"></div>
     <else />
-    	<div id="post-thumb" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 290px;"></div>
+    	<div class="post-thumb" style="background: url('{$v.imageUrl}') no-repeat center center;background-size: 150%;"></div>
     </if>
-    	<a class="post-infor" href="/video/{$v.id}/" target="_blank" title="{$v.title}">
-        	<span id="post-title">{$v.title}</span>
-            <span id="post-description">{$v.description}</span>
-            <span id="post-date">{$v.createdTime|date="Y年n月d日",###}</span>
-        </a>
-    </div>
+      <a class="post-infor" href="/view/{$v.id}/" target="_blank" title="{$v.title}" hidden >
+          <span class="post-title">{$v.title}</span>
+          <span class="post-description">{$v.description}</span>
+          <span class="post-date">{$v.createdTime|date="Y年n月d日",###}</span> 
+      </a>
+    </div><!-- /.post-short -->
+    <div class="post-extra">
+      <a href="/{$v.usershortname}/" title="{$v.username}">
+        <img class="img-rounded" src="{$v.useravatar}">
+        <div class="post-author">{$v.username}</div>
+      </a>
+      <div class="function">
+          <li><span class="glyphicon glyphicon-play-circle"></span> {$v.viewed|intval}<li>
+        <if condition="$v[userid]==$visitor[id]">
+          <li class="more"><a id="edit" title="编辑视频" href="/edit/{$v.id}/" target="_blank"><span class="glyphicon glyphicon-edit"></span></a></li>
+          <if condition="$v[verify]==1">
+          <li class="more"><a id="feature" title="设置为主打作" onClick="FeatureVideo('{$v.userid}', '{$v.id}')"><span class="glyphicon glyphicon-star"></span></a> </li>
+          </if>
 
-    <div id="post-extra">
-    	<a href="/user/{$v.userid}/" title="{$v.username}">
-    	<img class="img-rounded float-left" style="width:18px; height:18px;" src="{$v.useravatar}" />
-    	<div id="post-author">{$v.username}</div>
-        </a>
-        <div id="post-viewd"><img src="__PUBLIC__/images/icon-views-sm.png"/> {$v.viewed|intval}</div>
+        </if>
+     </div>
     </div>
-</div>
-<!-- 作品 END-->﻿
+  </div>
+</div><!-- /.amzvideo --> 

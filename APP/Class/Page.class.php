@@ -290,15 +290,15 @@ class SubPages{
 
     $prewPageUrl=$this->subPage_link.($this->current_page-1);
 
-    $subPageCss2Str.="<ul><li><a href='$firstPageUrl'>首页</a></li>";
+    $subPageCss2Str.="<li><a href='$firstPageUrl'>首页</a></li>";
 
     $subPageCss2Str.="<li><a href='$prewPageUrl'>&laquo;</a></li>";
 
     }else {
 
-    $subPageCss2Str.="<ul><li class='disabled'><a href='#'>首页</a></li>";
+    $subPageCss2Str.="<li class='disabled'><span>首页</span></li>";
 
-    $subPageCss2Str.="<li class='disabled'><a href='#'>&laquo;</a></li>";
+    $subPageCss2Str.="<li class='disabled'><span>&laquo;</span></li>";
 
     }
 
@@ -332,19 +332,19 @@ class SubPages{
 
     $nextPageUrl=$this->subPage_link.($this->current_page+1);
 
-    $subPageCss2Str.="<li> <a href='$nextPageUrl'>&raquo;</a></li>";
+    $subPageCss2Str.="<li><a href='$nextPageUrl'>&raquo;</a></li>";
 
-    $subPageCss2Str.="<li> <a href='$lastPageUrl'>尾页</a></li> </ul>";
+    $subPageCss2Str.="<li><a href='$lastPageUrl'>尾页</a></li>";
 
     }else {
 
-    $subPageCss2Str.="<li class='disabled'><a href='#'>&raquo;</a></li>";
+    $subPageCss2Str.="<li class='disabled'><span>&raquo;</span></li>";
 
-    $subPageCss2Str.="<li class='disabled'><a href='#'>尾页</a></li> </ul>";
+    $subPageCss2Str.="<li class='disabled'><span>尾页</span></li>";
 
     }
 
-    $subPageCss2Str.="&nbsp;&nbsp;<ul> <li><span class=disabled>当前".$this->current_page."/".$this->pageNums."页</span></li> </ul>";
+    $subPageCss2Str.="&nbsp;&nbsp;<li class='disabled'><span>当前".$this->current_page."/".$this->pageNums."页</span></li>";
 
 
 

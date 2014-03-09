@@ -28,7 +28,7 @@ class PostAction extends CommonAction {
        //验证是否存在
        if ($exists_video[id]){
 
-            $this->redirect("/video/".$exists_video[id]."/");
+            $this->redirect("/view/".$exists_video[id]."/");
 
        } else {
 
@@ -42,6 +42,8 @@ class PostAction extends CommonAction {
             if ($Video->type() == -1) $this->redirect('/');
             //获取截图标题
             $info = VideoUrlParser::parse($url);
+            $sourceSite = $Video->sourceSite();
+
             //准备数据
             $data = array(
                 'createdTime' => time(),
@@ -49,14 +51,23 @@ class PostAction extends CommonAction {
                 'pre_tag' => 1,
                 'url' => $url,
                 'imageUrl' => $info['img'],
-                'title' => $info['title']
+				'description' => $info['description'],
+				'tags' => $info['tags'],
+                'title' => $info['title'],
+                'playId' => $info['playId'],
+                'videoSite' => $sourceSite
             );
             //存入数据
             $vid = M('video')->add($data);
-            M('user')->where(array('id' => $userid))->setInc('post');
-            M('tag')->where(array('id' => 1))->setInc('count');
 
-            $this->redirect("/edit/".$vid."/");
+            if ($vid) {
+	            M('user')->where(array('id' => $userid))->setInc('post');
+	            M('tag')->where(array('id' => 1))->setInc('count');
+	            $this->redirect("/edit/".$vid."/");
+            } else {
+            	$this->error('添加失败，换个网址再试试吧:-D'.'/');
+            }
+
 
        }
 
@@ -121,15 +132,20 @@ class PostAction extends CommonAction {
                 }
                 if (I('verify')){
                     M('tag')->where(array('id' => I('pre_tag') ))->setInc('countOriginal');
+                    M('user')->where(array('id' => $video[userid] ))->setField('lastPost',$video['id']);
                 } else {
                     M('tag')->where(array('id' => I('pre_tag') ))->setInc('count');
                 }
+
+				$time = I('createdTime');
+				$time = substr($time,0,4).'-'.substr($time,9,2).'-'.substr($time,16,2);
 
                $data = array (
                'title' => I('title'),
                'pre_tag' => I('pre_tag'),
                'tags' => I('tags'),
                'description' => I('description'),
+			   'createdTime' => strtotime($time)
                );
 
 
@@ -144,6 +160,9 @@ class PostAction extends CommonAction {
                     $data[url] = I('url');
                     $info = VideoUrlParser::parse(I('url'));
                     $data[imageUrl] = $info['img'];
+                    import('Class.Video', APP_PATH);
+                    $Video = new Video(I('url'));
+                    $data[videoSite] = $Video->sourceSite();
                 };
 
                 if (I('userid')) { $userid = I('userid'); } else { $userid = $visitor[id]; }
@@ -160,7 +179,8 @@ class PostAction extends CommonAction {
                 };
 
                 M('video')->where(array('id' => $video[id]))->save($data);
-                $this->redirect("/video/".$video[id]."/");
+
+                $this->redirect("/view/".$video[id]."/");
 
 
            } else {
@@ -188,7 +208,7 @@ class PostAction extends CommonAction {
             if (M('video')->delete($vid)) {
                 $this->success("该视频已经被删除~","/");
             } else {
-                $this->error('没有修改或修改发生问题',"/video/".$video[id]."/");
+                $this->error('没有修改或修改发生问题',"/view/".$video[id]."/");
             }
 
        } else {

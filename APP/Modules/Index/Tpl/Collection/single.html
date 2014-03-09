@@ -1,16 +1,16 @@
-﻿<!-- 选辑-->
-<div class="span3 shadow" style="height:205px;padding:10px; margin-bottom:20px; margin-right:3px">
+<div class="amzvideo col-md-3 col-sm-4">
+  <div class="shadow">
     <div class="post-short">
-    	<div id="post-thumb" style="background: url('{$c.thumb}') no-repeat center center;background-size: 290px;"></div>
-    	<a class="post-infor" href="/collection/{$c.id}/" target="_blank" style="background-color: rgba(0,0,0,0); padding:0">
-        	<img style="max-width:210px;" width="210px" height="160px" src="__PUBLIC__/images/play.png" />
-        </a>
+      <div class="post-thumb" style="background: url('{$c.thumb}') no-repeat center center;background-size: 150%;"></div>
+      <a class="post-infor" href="/collection/{$c.id}/" target="_blank" title="{$c.name}" hidden >
+      	<div class="collection-play"><span class="glyphicon glyphicon-play-circle"></span></div>
+      </a>
+    </div><!-- /.post-short -->
+    <div class="collection">
+        <div class="count"><span class="label label-default">&nbsp;{$c.count|intval}部&nbsp;</span></div>
+        <div class="title"><a href="/collection/{$c.id}/" target="_blank" title="{$c.name}" >{$c.name}</a></div>
+        <div class="infor">由 {$c.username} 创建</div>
     </div>
-
-    <div style="margin-top: 10px;float:right"><span class="label label-inverse" style="line-height:20px;">&nbsp;{$c.count|intval}部&nbsp;</span></div>
-    <div class="collection-title"><a href="/collection/{$c.id}/" target="_blank" title="{$c.name}" >{$c.name}</a></div>
-    <div class="collection-infor">由 {$c.username} 创建</div>
-
+  </div><!-- /.collectioninfo --> 
 
 </div>
-<!-- 选辑 END--> 

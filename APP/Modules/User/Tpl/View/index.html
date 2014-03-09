@@ -1,124 +1,161 @@
 <include file="./APP/Tpl/header.html" />
-<div class="container" style="padding-top:25px">
+<include file='headerbar' />
 
-<div class="row" >
-<div class="span9" >
 
-    <div style="height:90px; margin-bottom:20px; display:block">
-    
-      <div class="avatar" style="height:80px; width:80px;">
-        <img class="img-rounded" src="{$user.avatar}" width="80" height="80" />
-      </div>
-      <div id="detailed" class="float-left" style="margin:0 0 0 10px">
-          <div id="name" >
-            <div class="user-detail-name ellipsis float-left" style="max-width:240px;">{$user.username}</div>
-            <if condition="$user[verify]"><i title="认证用户" class="icon2-verify float-left" style="margin-left:5px"></i></if>
-            
-          </div>
-           <div id="user-detail-infor">
-                <i class="icon-map-marker" style="margin:4px 0px 0 0"></i> {$user.location}
-                <i class="icon-briefcase" style="margin:4px 0px 0 10px"></i> {$user.career}
-                <if condition="$user[extraweibo]">
-                <i class="icon-weibo" style="margin:4px 0px 0 10px"></i> <a target="_blank" href="{$user.extraweibo}">新浪微博</a>
+<div id="user-page" class="container">
+
+  <div class="row">
+    <!-- 左侧 -->
+    <div class="col-md-9">
+        <!-- 用户板块 -->
+        <div class="user-item" style="border-bottom:none;">
+          <img class="img-rounded avatar" src="{$user.avatar}" />
+          <div class="detail">
+              <div class="name">
+                {$user.username}
+                <if condition="$user[verify]"><i title="认证用户" class="custom-icon-verify"></i></if>
+              </div>
+              <div class="more">
+               	<li><span class="glyphicon glyphicon-map-marker"></span>{$user.location}</li>
+              	<li><span class="glyphicon glyphicon-briefcase"></span>{$user.career}</li>
+              	<if condition="$user[extraweibo]">
+                	<li><span class="glyphicon glyphicon-send"></span><a target="_blank" href="{$user.extraweibo}">新浪微博</a></li>
                 </if>
                 <if condition="$user[extrablog]">
-                <i class="icon-globe" style="margin:4px 0px 0 10px"></i> <a target="_blank" href="{$user.extrablog}">我的网站</a>
-                </if>
-           </div>
-           
-            <if condition="$visitor">
-            	<div id="followuserstatus-{$user.id}">
-                <if condition="isfollow($visitor[id], $user[id])">
-                <a class="my-btn my-btn-gray" onclick="FollowUser('{$user.id}', 1)" href="#" >已关注</a>
-                <else />
-                <a class="my-btn my-btn-red" onclick="FollowUser('{$user.id}', 0)" href="#" >关注</a>
-                </if>
+                    <li><span class="glyphicon glyphicon-globe"></span><a target="_blank" href="{$user.extrablog}">我的网站</a></li>
+               	</if>
+              </div>
+              <div class="user-btn">
+              <if condition="$visitor">
+              	<div id="followuserstatus-{$user.id}">
+                	<if condition="isfollow($visitor[id], $user[id])">
+                    <a class="btn btn-default" onclick="FollowUser('{$user.id}', 1)" href="#" >已关注</a>
+                    <else />
+                    <a class="btn btn-warning" onclick="FollowUser('{$user.id}', 0)" href="#" >关注</a>
+                    </if>
                 </div>
-                <a class="my-btn my-btn-gray" href="#" onclick="SendMessage('{$user.id}')">发私信</a>
-            <else />
-            	<a class="my-btn my-btn-red" href="#loginFront" role="button" data-toggle="modal">关注</a>
-                <a class="my-btn my-btn-gray" href="#loginFront" role="button" data-toggle="modal">发私信</a>
-            </if>
-           
-           
-      </div>
-    
-    </div>
-    
-    <if condition="$page_name != setting">
-    <div class="row" style="margin-bottom:20px">
-      <div id="user-detail-headerbar">
-        <if condition="$page_name == postOriginal"> <div class="link active"> <else /> <div class="link"> </if>
-        <a href="/user/{$user.id}/">创作</a></div>
-        <if condition="$page_name == share"> <div class="link active"> <else /> <div class="link"> </if>
-        <a href="/user/{$user.id}/share/">分享</a></div>
-        <if condition="$page_name == like"> <div class="link active"> <else /> <div class="link"> </if>
-        <a href="/user/{$user.id}/like/">收藏</a></div>
-        <if condition="$page_name == follow"> <div class="link active"> <else /> <div class="link"> </if>
-        <a href="/user/{$user.id}/follow/">关注</a></div>
-      </div>
-    </div>
-    </if>
-    <if condition="$page_type == users">
-	<include file="Public:users" />
-    <else />
-    <include file="Public:posts" />
-    </if>
-</div>
-
-<div class="span3" style="margin-left:0;">
-    <div style="width:230px; position:fixed">
-		<div class="user-detail-block" style="min-height:90px;">
-                  <div class="information border">
-						<div id="nums">{$user.post|intval}</div>
-                        <div id="title"> 分享 </div>
-                    </div>   
-                    <div class="information border">
-						<div id="nums">{$user.likecount|intval}</div>
-                        <div id="title"> 收藏 </div>
-                    </div>   
-                    <div class="information">
-						<div id="nums">{$user.follow|intval}</div>
-                        <div id="title"> 关注 </div>
-                    </div>   
-        </div>
+                <a class="btn btn-default" href="#" onclick="SendMessage('{$user.id}')">发私信</a>
+              <else />
+              	<a class="btn btn-warning" href="#loginFront" role="button" data-toggle="modal">关注</a>
+                <a class="btn btn-default" href="#loginFront" role="button" data-toggle="modal">发私信</a>
+              </if>
+              </div>
+          </div>
+        </div><!-- / 用户板块 -->
         
-        <div class="user-detail-block">
-        	<div class="user-detail-title">关于我</div>
-            {$user.aboutme}
+        <!-- 菜单 -->
+        <div id="header-bar">
+          <ul class="nav nav-tabs">
+            <if condition="$page_name == postOriginal"><li class="active"><else /><li> </if><a href="/{$user.shortname}/">创作</a></li>
+            <if condition="$page_name == share"><li class="active"><else /><li> </if><a href="/{$user.shortname}/share/">分享</a></li>
+            <if condition="$page_name == like"><li class="active"><else /><li> </if><a href="/{$user.shortname}/like/">收藏</a></li>
+            <if condition="$page_name == follow"><li class="active"><else /><li> </if><a href="/{$user.shortname}/follow/">关注</a></li>
+          </ul>
+        </div><!-- / 菜单 -->
+
+        <!-- 主打作 -->
+        <if condition="$page_name == postOriginal">       
+        <div id="feature-video" class="row">
+          <div class="col-sm-8">
+          
+            <div id="view-player">
+                  {$featureVideo.content}
+                  <script>
+                    $(function(){ changePlayer('{$featureVideo.videoSite}','user'); });
+                    window.onresize = function(){ changePlayer('{$featureVideo.videoSite}','user'); }
+                  </script>
+            </div>
+            
+          </div>
+          <div class="col-xs-4 hidden-xs">
+            <div id="right" >
+                <div id="feature-info">
+                    <div id="title">
+                        <div id="line"></div>
+                        <div id="link"><a title="{$featureVideo.title}" href="/view/{$featureVideo.id}/">{$featureVideo.title}</a></div>
+                    </div>
+                    <div id="description">{$featureVideo.description}</div>
+                    <div id="date">{$featureVideo.createdTime|date="Y 年 n 月 d 日",###}</div>
+                    <a id="more" href="/view/{$featureVideo.id}/">查看更多</a>
+                </div>
+            </div>
+          </div>
         </div>
+        </if><!-- / 主打作 -->
         
-        <div class="user-detail-block">
-        	<div class="user-detail-title">统计</div>
-            被访问了{$user.viewed}次，共有{$user.postOriginal}部创作，{$user[post] - $user[postOriginal]}部分享，{$user.likecount}部收藏
-        </div>
+        <if condition="$page_type == users">
+        	<include file="Public:users" />
+        <else />
+        	<include file="Public:posts" />
+        </if> 
+         
+    </div><!-- / 左侧 -->
+
+	<!-- 右侧 -->
+    <div class="col-md-3">
+      <div class="user-right">
+          <!-- 用户数据 -->
+          <div id="user-data">
+            <div id="information" class="row">
+              <div class="col-xs-4">
+                <div id="nums"> <a href="/{$user.shortname}/" target="_blank">{$user.post|intval}</a></div>
+                <div id="title"> 分享 </div>
+              </div>
+              <div class="col-xs-4">
+                <div id="nums"> <a href="/{$user.shortname}/like/" target="_blank">{$user.likecount|intval}</a></div>
+                <div id="title"> 收藏 </div>
+              </div>
+              <div class="col-xs-4">
+                <div id="nums"><a href="/{$user.shortname}/follow/" target="_blank">{$user.follow|intval}</a></div>
+                <div id="title"> 关注 </div>
+              </div>
+            </div>
+          </div> <!-- / 用户数据 --> 
+    
+          <div class="hr-block">
+            <div class="title">关于我</div>
+            <div class="content">{$user.aboutme}</div>
+          </div>
+
+          <div class="hr-block">
+            <div class="title">统计</div>
+            <div class="content">被访问了{$user.viewed}次，共有{$user.postOriginal}部创作，{$user[post] - $user[postOriginal]}部分享，{$user.likecount}部收藏</div>
+          </div>
+          
+      </div>
     </div>
-</div>
+    <!-- / 右侧 -->
 
-
+  </div>
 
 </div> <!-- /上方 -->
 
-<div id="sendMessage" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sendMessage" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">发送私信</h3>
-  </div>
-  <div class="modal-body">
-    <form class="form-horizontal" action="{:U('User/Ajax/sendMessage')}" id="sendMessage" method="POST">
-    <input id="sendMessage-uid" name="uid" type="hidden" value="#" />
-      <div class="control-group">
-            <label class="control-label2" for="input01">说明</label>
-            <div class="controls2">
-              <textarea placeholder="请填写私信内容" class="span4" id="message" name="message" style="min-height:120px;max-width: 356px;" ></textarea>
+<!-- 登陆 -->
+<div class="modal fade" id="sendMessage" tabindex="-1" role="dialog" aria-labelledby="sendMessageLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="sendMessageLabel">发送私信</h4>
+      </div>
+      <div class="modal-body">   
+        <form class="form-horizontal" action="{:U('User/Ajax/sendMessage')}" method="POST">
+          <input id="sendMessage-uid" name="uid" type="hidden" value="#" />
+          <div class="form-group">
+            <label class="col-sm-2 control-label">私信</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" rows="6" name="message" placeholder="请填写私信内容"></textarea>
             </div>
-        </div>
-		
-  </div>
-  <div class="modal-footer">
-    <input type="submit" class="btn btn-red" value="恩，发射！" />
-    <button class="btn float-left" data-dismiss="modal" aria-hidden="true">关闭</button>
-  </div>
-  </form>
-</div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9">
+              <button type="submit" class="btn btn-warning btn-block">恩，发射！</button>
+            </div>
+          </div>
+        </form>
+      </div>    
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal --> 
+
 <include file="./APP/Tpl/footer.html" />

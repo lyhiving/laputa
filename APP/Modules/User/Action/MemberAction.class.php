@@ -43,8 +43,9 @@ class MemberAction extends CommonAction {
         }
         $email = I('email');
         $pwd = I('password', '', 'md5');
+        $checkbox = I('checkbox');
 
-        self::LoginMethod($email, $pwd);
+        self::LoginMethod($email, $pwd, $checkbox);
 
         $this->redirect('/');
 
@@ -57,13 +58,26 @@ class MemberAction extends CommonAction {
 
         $email = I('email');
         $pwd = I('password', '', 'md5');
+        $checkbox = I('checkbox');
 
-        self::LoginMethod($email, $pwd);
+        self::LoginMethod($email, $pwd, $checkbox);
 
         $this->redirect($_SERVER['HTTP_REFERER']);
 
     }
 
+
+    /**
+     * 全站微博快速登录
+     */
+    public function weiboLoginVerify() {
+        import('Class.Weibo', APP_PATH);
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/user/member/weiboLogin/' );
+		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+		$code_url = $code_url = $o->getAuthorizeURL( WB_CALLBACK_URL );
+
+		Header("Location:$code_url");
+    }
 
 
     // 注册页面
@@ -107,10 +121,11 @@ class MemberAction extends CommonAction {
            	$data[verify] = 0;
             $data[guest] = 1;
            }
-		   echo 112;
+		   //echo 112;
 		   $uid = M('User')->add($data);
            if( $uid) {
             self::LoginMethod($email, $pwd = I('pass1', '', 'md5'));
+            M('user')->where("id=$uid")->setField('shortname',"user".$uid);
 
 
 			// 通知多说 同步用户
@@ -155,10 +170,54 @@ class MemberAction extends CommonAction {
 	}
 
 
+
+	/**
+	 *  微博登陆
+	 */
+    public function weiboLogin() {
+    	import('Class.Weibo', APP_PATH);
+		define( "WB_CALLBACK_URL" , 'http://aimozhen.com/user/member/weiboLogin/' );
+
+		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
+
+		if (isset($_REQUEST['code'])) {
+			$keys = array();
+			$keys['code'] = $_REQUEST['code'];
+			$keys['redirect_uri'] = WB_CALLBACK_URL;
+			try {
+				$token = $o->getAccessToken( 'code', $keys ) ;
+			} catch (OAuthException $e) {
+			}
+		}
+
+		if ($token) {
+			$uid = $token['uid'];
+			$user = M('user')->where("weiboId=$uid")->find();
+			if ($user) {
+		        $email = $user['email'];
+		        $pwd = $user['password'];
+		        $checkbox = '1';
+
+		        self::LoginMethod($email, $pwd, $checkbox);
+
+		        $this->redirect('/');
+			} else {
+				$this->error('您还没有绑定微博','/');
+			}
+
+		} else {
+			$this->error('获取失败','/user/member/login/');
+
+		}
+    }
+
+
+
+
     // 验证码
     public function Verify() {
         import('ORG.Util.Image');
-        Image::buildImageVerify(4, 1, 'png');
+        Image::buildImageVerify(4, 1, 'png', '100', '33');
     }
 
 
@@ -172,7 +231,7 @@ class MemberAction extends CommonAction {
     }
 
    // 登陆通用方法
-   private function LoginMethod($email, $pwd) {
+   private function LoginMethod($email, $pwd, $checkbox) {
 
 
         $user = M('User')->field('id,username,email,password,group,guest,verify')->where(array('email' => $email))->find();
@@ -192,9 +251,6 @@ class MemberAction extends CommonAction {
         session('uid', $user['id']);
         session('username', $user['username']);
 
-        cookie('__u',$user['id']);
-        cookie('__c',sha1($user['id'] . '3stc' . $user['password']));
-
         import('Class.JWT', APP_PATH);  // 多收评论
 		$token = array(
 		    "short_name"=> C('DUOSHUO_USER'),
@@ -202,7 +258,13 @@ class MemberAction extends CommonAction {
 		    "name"=> $user['username'],
 		);
 		$duoshuoToken = JWT::encode($token, C('DUOSHUO_SECRET'));
-		cookie('duoshuo_token',$duoshuoToken);
+
+		if($checkbox) {
+			cookie('__u',$user['id']);
+	        cookie('__c',sha1($user['id'] . '5s8m' . $user['password']));
+			cookie('duoshuo_token',$duoshuoToken);
+		}
+
 
    }
 

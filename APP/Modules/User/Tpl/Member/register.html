@@ -1,80 +1,74 @@
 <include file="./APP/Tpl/header.html" />
-		<div class="container" style="margin:30px auto 20px auto">
-	
-		  <div class="row">
-		  <div class="span11 shadow" style="width:990px"> 
-		  <div id="title" style="padding:20px;">
-			<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">欢迎来到艾墨镇！</span><br />
-			<span style="color: #7F7F7F;">填写居住证，永久有效无需暂住^_^</span><br />
-			<div class="hr2"></div>
-		  </div>
-		  <!-- 编辑区域--> 
-		  <div class="span6" style="margin-left:0;padding:0 0 0 20px;"> 
-		  
-	
-		  <form class="form-horizontal" id="reg" action="{:U('User/Member/RegisterVerify')}" method="POST">
-		  <input type="hidden" name="hidden" value="{$regemail|md5}" />
-					<div class="control-group" id="namegroup">
-						<label class="control-label2" for="name">昵称 </label>
-						<div class="controls2 my-input">
-							<input type="text" class="input-xlarge" id="name" name="name" placeholder="好名字是好生活的开始~">
-							 <span class="help-inline" id="nameInfo"></span>
-						</div>
-					</div>
-					<div class="control-group my-input">
-						<label class="control-label2" for="input01">Email </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="email" name="email" type="text" readonly value="{$regemail}" />
-						</div>
-					</div>
-					<div class="control-group my-input" id="pass1group">
-						<label class="control-label2" for="pass1">密码 </label>
-						<div class="controls2">
-							<input class="input-xlarge" type="password" id="pass1" name="pass1" />
-							<span class="help-inline" id="pass1Info"></span>
-						</div>
-					</div>
-					<div class="control-group my-input" id="pass2group">
-						<label class="control-label2" for="pass2">重复 </label>
-						<div class="controls2">
-							<input class="input-xlarge" type="password" id="pass2" name='pass2' />
-							<span class="help-inline" id="pass2Info"></span>
-						</div>
-					</div>
-				   
-		  <div id="title" style=" padding-bottom:20px;">
-			<span style="color: #7F7F7F; font-weight: bold;">如果有邀请码请填写在下方（选填）</span>
-			<div class="hr2"></div>
-		  </div>
-					<div class="control-group my-input">
-						<label class="control-label2" for="input01">邀请 </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="invitecode" name="invitecode" type="text" />
-						</div>
-					</div> 
-				  <!-- <div class="control-group">
-						<label class="control-label2" for="input01" >微博 </label>
-						<div class="controls2">
-							<input placeholder="http://weibo.com/你的名字" class="input-xlarge" id="exterweibo" name="exterweibo" type="text" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label2" for="input01">博客 </label>
-						<div class="controls2">
-							<input class="input-xlarge" id="exterblog" name="exterblog" type="text" />
-						</div>
-					</div>-->
-					
-					<div style="margin:10px 0 0 60px;">
-						<input id="send" type="submit" class="btn btn-red" value="恩，就这样吧！" />
-						
-					</div>
+
+<div class="container">
+  <div class="row amzcontent">
+    <div class="col-md-12">
+		<div class="shadow">
+            <div class="amz-block">
+              <div class="top">
+                <div class="title">站内信列表</div>
+                <div class="content">请点击标题阅读内容</div>
+              </div>
+            </div>
+          
+            <div class="square" style="padding:20px;"> 
+            <form class="form-horizontal" id="reg" action="{:U('User/Member/RegisterVerify')}" method="POST">
+            	<input type="hidden" name="hidden" value="{$regemail|md5}" />
+                
+              <div id="namegroup" class="form-group">
+                <label class="col-sm-1 control-label">昵称</label>
+                <div class="col-sm-6">
+                  <input id="name" name="name"  type="text" class="form-control input-lg" placeholder="好名字是好生活的开始~">
+                  <label id="nameInfo" class="control-label"></label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-1 control-label">Email</label>
+                <div class="col-sm-6">
+                  <input name="email"  type="text" class="form-control input-lg" value="{$regemail}" readonly>
+                  <label class="control-label"></label>
+                </div>
+              </div>       
+              <div id="pass1group" class="form-group">
+                <label class="col-sm-1 control-label">密码</label>
+                <div class="col-sm-6">
+                  <input id="pass1" name="pass1"  type="password" class="form-control input-lg">
+                  <label id="pass1Info" class="control-label"></label>
+                </div>
+              </div>   
+              <div id="pass2group" class="form-group">
+                <label class="col-sm-1 control-label">密码</label>
+                <div class="col-sm-6">
+                  <input id="pass2" name="pass2"  type="password" class="form-control input-lg">
+                  <label id="pass2Info" class="control-label"></label>
+                </div>
+              </div> 
+    
+                       
+              <div class="amz-block">
+                <div class="top">
+                    <div class="content">如果有邀请码请填写在下方(选填)</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-1 control-label">邀请码</label>
+                <div class="col-sm-6">
+                  <input name="invitecode"  type="text" class="form-control input-lg">
+                  <label class="control-label"></label>
+                </div>
+              </div> 
+    
+              <div class="form-group" style="margin-top:40px;">
+                <div class="col-sm-6 col-md-offset-1">
+                    <button type="submit" class="btn btn-danger btn-lg btn-block">完成注册</button>
+                </div>
+              </div>
 			</form>
-			</div>
-			<!-- /编辑区域-->
-		  </div>
-		  
-		  </div>
-		</div> <!-- /上方 -->
-		<script type="text/javascript"> $(function(){ vRegForm();}); </script>	
+            </div>
+		</div>
+	</div>
+  </div>
+</div> <!-- /上方 -->
+
+<script type="text/javascript"> $(function(){ vRegForm();}); </script>	
 <include file="./APP/Tpl/footer.html" />

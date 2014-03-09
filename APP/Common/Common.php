@@ -43,9 +43,10 @@ function postreplace($data) {
 
         if (!$v['imageUrl']) { $v['imageUrl'] = "__PUBLIC__/images/noimage.jpg" ;}
 
-        $user = M('user')->field('username,email,weiboId')->find($v['userid']);
+        $user = M('user')->field('username,shortname,email,weiboId')->find($v['userid']);
 
         $v[username] = $user[username];
+        $v[usershortname] = $user[shortname];
         $v[useravatar] = getavatar($user);
         $post[] = $v;
         }
@@ -156,7 +157,8 @@ function messagereplace($data) {
         	$m[fromname] = '系统邮件';
         	$m[userlink] = '#';
         } else {
-        	$m[userlink] = '/user/'.$message[userid].'/';
+			$uname = M('user')->where(array('id' => $message[userid]))->getField('shortname');
+        	$m[userlink] = '/'.$uname.'/';
             $m[fromname] = M('user')->where(array('id'=> $message[userid]))->getField('username');
         };
         if (!$m[title]) $m[title] = '无标题';
@@ -180,6 +182,17 @@ function copyright($vid, $olduid, $newuid, $verify) {
 
 }
 
+// 获取https远程内容
+function get_Curl($url){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	$result =  curl_exec($ch);
+	curl_close ($ch);
+	return $result;
+}
 
 ?>
 

@@ -11,13 +11,13 @@
             </div>
         </div>
           
-        <div id="realpagination" class="row" style=" margin-top:50px;display:none">
-            <div class="pagination pagination-small pagination-centered">
-                {$page_nav}
-            </div>
+        <div id="realpagination" class="row" hidden >
+            <ul class="pagination pagination-sm">
+              {$page_nav}
+            </ul>
         </div>
     <else />
-        <div class="row" style=" margin:30px 0 100px 0;text-align: center">
+        <div class="row" style="margin:30px 0 100px 0;text-align: center">
             <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">还木有作品</p>
             <p><?=$user->username?>还木有分享作品<br />
                 <br />

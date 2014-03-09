@@ -35,7 +35,7 @@ class CommonAction extends Action{
                 self::$user = $temp_user;
             } elseif (self::cookieget('__u')) {
                 $temp_user = M('User')->find(intval(self::cookieget('__u')));
-                if (sha1($temp_user[id] . '3stc' . $temp_user[password]) == self::cookieget('__c')) {
+                if (sha1($temp_user[id] . '5s8m' . $temp_user[password]) == self::cookieget('__c')) {
                     self::$user = $temp_user;
                     }
             }
@@ -74,7 +74,7 @@ class CommonAction extends Action{
             $page_nav = new SubPages($page_size,($count/3),$jspage,10, $page_link."/p/",2);
             $this->page_nav = $page_nav->subPageCss2() ;
         } else {
-            $this->page_nav = "<a href=".$page_link."/>再换一批</a> </div>";
+            $this->page_nav = "<a class='btn btn-warning btn-lg' role='button' href=".$page_link."/>再换一批</a>";
         };
 
         $this->page_link = $page_link;

@@ -1,27 +1,37 @@
 <include file="./APP/Tpl/header.html" />
-<div class="container" style="padding-top:25px">
 
-	<div class="row"> 
-    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > 搜索 > {$search}</div>
-        </div>
-		
-	<div class="row amzcontent">
+<div class="container">
+
+    <div id="view-breadcrumb" class="row">
+    	<div class="col-xs-12"><a href="/">艾墨镇</a> > 搜索 > {$search}</div>
+    </div>
+    
+    <div class="row amzcontent">
+    <if condition="$post_count">
         <foreach name="post" item="v">
-      		<include file="Post:single" /> 
+      		<include file='Post:single' /> 
         </foreach>
-	</div>
-      
-	<div class="row amznavigation">
-		<div class="amznext" style="text-align:center">
-			{$page_next}      
-		</div>
-	</div>
-      
-	<div id="realpagination" class="row" style=" margin-top:50px;display:none">
-		<div class="pagination pagination-small pagination-centered">
-			{$page_nav}
-		</div>
-	</div>
+    <else />
+        <div class="row" style="margin:30px 0 100px 0;text-align: center">
+            <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">换一个关键字试一试？</p>
+            <p>木有找到标题含有 {$search} 的作品<br />
+            </p>
+        </div>
+    </if>
+
+    </div>
+    
+    <div class="row amznavigation">
+        <div class="amznext" style="text-align:center">
+            {$page_next}      
+        </div>
+    </div>
+    
+    <div id="realpagination" class="row" hidden >
+        <ul class="pagination pagination-sm">
+          {$page_nav}
+        </ul>
+    </div>
 
 </div> <!-- /上方 -->
 

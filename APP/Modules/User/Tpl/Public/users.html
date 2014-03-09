@@ -1,12 +1,15 @@
     <if condition="$post_count">
+    <div style="margin-top:30px;">
         <foreach name="users" item="u">
             <include file="./APP/Modules/Index/Tpl/Post/user.html" /> 
         </foreach>
-          
-          
-        <div class="pagination pagination-small pagination-centered">
-            {$page_nav}
+
+        <div id="realpagination" class="row" >
+            <ul class="pagination pagination-sm">
+              {$page_nav}
+            </ul>
         </div>
+    </div>
     <else />
         <div class="row" style=" margin:30px 0 100px 0;text-align: center">
             <p style="color: #2D2D2D; font-weight: bold; font-size: 18px;">还木有用户</p>
@@ -17,14 +20,10 @@
     </if>
     
 <script>
-$('a[data-toggle=tooltip]').mouseover(function() { 
-
- $(this).tooltip('show'); 
-
-  }) 
+	$('a[data-toggle=tooltip]').mouseover(function() { $(this).tooltip('show'); }) 
     jQuery(".user-item").hover(function(){
-        jQuery(this).find("#more-button").fadeIn(200);
+        jQuery(this).find(".user-btn").fadeIn(200);
     },function(){
-        jQuery(this).find("#more-button").fadeOut(200);
+        jQuery(this).find(".user-btn").fadeOut(200);
     });
 </script>

@@ -1,60 +1,67 @@
 <include file="./APP/Tpl/header.html" />
-<div class="container" style="padding-top:25px">
-	
-	<div class="row">
-      <div class="span12 shadow"> 
 
-		<div id="title" style="padding:20px;">
-      		<span style="color: #2C2C2C; font-size: 18px; font-weight: bold;">站内信列表</span><br />
-      		<span style="color: #7F7F7F; font-weight: bold;">请点击标题阅读内容</span>
+<div class="container">
+  <div class="row amzcontent">
+    <div class="col-md-12">
+		<div class="shadow">
+            <div class="amz-block">
+              <div class="top">
+                <div class="title">站内信列表</div>
+                <div class="content">请点击标题阅读内容</div>
+              </div>
+            </div>
+          
+            <div style="padding:20px;">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th width="5%">#</th>
+                      <th width="50%">信件标题</th>
+                      <th width="20%">发信人</th>
+                      <th width="25%">发信时间</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <php> $mid = 0 </php>
+                  <foreach name="messages" item="m">
+                  <php> $mid ++ </php>
+                    <tr>
+                      <td>{$mid}</td>
+                      <td>
+                      <if condition="!$m[status]">
+                      <a id="MessageTitle-{$m.id}" style="color:#000; font-weight:bold" href="#MessageView" onClick="ShowMessage('{$m.id}')" >{$m.title}</a>
+                      <else />
+                      <a style="color:#333" href="#MessageView" onClick="ShowMessage('{$m.id}')" >{$m.title}</a>
+                      </if>
+                      </td>
+                      <td><a style="color:#424242" href="{$m.userlink}">{$m.fromname}</a></td>
+                      <td>{$m.creatTime|date="Y年 n月 d日 H:i",###}</td>
+                    </tr>
+                  </foreach>
+                  </tbody>
+                </table>
+            </div>
 		</div>
-      
-		<div style="padding:0px 0px 20px 20px;">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th width="5%">#</th>
-                  <th width="50%">信件标题</th>
-                  <th width="20%">发信人</th>
-                  <th width="25%">发信时间</th>
-                </tr>
-              </thead>
-              <tbody>
-              <php> $mid = 0 </php>
-              <foreach name="messages" item="m">
-              <php> $mid ++ </php>
-                <tr>
-                  <td>{$mid}</td>
-                  <td>
-                  <if condition="!$m[status]">
-                  <a id="MessageTitle-{$m.id}" style="color:#000; font-weight:bold" href="#MessageView" onClick="ShowMessage('{$m.id}')" >{$m.title}</a>
-                  <else />
-                  <a style="color:#333" href="#MessageView" onClick="ShowMessage('{$m.id}')" >{$m.title}</a>
-                  </if>
-                  </td>
-                  <td><a style="color:#424242" href="{$m.userlink}">{$m.fromname}</a></td>
-                  <td>{$m.creatTime|date="Y年 n月 d日 H:i",###}</td>
-                </tr>
-              </foreach>
-              </tbody>
-            </table>
-		</div>
-
 	</div>
+  </div>
 </div> <!-- /上方 -->
 
 <!-- 消息查看弹出框 -->
-<div id="MessageView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="MessageView" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="title">阅读站内信</h3>
-  </div>
-  <div id="MessageViewContent" class="modal-body" style="padding:20px;">
-    <p >内容加载中...</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-  </div>
-</div>
+<div class="modal fade" id="MessageView" tabindex="-1" role="dialog" aria-labelledby="MessageViewLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="MessageViewLabel">阅读站内信</h4>
+      </div>
+      <div class="modal-body">
+          <div id="MessageViewContent" class="modal-body" style="padding:20px;">
+            <p >内容加载中...</p>
+          </div>
+          <button class="btn btn-warning btn-block" data-dismiss="modal" aria-hidden="true">我知道了</button>
+      </div>
+    </div><!-- /.modal-content --> 
+  </div><!-- /.modal-dialog --> 
+</div><!-- /.modal -->  
 
 <include file="./APP/Tpl/footer.html" />

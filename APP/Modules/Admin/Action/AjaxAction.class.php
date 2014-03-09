@@ -54,8 +54,8 @@ class AjaxAction extends CommonAction {
 			M('user')->where("id=$uid")->setField("guest","0");
 			MailAction::guestConfirm($email);
 		}
-
-		$this->redirect("/user/$uid");
+		$uname = M('user')->where(array('id' => $message[userid]))->getField('shortname');
+		$this->redirect("/$uname/");
 
 	}
 
@@ -69,8 +69,8 @@ class AjaxAction extends CommonAction {
 			M('user')->where("id=$uid")->setField("verify","1");
 			MailAction::verifyConfirm($email);
 		}
-		$this->redirect("/user/$uid");
-
+		$uname = M('user')->where(array('id' => $message[userid]))->getField('shortname');
+		$this->redirect("/$uname/");
 	}
 
 	public function copyright() {
@@ -80,7 +80,7 @@ class AjaxAction extends CommonAction {
 		$video = M('video')->where("id=$vid")->field("userid,verify")->find();
 
 		if ($newuid == $video['userid']  ) {
-			$this->redirect("/video/$vid/");
+			$this->redirect("/view/$vid/");
 
 		} else {
 			copyright($vid, $video['userid'], $newuid, $video['verify']);

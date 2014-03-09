@@ -1,101 +1,117 @@
 <?php $visitor = CommonAction::$user; $tags = getalltag(); ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<html xmlns:wb=“http://open.weibo.com/wb”>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
+<!DOCTYPE html>
+<html lang="zh-cn">
+<html xmlns:wb="http://open.weibo.com/wb">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/public/static/favicon.ico">
     <if condition="$page_name == view">
     <title>{$video.title}  |  艾墨镇，分享视频，创造梦想</title>
-    <elseif condition="$page_cat == user" />
-    <title>{$user.username}  |  艾墨镇，分享视频，创造梦想</title>
+    <elseif condition="($page_cat == user)" />
+    <title><if condition="$user[username]">{$user.username}  |</if> 艾墨镇，分享视频，创造梦想</title>
     <else />
     <title>艾墨镇，分享视频，创造梦想</title>
     </if>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AIMOZHEN 艾墨镇 分享动画 分享精彩">
-    <meta name="author" content="艾墨镇,aimozhen">
-    <meta name="keywords" content="aimozhen,艾墨镇,动画,animetaste,独立动画,视频,微电影,V电影,短片,原创,animation,动漫"/>
-    <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico">
+    
     <!-- CSS -->
-    <link href="http://static.aimozhen.com/Public/media/css/bootstrap-all.min.css?t=20130724" rel="stylesheet">
-    <link href="__PUBLIC__/media/css/style.min.css?t=20130724" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/static/css/style.css?version==2.12" rel="stylesheet">
     
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link href="http://static.aimozhen.com/Public/media/css/bootstrap-ie.min.css" rel="stylesheet">
-    <![endif]-->
-    
-    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
-    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2517727821" type="text/javascript" charset="utf-8"></script>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-  <body background="__PUBLIC__/images/web_bg.jpg" style="background-size:70px ">
-
-    <div class="navbar navbar-inverse navbar-fixed-top" style="box-shadow: 0px 1px 3px #b2b2b2 ;">
-      <div class="navbar-inner">
-		<div class="container" style="padding-top:2px;">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-     		<!-- 左侧菜单栏 -->
-            <div style="float:left; margin:7px 10px 0 0;width:103px;height:23px;}"><a href="/"><img src="__PUBLIC__/images/logo@2x.png"__PUBLIC__/></a></div>
-            <div class="nav-collapse collapse">
-			<ul class="nav ">
-              <if condition="$page_cat == creator"> <li class="active"> <else /> <li> </if> <a href="/creator/">创作人</a></li>
-              <if condition="$page_cat == share"> <li class="active"> <else /> <li> </if> <a href="/share/">灵感库</a></li>
-              <if condition="$page_cat == collection"> <li class="active"> <else /> <li> </if> <a href="/collection/">精选集</a></li>
-			</ul>
-
-            
-			<ul class="nav nav-pills pull-right">
-            	<!-- 头像模块 -->
-                <if condition="$visitor">
-                <li class="dropdown" >
-                    <a style="padding:5px 10px 5px 5px;" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#"><img style="width:24px; height:24px" src="{$visitor.avatar}" />
-                    <b class="caret"></b> </a>
-                      <ul class="dropdown-menu">
-                        <li class="nav-header">{$visitor.username}</li>
-                        <li><a href="/home/video/"><i class="icon-film"></i> 我分享的</a></li>
-                        <li><a href="/home/like/"><i class="icon-heart"></i> 我收藏的</a></li>
-                        <li><a href="/home/follow/"><i class="icon-star"></i> 我关注的</a></li>
-                        <li><a href="/home/message/"><i class="icon-envelope"></i> 站内信息</a></li>
-                        <li><a href="/home/setting/"><i class="icon-cog"></i> 修改资料</a></li>
-                        <li><a href="{:U('User/Member/Logout')}"><i class="icon-off"></i> 退出</a></li>
-                      </ul>
-				</li>
-                <else />
-                    <if condition="$page_name!='login'">
-                    <li><a href="#regFront" data-toggle="modal">注册</a></li>
-                    <li><a href="#loginFront" data-toggle="modal">登录</a></li>
-                    </if>
-                </if>
-                                
-                <!-- 搜索 -->
-				<li style="margin:0 15px 0 10px;">
-					<form class="navbar-search pull-left" action="/search/" method="GET">
-                    	<input type="hidden" name="type" value="title" />
-						<input type="text" class="search-query" id="q" name="q" placeholder="Search...">
-                    </form>
-				</li>
-                
-                <!-- 分享 -->
-                <li style="margin:-1px 17px 0 0;">
-                	<if condition="$visitor">
-					<button href="#shareFront" class="btn btn-red" type="button" data-toggle="modal">✚ 分享视频</button>
-                    <else />
-                    <button href="#loginFront" class="btn btn-red" type="button" data-toggle="modal">✚ 分享视频</button>
-                    </if>
-				</li>   
-                    
-			 </ul>
-             
-             </div>
-		 </div><!--/总菜单 -->
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">菜单</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a href="/"><img class="navbar-brand" src="/public/images/logo@2x.png"></a> </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+          <if condition="$page_cat == creator"> <li class="active"> <else /> <li> </if> <a href="/creator/">创作人</a></li>
+          <if condition="$page_cat == share"> <li class="active"> <else /> <li> </if> <a href="/share/">灵感库</a></li>
+          <if condition="$page_cat == collection"> <li class="active"> <else /> <li> </if> <a href="/collection/">精选集</a></li>
+          <if condition="$page_cat == user"> <li class="active"> <else /> <li> </if> <a href="/creator/author/">镇民</a></li>
+      </ul>
+      <div class="navbar-form navbar-right" style="margin-right:-15px">
+        <form class="navbar-left" action="/search/" method="GET">
+          <div class="form-group">
+            <input type="hidden" name="type" value="title" />
+            <input id="search" type="text" class="form-control" id="q" name="q" placeholder="Search...">
+          </div>
+        </form>
+        <if condition="$visitor">
+        	<button class="btn btn-danger navbar-left" data-toggle="modal" data-target="#shareFront"><span class="glyphicon glyphicon-plus"></span> 分享视频</button>
+        <else />
+        	<button class="btn btn-danger navbar-left" data-toggle="modal" data-target="#loginFront"><span class="glyphicon glyphicon-plus"></span> 分享视频</button>
+        </if>
       </div>
-      <div style="background-image:url(__PUBLIC__/images/bgline.png); background-repeat:repeat-x; height:2px"></div>
+      <ul class="nav navbar-nav navbar-right">
+      	<if condition="$visitor">
+        <li class="dropdown" style="height:50px;">
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img style="width:28px; height:28px; margin-top:-4px;" src="{$visitor.avatar}" /> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/home/view/"><span class="glyphicon glyphicon-facetime-video"></span> &nbsp; 我的分享</a></li>
+            <li><a href="/home/like/"><span class="glyphicon glyphicon-heart"></span> &nbsp; 我的收藏</a></li>
+            <li><a href="/home/follow/"><span class="glyphicon glyphicon-star"></span> &nbsp; 我的关注</a></li>
+            <li><a href="/home/message/"><span class="glyphicon glyphicon-envelope"></span> &nbsp; 站内信息</a></li>
+            <li><a href="/home/setting/"><span class="glyphicon glyphicon-wrench"></span> &nbsp; 修改资料</a></li>
+            <li class="divider"></li>
+            <if condition="!$visitor[verify]">
+                <li><a href="/page/register/"><span class="glyphicon glyphicon-ok-circle"></span> &nbsp; 申请认证</a></li>
+                <li class="divider"></li>
+            </if>
+            <li><a href="{:U('User/Member/Logout')}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; 退出</a></li>
+          </ul>
+        </li>
+        <else />
+            <if condition="$page_name!='login'">
+            <li><a href="#regFront" data-toggle="modal">注册</a></li>
+            <li><a href="#loginFront" data-toggle="modal">登录</a></li>
+            </if>
+        </if>
+      </ul>
     </div>
+    <!--/.nav-collapse --> 
+  </div>
+  <div class="line"></div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div id="common-info" class="col-xs-12">
+      <if condition="!$visitor[id]">
+        <div id="tips" class="bs-callout bs-callout-warning alert-dismissable" hidden >
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4>Hi 欢迎来到艾墨镇！</h4>
+          <p>这是一个关于独立影像的小镇 期待你一起来分享更多的内容 登录后还可以收藏作品 拥有自己的专属页面哟 <a href="#loginFront" data-toggle="modal">点此登录</a> 或者 <a href="#regFront" data-toggle="modal">点此入住</a></p>
+        </div>
+      </if>
+      <if condition="!$visitor[weiboId] && $visitor[id]">
+        <div id="weiboID" class="bs-callout bs-callout-danger alert-dismissable" hidden >
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4>请绑定微博</h4>
+          <p>绑定微博后会同步您的头像以及基础信息，绑定后可以直接获得分享作品的权限哟！<a href="/home/setting/">前去绑定</a></p>
+        </div>
+      </if>
+      <if condition="$visitor[weiboId] && $visitor[id] && $visitor[guest]">
+        <div id="weiboID" class="bs-callout bs-callout-warning alert-dismissable" hidden >
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4>想在这里分享作品吗？</h4>
+          <p>绑定后即可直接分享作品 V用户绑定后可以直接分享原创作品 <a href="/home/setting/">重新绑定</a> 或者 <a href="/page/register/">申请原创作者</a></p>
+        </div>
+      </if>
+    </div>
+  </div>
+</div>

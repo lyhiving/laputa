@@ -1,12 +1,13 @@
 <include file="./APP/Tpl/header.html" />
-<div class="container" style="padding-top:25px">
-	<div class="row"> 
-    	<div class="span8 breadcrumb"> <a href="/">艾墨镇</a> > <a href="/collection/">选辑</a>  > <a href="#">{$page_name}</a> </div>
+<div class="container">
+
+  <div id="view-breadcrumb" class="row">
+    	<div class="col-xs-12"><a href="/">艾墨镇</a> > <a href="/collection/">精选集</a> > {$page_name}</div>
 	</div>
 		
 	<div class="row amzcontent">
         <foreach name="post" item="v">
-      		<include file="Post:single" /> 
+      		<include file='Post:single' /> 
         </foreach>
 	</div>
       
@@ -16,11 +17,11 @@
 		</div>
 	</div>
       
-	<div id="realpagination" class="row" style=" margin-top:50px;display:none">
-		<div class="pagination pagination-small pagination-centered">
-			{$page_nav}
-		</div>
-	</div>
+    <div id="realpagination" class="row" hidden >
+        <ul class="pagination pagination-sm">
+          {$page_nav}
+        </ul>
+    </div>
 
 </div> <!-- /上方 -->
 

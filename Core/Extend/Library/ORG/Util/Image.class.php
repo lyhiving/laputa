@@ -427,7 +427,7 @@ class Image {
         for ($i = 0; $i < $length; $i++) {
             $fontcolor = imagecolorallocate($im, mt_rand(0, 120), mt_rand(0, 120), mt_rand(0, 120)); //这样保证随机出来的颜色较深。
             $codex = String::msubstr($code, $i, 1);
-            imagettftext($im, mt_rand(16, 20), mt_rand(-60, 60), 40 * $i + 20, mt_rand(30, 35), $fontcolor, $fontface, $codex);
+            imagettftext($im, mt_rand(2, 20), mt_rand(-60, 60), 40 * $i + 20, mt_rand(30, 35), $fontcolor, $fontface, $codex);
         }
         Image::output($im, $type);
     }

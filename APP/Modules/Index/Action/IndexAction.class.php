@@ -18,13 +18,16 @@ class IndexAction extends CommonAction {
 
     // 网站首页 最新视频
     public function Index() {
+
         self::listnew();
+
     }
 
     public function listnew() {
 
         $page_size = 24;
         $this->page_name = "listnew";
+        $this->page_nav_name = "";
 
         if ( !I('creator') ) {
             $this->page_cat = "share";
@@ -36,10 +39,10 @@ class IndexAction extends CommonAction {
             $where = array("verify" => 1);
         }
         $order = "id DESC";
-        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+        $field = "url,pre_tag,tags,collection,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
-        $this->display('index');
+        $this->display('list');
 
     }
 
@@ -48,7 +51,7 @@ class IndexAction extends CommonAction {
 
         $page_size = 24;
         $this->page_name = "hot";
-        $type = I('id');
+        $this->page_nav_name = $type = I('id');
 
         if ( !I('creator') ) {
             $this->page_cat = "share";
@@ -68,10 +71,10 @@ class IndexAction extends CommonAction {
             $order = "likecount desc, id desc";
         };
 
-        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+        $field = "url,pre_tag,tags,collection,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
-        $this->display('index');
+        $this->display('list');
 
     }
 
@@ -80,7 +83,7 @@ class IndexAction extends CommonAction {
 
        $page_size = 24;
         $this->page_name = "tag";
-        $id = I('id');
+        $this->page_nav_name = $id = I('id');
 
         if ( !I('creator') ) {
             $this->page_cat = "share";
@@ -96,7 +99,7 @@ class IndexAction extends CommonAction {
         $field = "url,tags,collection,verify,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link);
-        $this->display('index');
+        $this->display('list');
 
     }
 
@@ -105,16 +108,17 @@ class IndexAction extends CommonAction {
     public function Discover() {
         $page_size = 24;
         $this->page_name = "discover";
+        $this->page_nav_name = "";
 
         $this->page_cat = "share";
         $this->page_link = $page_link = '/share/discover';
         $where = array("verify" => 0);
 
         $order = "RAND( )";
-        $field = "url,pre_tag,tags,collection,verify,card,score,play_url";
+        $field = "url,pre_tag,tags,collection,card,score,play_url";
 
         self::ListVideo($where, $order, $field, $page_size, $page_link, 1);
-        $this->display('index');
+        $this->display('list');
 
     }
 
@@ -123,6 +127,8 @@ class IndexAction extends CommonAction {
 
         $page_size = 24;
         $this->page_name = "author";
+        $this->page_nav_name = "";
+
 
 
         $this->page_cat = "creator";

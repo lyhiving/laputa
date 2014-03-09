@@ -137,11 +137,18 @@ class AjaxAction extends CommonAction {
             $temp_size = getimagesize($path.$picName);
             if($temp_size[0] < 420 || $temp_size[1] < 320){//判断宽和高是否符合头像要求
                 @unlink($path.$picName);//删除临时文件
-                $this->ajaxReturn(0,'图片尺寸过小！',0,'json');
+                $data['status'] = 0;
+				$data['info'] = '图片尺寸过小！';
+                $this->ajaxReturn($data,'json');
+            } else {
+	            $data['status'] = 1;
+				$data['info'] = $info;
+				$data['data'] = '/upload/temp/'.$picName;
+	            $this->ajaxReturn($data,'json');
             }
-            $this->ajaxReturn('/upload/temp/'.$picName,$info,1,'json');
         }
     }
+
     //裁剪并保存用户头像
     public function cropImg(){
         //图片裁剪数据

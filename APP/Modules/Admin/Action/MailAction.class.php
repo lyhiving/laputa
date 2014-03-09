@@ -35,7 +35,7 @@ class MailAction extends CommonAction {
 
 
 		$this->toUser = "admin@aimozhen.com";
-		$this->title = "【内测申请】艾墨镇内测用户申请";
+		$this->title = "【认证申请】艾墨镇用户认证申请";
 		$this->fromName = "艾墨镇";
 
 		$this->content = <<<EOF
@@ -45,12 +45,12 @@ class MailAction extends CommonAction {
 <p>【性别】 $sex</p>
 <p>【注册原因】 $reason</p>
 <p> </p>
-<p>【一键转正】 <a href="http://aimozhen.com/admin/ajax/guest/email/$email/uid/$uid/" target="_blank">同意点这里</a></p>
 <p><span style="color: #F00">【一键认证】</span> <a href="http://aimozhen.com/admin/ajax/verify/email/$email/uid/$uid/" target="_blank">同意点这里</a></p>
 EOF;
 
 		self::sendSystEmmail();
-		$this->redirect('/');
+		$uname = M('user')->where(array('id' => $uid))->getField('shortname');
+		$this->redirect("/$uname/");
 
 	}
 
@@ -116,7 +116,7 @@ EOF;
 		$this->content = <<<EOF
 <p>【作品认领】艾墨镇视频认领</p>
 <p>【申请人】 $name </p>
-<p>【视频】 <a href="http://aimozhen.com/video/$vid/" target="_blank">$vid、$video[title]</a> </p>
+<p>【视频】 <a href="http://aimozhen.com/view/$vid/" target="_blank">$vid、$video[title]</a> </p>
 <p>【原发布者】 $old_user[id]、$old_user[username]  |  $old_user[email]</p>
 <p>【新发布者】 $user[id]、$user[username]  |  $user[email]</p>
 <p>【申请说明】 $reason</p>
@@ -142,7 +142,7 @@ EOF;
 			$this->fromName = "艾墨镇";
 			$this->content = '<p>亲爱的镇民 :</p>
 							<p>你发布的一部作品被原作者认领，系统已经将这部作品的发布者修正，如果你有疑义可以发送邮件到 admin@aimozhen.com 与我们取得联系。</p>
-							<p>被认领作品的地址是：<a href="http://aimozhen.com/video/'.$vid.'/">http://aimozhen.com/video/'.$vid.'/</a></p>
+							<p>被认领作品的地址是：<a href="http://aimozhen.com/view/'.$vid.'/">http://aimozhen.com/view/'.$vid.'/</a></p>
 							<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
 			self::temp();
 			self::sendMail();
@@ -154,14 +154,14 @@ EOF;
 			$this->fromName = "艾墨镇";
 			$this->content = '<p>亲爱的镇民 :</p>
 							<p>你的认领请求已经被接受，系统已经将这部作品分配到你的账户，你可以登录系统后，再次编辑作品信息(比如重新设置为原创作品)，如果你有疑义可以发送邮件到 admin@aimozhen.com 与我们取得联系。</p>
-							<p>被认领作品的地址是：<a href="http://aimozhen.com/video/'.$vid.'/">http://aimozhen.com/video/'.$vid.'/</a></p>
+							<p>被认领作品的地址是：<a href="http://aimozhen.com/view/'.$vid.'/">http://aimozhen.com/view/'.$vid.'/</a></p>
 							<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
 			self::temp();
 			self::sendMail();
 
 		}
 
-		$this->redirect('http://aimozhen.com/video/'.$vid);
+		$this->redirect('http://aimozhen.com/view/'.$vid);
 	}
 
 	/**
@@ -186,7 +186,6 @@ EOF;
 				<p>艾墨镇 分享视频 创造梦想 <a href="http://aimozhen.com/" target="_blank">http://aimozhen.com/</a></p>';
 			self::temp();
 			self::sendMail();
-			$this->success("请查收邮件");
 		} else {
 			$this->error("未找到用户请重试");
 		}
@@ -195,17 +194,42 @@ EOF;
 
 
 	public function sendSystEmmail() {
-		ignore_user_abort(true);
-		import('Class.Mail', APP_PATH);
-		SendMail($this->toUser,$this->title,$this->content,$this->fromName);
+		self::mailSender($this->toUser,$this->title,$this->content,$this->fromName);
 	}
 
 	public function sendMail() {
-		ignore_user_abort(true);
-		import('Class.Mail', APP_PATH);
-		SendMail($this->toUser,$this->title,$this->html,$this->fromName);
+		//echo $this->toUser.$this->title.$this->html.$this->fromName;die;
+		self::mailSender($this->toUser,$this->title,$this->html,$this->fromName);
 	}
 
+
+
+	private function mailSender($toUser,$title,$body,$fromName){
+		import('Class.sendcloud.SendCloudLoader', APP_PATH,".php");
+
+	try {
+		set_time_limit(300);
+
+		$sendCloud = new SendCloud(C('MAIL_LOGINNAME'), C('MAIL_PASSWORD'));
+		$message = new SendCloud\Message();
+		$message->addRecipient($toUser) // 添加第一个收件人
+				->setReplyTo(C('MAIL_REPLYTO')) // 添加回复地址
+				->setFromName($fromName) // 添加发送者称呼
+				->setFromAddress(C('MAIL_ADDRESS')) // 添加发送者地址
+				->setSubject($title)  // 邮件主题
+				->setBody($body); // 邮件正文html形式
+
+		echo $sendCloud->send($message);
+		//print '<br>emailIdList:';
+		//print var_dump($sendCloud->getEmailIdList());// 取得emailId列表
+		$this->success("操作成功");
+	} catch (Exception $e) {
+			//print $e->getMessage();
+			$this->error("操作失败 请重新尝试");
+	}
+
+
+	}
 
 
 
@@ -357,7 +381,7 @@ body,td,th {
                 <td id="header" class="w640" width="640" align="center" bgcolor="#404040" style="border-collapse:collapse;" >
 
     <div align="center" style="text-align:center;" >
-        <a href="http://aimozhen.com/"><img id="customHeaderImage" label="Header Image" width="640" src="http://www.aimozhen.com/Public/images/email_header.jpg" class="w640" border="0" align="top" style="display:inline;outline-style:none;text-decoration:none;" /></a>
+        <a href="http://aimozhen.com/"><img id="customHeaderImage" label="Header Image" width="640" src="http://static.aimozhen.com/public/images/email_header.jpg" class="w640" border="0" align="top" style="display:inline;outline-style:none;text-decoration:none;" /></a>
     </div>
 
 
